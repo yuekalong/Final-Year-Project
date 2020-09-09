@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 
 // import socket
-const server = require("http").Server(app);
+const server = app.listen(3000, () =>
+  console.log("server started at port 3000!")
+);
 const io = require("socket.io")(server);
 
 // import bodyParser for get the request body
@@ -26,11 +28,9 @@ app.use(bodyParser.json());
 const chatroomRouter = require("./routers/ChatroomRouter.js");
 
 // make express app use the router
-app.use("/chatroom", chatroomRouter(io));
+app.use(chatroomRouter(io));
 
 // testing route
 app.get("/", (req, res) => {
   res.send({ status: true });
 });
-
-app.listen(3000, () => console.log("server started at port 3000!"));
