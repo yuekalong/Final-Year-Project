@@ -21,8 +21,8 @@ module.exports = function (io) {
     });
 
     // send message
-    socket.on("send-msg", (msg) => {
-      chatroomController.sendMsg(connection, msg);
+    socket.on("send-msg", (data) => {
+      chatroomController.sendMsg(connection, data);
     });
 
     // when disconnect

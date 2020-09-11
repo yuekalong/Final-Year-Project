@@ -3,8 +3,9 @@ module.exports = {
     connection.socket.join();
     console.log("Room Join!");
   },
-  sendMsg: async function (msg, io) {
-    connection.io.emit("receive-msg", msg);
+  sendMsg: async function (connection, data) {
+    console.log(data.msg);
+    connection.io.emit("receive-msg", { msg: data.msg });
     console.log("Send Message!");
   },
 };

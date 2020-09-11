@@ -6,7 +6,7 @@ module.exports = {
   joinRoom: function (connection) {
     chatroomServices.joinRoom(connection);
   },
-  sendMsg: function (connection, msg) {
-    chatroomServices.sendMsg(msg, connection.io);
+  sendMsg: function (connection, data) {
+    chatroomServices.sendMsg(connection, data);
   },
 };
