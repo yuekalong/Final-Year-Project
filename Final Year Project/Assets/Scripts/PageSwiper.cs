@@ -12,83 +12,92 @@ public class PageSwiper : MonoBehaviour
     // variable of panel handler
     public Transform panelHandler;
 
+    // start page
+    public int startPage;
+    public int leftPages;
+    public int rightPages;
+
+    // correction factor
+    public float correctionFactor;
+
     // Start is called before the first frame update
     void Start()
     {
+        // init its anchor
+        panelHandler.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
         // initialize the panels position
         for (int idx = 0; idx < panelHandler.childCount; idx++)
         {
-            // initialize GameObject PanelHandler position
-            if (idx.Equals(0))
-            {
-                // set its anchor
-                panelHandler.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            float preWidth = 0;
 
+            // initialize GameObject PanelHandler position
+            if (idx == 0)
+            {
                 // set the first panel position
                 panelHandler.GetChild(idx).GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             }
             else
             {
                 // set all the panel position instead of first one
-                float PreWidth = .5f * (panelHandler.GetChild(idx - 1).GetComponent<RectTransform>().rect.width + panelHandler.GetChild(idx).GetComponent<RectTransform>().rect.width);
+                preWidth = .5f * (panelHandler.GetChild(idx - 1).GetComponent<RectTransform>().rect.width + panelHandler.GetChild(idx).GetComponent<RectTransform>().rect.width);
 
-                panelHandler.GetChild(idx).GetComponent<RectTransform>().anchoredPosition = new Vector2(idx * PreWidth, 0);
+                panelHandler.GetChild(idx).GetComponent<RectTransform>().anchoredPosition = new Vector2(idx * preWidth, 0);
             }
         }
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        OnSliderPage();
-    }
-
-    bool isDown = false;
-    float mousePosX;
+    bool holdDown = false;
+    float startPosX;
     float runtimePos;
     float deltaX;
-    int sliderIndex = 0;
-    void OnSliderPage()
+
+    // middle call 0, right decrease left increase
+    public int pageIdx = 0;
+
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            isDown = true;
-            mousePosX = Input.mousePosition.x;
+            holdDown = true;
+            startPosX = Input.mousePosition.x;
             runtimePos = panelHandler.GetComponent<RectTransform>().anchoredPosition.x;
         }
         if (Input.GetMouseButtonUp(0))
         {
-            isDown = false;
+            holdDown = false;
             float width = panelHandler.GetChild(0).GetComponent<RectTransform>().rect.width;
             if (Mathf.Abs(deltaX) >= (width / 2) || Mathf.Abs(Input.GetAxis("Mouse X")) >= 3)
             {
-                if (deltaX > 0)
+                if (deltaX > correctionFactor)
                 {
                     // to right
-                    sliderIndex++;
-                    if (sliderIndex > 0)
-                        sliderIndex = 0;
+                    pageIdx++;
+                    if (pageIdx > leftPages)
+                        pageIdx = leftPages;
                 }
                 else
                 {
                     // to left
-                    sliderIndex--;
-                    if (sliderIndex < (-panelHandler.childCount + 1))
-                        sliderIndex = -panelHandler.childCount + 1;
+                    pageIdx--;
+                    if (pageIdx < -rightPages)
+                        pageIdx = -rightPages;
                 }
-                panelHandler.GetComponent<RectTransform>().DOAnchorPosX(sliderIndex * width, 0.5f);
+                panelHandler.GetComponent<RectTransform>().DOAnchorPosX(pageIdx * width, 0.5f);
             }
             else
             {
-                panelHandler.GetComponent<RectTransform>().DOAnchorPosX(sliderIndex * width, 0.5f);
+                panelHandler.GetComponent<RectTransform>().DOAnchorPosX(pageIdx * width, 0.5f);
             }
         }
-        if (isDown)
+        if (holdDown)
         {
-            deltaX = Input.mousePosition.x - mousePosX;
-            panelHandler.GetComponent<RectTransform>().anchoredPosition = new Vector2(deltaX + runtimePos, 0);
+            deltaX = (Input.mousePosition.x - startPosX) * correctionFactor / 10;
+            panelHandler.GetComponent<RectTransform>().anchoredPosition = new Vector2(deltaX * correctionFactor / 50 + runtimePos, 0);
         }
     }
+
+
 }

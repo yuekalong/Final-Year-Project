@@ -6,7 +6,7 @@ using SocketIO;
 public class SocketManager : MonoBehaviour
 {
     SocketIOComponent socket;
-
+    public ChatroomDisplay chatroom;
 
 
     // Start is called before the first frame update
@@ -24,6 +24,8 @@ public class SocketManager : MonoBehaviour
 
             // set for close message
             socket.On("close", closeEvent);
+
+            socket.On("receive-msg", receiveMsg);
         }
     }
 
@@ -37,7 +39,8 @@ public class SocketManager : MonoBehaviour
     }
     private void errorEvent(SocketIOEvent ev)
     {
-        Debug.Log("Socket.io Error!\n" + ev.data);
+        Debug.Log("Socket.io Error!\n");
+        Debug.Log(ev);
     }
     private void closeEvent(SocketIOEvent ev)
     {
@@ -54,11 +57,16 @@ public class SocketManager : MonoBehaviour
 
     public void sendMsg(string msg)
     {
-        socket.Emit("send-msg", msg);
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["msg"] = msg;
+        Debug.Log("Send Message: " + msg);
+        socket.Emit("send-msg", new JSONObject(data));
     }
 
-    public void receiveMsg(string msg)
+    public void receiveMsg(SocketIOEvent ev)
     {
-
+        Debug.Log("Receive Message: " + ev.data);
+        JSONObject data = ev.data;
+        chatroom.addText(data.GetField("msg").str);
     }
 }

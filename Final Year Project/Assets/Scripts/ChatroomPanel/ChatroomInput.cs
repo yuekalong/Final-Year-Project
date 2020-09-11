@@ -1,24 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class ChatroomInput : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public SocketManager socket;
+
+    public void sendMsg()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        string input = GetComponent<InputField>().text;
+        socket.sendMsg(input);
+        GetComponent<InputField>().text = "";
     }
 }
