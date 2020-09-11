@@ -10,6 +10,7 @@ public class SocketManager : MonoBehaviour
 
 
     // Start is called before the first frame update
+    // set the socket system
     void Start()
     {
         socket = GetComponent<SocketIOComponent>();
@@ -58,6 +59,7 @@ public class SocketManager : MonoBehaviour
     public void sendMsg(string msg)
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
+        data["name"] = PlayerPrefs.GetString("name", "No Name");
         data["msg"] = msg;
         Debug.Log("Send Message: " + msg);
         socket.Emit("send-msg", new JSONObject(data));
@@ -67,6 +69,6 @@ public class SocketManager : MonoBehaviour
     {
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
-        chatroom.addText(data.GetField("msg").str);
+        chatroom.addText(data.GetField("name").str + ": " + data.GetField("msg").str);
     }
 }
