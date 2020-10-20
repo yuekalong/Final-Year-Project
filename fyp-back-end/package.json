@@ -20,10 +20,12 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "knex": "^0.21.5",
+    "knex": "^0.21.6",
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0",
+    "uuid": "^8.3.1",
     "yarn": "^1.22.5"
   }
 }

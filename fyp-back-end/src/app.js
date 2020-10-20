@@ -31,6 +31,7 @@ const chatroomRouter = require("./routers/ChatroomRouter.js");
 app.use(chatroomRouter(io));
 
 // testing route
-app.get("/", (req, res) => {
-  res.send({ status: true });
+app.get("/", async (req, res) => {
+  const result = await knex('chatroom_history').select("*");
+  res.send({ status: true, data: result });
 });
