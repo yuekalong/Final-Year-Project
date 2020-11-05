@@ -16,6 +16,8 @@ public class PageSwiper : MonoBehaviour
     public int startPage;
     public int leftPages;
     public int rightPages;
+    // middle call 0, right decrease left increase
+    public int pageIdx;
 
     // correction factor
     public float correctionFactor;
@@ -44,8 +46,14 @@ public class PageSwiper : MonoBehaviour
 
                 panelHandler.GetChild(idx).GetComponent<RectTransform>().anchoredPosition = new Vector2(idx * preWidth, 0);
             }
-        }
 
+            if(idx == Mathf.Abs(startPage)){
+                float width = panelHandler.GetChild(0).GetComponent<RectTransform>().rect.width;
+                panelHandler.GetComponent<RectTransform>().DOAnchorPosX(startPage * width, 0.5f);
+                pageIdx = startPage;
+            }
+        }
+        
     }
 
     // Update is called once per frame
@@ -54,11 +62,12 @@ public class PageSwiper : MonoBehaviour
     float runtimePos;
     float deltaX;
 
-    // middle call 0, right decrease left increase
-    public int pageIdx = 0;
 
     void Update()
     {
+        int leftLimit = (startPage + leftPages);
+        int rightLimit = (startPage + (-rightPages));
+
         if (Input.GetMouseButtonDown(0))
         {
             holdDown = true;
@@ -69,21 +78,22 @@ public class PageSwiper : MonoBehaviour
         {
             holdDown = false;
             float width = panelHandler.GetChild(0).GetComponent<RectTransform>().rect.width;
+
             if (Mathf.Abs(deltaX) >= (width / 2) || Mathf.Abs(Input.GetAxis("Mouse X")) >= 3)
             {
                 if (deltaX > correctionFactor)
                 {
-                    // to right
+                    // to left page
                     pageIdx++;
-                    if (pageIdx > leftPages)
-                        pageIdx = leftPages;
+                    if (pageIdx > leftLimit)
+                        pageIdx = leftLimit;
                 }
                 else
                 {
-                    // to left
+                    // to right page
                     pageIdx--;
-                    if (pageIdx < -rightPages)
-                        pageIdx = -rightPages;
+                    if (pageIdx < rightLimit)
+                        pageIdx = rightLimit;
                 }
                 panelHandler.GetComponent<RectTransform>().DOAnchorPosX(pageIdx * width, 0.5f);
             }
@@ -95,6 +105,12 @@ public class PageSwiper : MonoBehaviour
         if (holdDown)
         {
             deltaX = (Input.mousePosition.x - startPosX) * correctionFactor / 10;
+            if(pageIdx == leftLimit && deltaX > 0){
+                deltaX = 0; 
+            }
+            else if(pageIdx == rightLimit && deltaX < 0){
+                deltaX = 0;
+            }
             panelHandler.GetComponent<RectTransform>().anchoredPosition = new Vector2(deltaX * correctionFactor / 50 + runtimePos, 0);
         }
     }
