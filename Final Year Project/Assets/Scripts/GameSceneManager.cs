@@ -11,7 +11,16 @@ public class GameSceneManager : MonoBehaviour
         string input = GetComponent<InputField>().text;
         PlayerPrefs.SetString("name", input);
         Debug.Log(PlayerPrefs.GetString("name", "No Name"));
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("MapScene");
     }
 
+    public void goToChatroom()
+    {
+        SceneManager.LoadScene("ChatroomScene");
+    }
+
+    public void goToMap()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
 }
