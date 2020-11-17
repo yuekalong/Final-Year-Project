@@ -14,19 +14,21 @@ const loginStrategy = new LocalStrategy(
   },
   async function (username, password, done) {
     try {
-      console.log("alrgiht");
-      let users = await knex.raw(
-        `
+      let users = (
+        await knex.raw(
+          `
             SELECT *
             FROM user
             WHERE BINARY name = ?
       `,
-        [username]
-      );
+          [username]
+        )
+      )[0];
+
       if (users.length == 0) {
         return done(null, false, { message: "Invalid Credentials" });
       }
-      let dbUser = users[0][0];
+      let dbUser = users[0];
       // if (await bcrypt.compare(password, dbUser.password)) {
       if (password == dbUser.password) {
         const userInfo = await knex("user")

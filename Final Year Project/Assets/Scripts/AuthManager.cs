@@ -27,11 +27,17 @@ public class AuthManager : MonoBehaviour
         form.AddField("username", username.text);
         form.AddField("password", password.text);
 
-        UnityWebRequest req = UnityWebRequest.Post("http://localhost:3000/auth/login", form);
+        UnityWebRequest req = UnityWebRequest.Post("http://192.168.8.118:3000/auth/login", form);
         
         yield return req.SendWebRequest();
         
         JSONNode res = JSON.Parse(req.downloadHandler.text);
+
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            error.text=req.error;
+            yield break;
+        }
 
         if(res["success"]){
             JSONNode userInfo = res["data"]["userInfo"];
