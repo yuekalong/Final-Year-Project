@@ -14,7 +14,6 @@ const loginStrategy = new LocalStrategy(
   },
   async function (username, password, done) {
     try {
-      console.log(password);
       let users = (
         await knex.raw(
           `

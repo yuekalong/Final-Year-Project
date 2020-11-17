@@ -7,13 +7,15 @@ public class SocketManager : MonoBehaviour
 {
     SocketIOComponent socket;
     public ChatroomDisplay chatroom;
-
+    Dictionary<string, string> user = new Dictionary<string, string>();
 
     // Start is called before the first frame update
     // set the socket system
     void Start()
     {
         socket = GetComponent<SocketIOComponent>();
+        user["id"] = PlayerPrefs.GetString("id", "No ID");
+        user["name"] = PlayerPrefs.GetString("name", "No Name");
 
         if (socket != null)
         {
@@ -32,11 +34,14 @@ public class SocketManager : MonoBehaviour
 
     #region event
     private void openEvent(SocketIOEvent ev)
-    {
-        Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
-
-        // join room
-        joinRoom();
+    {   
+        // ensure it connected the socket and have the sid
+        if(socket.sid != null){
+            Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
+            user["socketID"] = socket.sid;
+            // join room
+            joinRoom();
+        }
     }
     private void errorEvent(SocketIOEvent ev)
     {
@@ -51,17 +56,20 @@ public class SocketManager : MonoBehaviour
 
     private void joinRoom()
     {
+        socket.Emit("join-room", new JSONObject(user));
+        
         Debug.Log("Room Join!");
-
-        socket.Emit("join-room");
     }
 
     public void sendMsg(string msg)
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
-        data["name"] = PlayerPrefs.GetString("name", "No Name");
+        data["id"] = user["id"];
+        data["socketID"] = user["socketID"];
+        data["name"] = user["name"];
         data["msg"] = msg;
         Debug.Log("Send Message: " + msg);
+
         socket.Emit("send-msg", new JSONObject(data));
     }
 

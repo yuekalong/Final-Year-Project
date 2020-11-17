@@ -16,8 +16,8 @@ module.exports = function (io) {
     };
 
     // join room
-    socket.on("join-room", () => {
-      chatroomController.joinRoom(connection);
+    socket.on("join-room", (user) => {
+      chatroomController.joinRoom(connection, user);
     });
 
     // send message
