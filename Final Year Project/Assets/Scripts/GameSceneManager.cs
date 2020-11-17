@@ -6,20 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public void startGame()
+    public static void startGame()
     {
-        string input = GetComponent<InputField>().text;
-        PlayerPrefs.SetString("name", input);
-        Debug.Log(PlayerPrefs.GetString("name", "No Name"));
         SceneManager.LoadScene("MapScene");
     }
 
-    public void goToChatroom()
+    public static void goToChatroom()
     {
         SceneManager.LoadScene("ChatroomScene");
     }
 
-    public void goToMap()
+    public static void goToMap()
     {
         SceneManager.LoadScene("MapScene");
     }

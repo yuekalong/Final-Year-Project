@@ -24,14 +24,19 @@ app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// import passport and set the passport
+const auth = require("./init-passport");
+
 // import routers
+const authRouter = require("./routers/AuthRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
 
 // make express app use the router
+app.use("/auth", authRouter);
 app.use(chatroomRouter(io));
 
 // testing route
 app.get("/", async (req, res) => {
-  const result = await knex('chatroom_history').select("*");
+  const result = await knex("chatroom_history").select("*");
   res.send({ status: true, data: result });
 });
