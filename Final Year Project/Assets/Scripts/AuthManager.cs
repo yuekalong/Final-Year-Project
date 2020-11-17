@@ -7,8 +7,8 @@ using SimpleJSON;
 
 public class AuthManager : MonoBehaviour
 {
-    public Text username;
-    public Text password;
+    public InputField username;
+    public InputField password;
     public Text error;
 
     private void Start() {

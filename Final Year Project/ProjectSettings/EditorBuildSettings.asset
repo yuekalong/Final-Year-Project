@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameStartScene.unity
+    path: Assets/Scenes/LoginScene.unity
     guid: 8e1b580cda2cf4e44a1a347c260cea1b
   - enabled: 1
     path: Assets/Scenes/ChatroomScene.unity
