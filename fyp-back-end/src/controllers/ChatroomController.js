@@ -1,6 +1,5 @@
 // import the service
 const chatroomServices = require("../services/ChatroomServices.js");
-const { joinRoom } = require("../services/ChatroomServices.js");
 
 module.exports = {
   joinRoom: function (connection, user) {

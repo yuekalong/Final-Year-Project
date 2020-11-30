@@ -1493,7 +1493,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1928377454}
         m_TargetAssemblyTypeName: GameSceneManager, Assembly-CSharp
-        m_MethodName: goToMap
+        m_MethodName: GoToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,17 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public static void startGame()
+    public static void GoToLobby()
     {
+        string status = PlayerPrefs.GetString("game_status", "No Game Status");
+
+        if(status == "waiting"){
+            Debug.Log("Go To Lobby!");
+        }
+        else if(status == "playing"){
+            StartGame();
+        }
+    }
+
+    public static void StartGame()
+    {
+        // get the player type (hunter or protector)
         SceneManager.LoadScene("MapScene");
     }
 
-    public static void goToChatroom()
+    public static void GoToChatroom()
     {
         SceneManager.LoadScene("ChatroomScene");
     }
 
-    public static void goToMap()
+    public static void GoToMap()
     {
         SceneManager.LoadScene("MapScene");
     }

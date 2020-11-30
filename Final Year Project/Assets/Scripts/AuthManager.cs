@@ -18,6 +18,8 @@ public class AuthManager : MonoBehaviour
     public void Login()
     {   
         error.text = "";
+
+        // to start the IEnumerator
         StartCoroutine(LoginRequest());
     }
 
@@ -27,10 +29,12 @@ public class AuthManager : MonoBehaviour
         form.AddField("username", username.text);
         form.AddField("password", password.text);
 
-        UnityWebRequest req = UnityWebRequest.Post("http://192.168.8.118:3000/auth/login", form);
+        UnityWebRequest req = UnityWebRequest.Post("http://localhost:3000/auth/login", form);
         
+        // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
         
+        // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);
 
         if(req.isNetworkError || req.isHttpError){
@@ -44,7 +48,7 @@ public class AuthManager : MonoBehaviour
 
             PlayerPrefs.SetString("id", userInfo["id"]);
             PlayerPrefs.SetString("name", userInfo["name"]);
-            PlayerPrefs.SetString("game_status", userInfo["game_status"]);
+            PlayerPrefs.SetString("status", userInfo["game_status"]);
             PlayerPrefs.SetString("jwt", res["data"]["token"]);
 
             Debug.Log("ID: " + PlayerPrefs.GetString("id", "No ID"));
@@ -52,11 +56,56 @@ public class AuthManager : MonoBehaviour
             Debug.Log("Game Status: " + PlayerPrefs.GetString("game_status", "No Game Status"));
             Debug.Log("JWT: " + PlayerPrefs.GetString("jwt", "No JWT"));
 
-            GameSceneManager.startGame();
+            if(userInfo["game_status"].Equals("playing")){
+                Debug.Log("GetBasicGameInfo");
+                StartCoroutine(GetBasicGameInfo());
+            }
+            else GameSceneManager.GoToLobby();
+                   
         }
         else{
+            Debug.Log(res);
             // invalid credentials
             error.text="invalid credentials";
+        }
+    }
+
+    IEnumerator GetBasicGameInfo(){
+        Debug.Log(PlayerPrefs.GetString("id", "No ID"));
+
+        UnityWebRequest req = UnityWebRequest.Get("http://localhost:3000/account/game-basic-info/"+ PlayerPrefs.GetString("id", "No ID"));
+        
+        // stop the function and return the state to Login(), if access this function again will start from here
+        yield return req.SendWebRequest();
+        // parse the json response
+        JSONNode res = JSON.Parse(req.downloadHandler.text);
+
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            error.text=req.error;
+            yield break;
+        }
+        if(res["success"]){
+            JSONNode data = res["data"];
+
+            PlayerPrefs.SetString("game_id", data["game"]["id"]);
+            PlayerPrefs.SetString("area_id", data["game"]["area"]);
+            PlayerPrefs.SetString("treasure_id", data["game"]["treasure"]);
+            PlayerPrefs.SetString("group_id", data["group"]["id"]);
+            PlayerPrefs.SetString("group_type", data["group"]["type"]);
+            PlayerPrefs.SetString("opponent_id", data["opponent"]["id"]);
+
+            Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
+            Debug.Log("Area ID: " + PlayerPrefs.GetString("area_id", "No Area ID"));
+            Debug.Log("Treasure ID: " + PlayerPrefs.GetString("treasure_id", "No Treasure ID"));
+            Debug.Log("Group ID: " + PlayerPrefs.GetString("group_id", "No Group ID"));
+            Debug.Log("Group Type: " + PlayerPrefs.GetString("group_type", "No Group Type"));
+            Debug.Log("Opponent ID: " + PlayerPrefs.GetString("opponent_id", "No Opponent ID"));
+
+            GameSceneManager.GoToLobby();
+        }
+        else{
+            Debug.Log(res);
         }
     }
 }
