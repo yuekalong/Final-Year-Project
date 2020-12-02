@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-
+using Google.Maps.Coord;
+using Google.Maps.Unity;
 namespace Google.Maps.Examples.Shared {
   /// <summary>
   /// This class controls the behavior of the instructions panel.
@@ -28,7 +29,7 @@ namespace Google.Maps.Examples.Shared {
     /// <summary>
     /// Reference to Help button.
     /// </summary>
-    public GameObject HelpButton;
+    //public GameObject HelpButton;
     /// <summary>
     /// Glass panel used to block events when dialog is on.
     /// </summary>
@@ -41,27 +42,49 @@ namespace Google.Maps.Examples.Shared {
     private void Start() {
       Assert.IsNotNull(InstructionsText, "Instructions Text is not set!");
       Assert.IsNotNull(InstructionsDialog, "Instructions Dialog is not set!");
-      Assert.IsNotNull(HelpButton, "Help button is not set!");
+      //Assert.IsNotNull(HelpButton, "Help button is not set!");
       Assert.IsNotNull(GlassPanel, "GlassPanel is not set!");
 
       InstructionsText.text =
-        "Arrow keys for pitch and yaw.\nWSAD to move.\nQE for height." +
-        "\n\nClick anywhere to close.";
+        "You are not in the game zone!!!\nPlease go back inside or you will lose the game in 30s.";
 
-      #if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
-      InstructionsText.text =
-      "Drag knob to move and rotate.\nUp and Down buttons for elevation." +
-      "\nGyroscope for pitch. \nPinch screen to zoom.\n\nTap anywhere to close.";
-      #endif
+
 
       ShowHideDialog(false);
     }
+    int map=1;
+    public void Update()
+    {
+      LatLng latLng;
+      LocationFollower script= GetComponent<LocationFollower>();
+      latLng=script.currentLocation;
+      
+      if(map==1 && latLng.Lat>0)
+      {
+        if(latLng.Lat>22.417259 && latLng.Lat<22.417515 && latLng.Lng>114.209442 && latLng.Lng<114.212139)
+          ShowHideDialog(false);
+        else 
+          ShowHideDialog(true);
+      }
+      if(map==2&& latLng.Lat>0)
+      {
+        if(latLng.Lat<22.419931 && latLng.Lat>22.419784 && latLng.Lng>114.209212 && latLng.Lng<114.202928)
+          ShowHideDialog(false);
+        else 
+          ShowHideDialog(true);
+      }
+      if(map==3)
+      {
+          ShowHideDialog(false);
+      }
 
+    }
     /// <summary>
     /// Event triggered when the help button is clicked on.
     /// </summary>
     public void OnClick() {
-      ShowHideDialog(true);
+      map+=1;
+      map=map%3+1;
     }
 
     /// <summary>
@@ -76,7 +99,7 @@ namespace Google.Maps.Examples.Shared {
     /// </summary>
     /// <param name="isVisible">Indicates if dialog should be visible or hidden.</param>
     private void ShowHideDialog(bool isVisible) {
-      HelpButton.SetActive(!isVisible);
+      //HelpButton.SetActive(!isVisible);
       InstructionsDialog.SetActive(isVisible);
       GlassPanel.SetActive(isVisible);
     }

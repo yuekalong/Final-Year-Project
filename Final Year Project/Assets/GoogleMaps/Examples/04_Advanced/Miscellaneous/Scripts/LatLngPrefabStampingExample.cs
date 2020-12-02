@@ -138,9 +138,26 @@ namespace Google.Maps.Examples {
     /// </summary>
     /// <param name="index">The index of the stamp whose position should be returned.</param>
     /// <returns>The position of the specified stamp in Unity World Space.</returns>
+    int x=3;
     private Vector3 GetStampPosition(int index) {
       LatLng latLng = LatLngs[index];
+      if(index==0)
+      {
+        LocationFollower script= GetComponent<LocationFollower>();
+        latLng=script.currentLocation;        
+      }
+      GameObject bomb = GameObject.Find("Bomb");
+      bomb add= bomb.GetComponent<bomb>();
+      if(x-1==add.count && index==x-1)
+      {
+        //LatLng temp= new LatLng(22.33236, 114.146100);
+        LatLng temp= latLng;
+        LatLngs[index]=temp;
+        //latLng = temp;
+        x+=1;
 
+      }
+      Debug.Log(add.count);
       return MapsService.Coords.FromLatLngToVector3(latLng);
     }
 

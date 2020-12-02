@@ -31,6 +31,7 @@ namespace Google.Maps.Examples {
     /// The player's last recorded real-world location and the the current floating origin.
     /// </summary>
     private LatLng PreviousLocation;
+    public LatLng currentLocation;
 
     /// <summary>Start following player's real-world location.</summary>
     private void Start() {
@@ -96,11 +97,11 @@ namespace Google.Maps.Examples {
       }
 
       // Get the current map location.
-      LatLng currentLocation =
+      currentLocation =
           new LatLng(Input.location.lastData.latitude, Input.location.lastData.longitude);
       Vector3 currentWorldLocation = MapsService.Coords.FromLatLngToVector3(currentLocation);
 
-      // Move the camera to the current map location.
+      /* Move the camera to the current map location.
       Vector3 targetCameraPosition = new Vector3(currentWorldLocation.x,
           Camera.main.transform.position.y, currentWorldLocation.z);
       Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,
@@ -112,7 +113,7 @@ namespace Google.Maps.Examples {
         MapsService.LoadMap(ExampleDefaults.DefaultBounds,
             ExampleDefaults.DefaultGameObjectOptions);
         PreviousLocation = currentLocation;
-      }
+      }*/
     }
 
     private void GetPermissions() {
