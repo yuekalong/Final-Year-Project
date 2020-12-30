@@ -5,19 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoginScene.unity
     guid: 8e1b580cda2cf4e44a1a347c260cea1b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ChatroomScene.unity
     guid: 63730fdd72a974adea94605cb3dbcd21
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MapScene.unity
     guid: 36996db15fdb54daabb817a20094184c
   - enabled: 0
     path: Assets/Shatalmic/Example/NetworkTest.unity
     guid: b03b4f2d4d7404569b8603a6eead368c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: b28a3d8c4866d4902885a73e1a072909
   m_configObjects: {}

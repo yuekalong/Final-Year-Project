@@ -34,7 +34,7 @@ public class CatchManager : MonoBehaviour
                 BluetoothLEHardwareInterface.Log("Message: " + message);
             });
         }
-        StartServer();
+        // StartServer();
     }
 
     public void StartServer()
@@ -49,13 +49,6 @@ public class CatchManager : MonoBehaviour
                         if (!connectedDeviceList.Contains(connectedDevice))
                         {
                             connectedDeviceList.Add(connectedDevice);
-
-                            // if (Cube != null)
-                            // {
-                            //     Cube.SetActive(true);
-                            //     SendCubeRotation(Cube.transform.rotation, connectedDevice);
-                            // }
-
                             TextStatus.color = Color.red;
                         }
                     }, (disconnectedDevice) =>
