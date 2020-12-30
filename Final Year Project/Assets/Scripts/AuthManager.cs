@@ -29,7 +29,7 @@ public class AuthManager : MonoBehaviour
         form.AddField("username", username.text);
         form.AddField("password", password.text);
 
-        UnityWebRequest req = UnityWebRequest.Post("http://localhost:3000/auth/login", form);
+        UnityWebRequest req = UnityWebRequest.Post("http://192.168.8.118:3000/auth/login", form);
         
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
@@ -45,7 +45,6 @@ public class AuthManager : MonoBehaviour
 
         if(res["success"]){
             JSONNode userInfo = res["data"]["userInfo"];
-
             PlayerPrefs.SetString("id", userInfo["id"]);
             PlayerPrefs.SetString("name", userInfo["name"]);
             PlayerPrefs.SetString("status", userInfo["game_status"]);
@@ -53,12 +52,13 @@ public class AuthManager : MonoBehaviour
 
             Debug.Log("ID: " + PlayerPrefs.GetString("id", "No ID"));
             Debug.Log("Name: " + PlayerPrefs.GetString("name", "No Name"));
-            Debug.Log("Game Status: " + PlayerPrefs.GetString("game_status", "No Game Status"));
+            Debug.Log("Game Status: " + PlayerPrefs.GetString("status", "No Game Status"));
             Debug.Log("JWT: " + PlayerPrefs.GetString("jwt", "No JWT"));
 
             if(userInfo["game_status"].Equals("playing")){
                 Debug.Log("GetBasicGameInfo");
-                StartCoroutine(GetBasicGameInfo());
+                // StartCoroutine(GetBasicGameInfo());
+                GameSceneManager.GoToLobby();
             }
             else GameSceneManager.GoToLobby();
                    
@@ -73,7 +73,7 @@ public class AuthManager : MonoBehaviour
     IEnumerator GetBasicGameInfo(){
         Debug.Log(PlayerPrefs.GetString("id", "No ID"));
 
-        UnityWebRequest req = UnityWebRequest.Get("http://localhost:3000/account/game-basic-info/"+ PlayerPrefs.GetString("id", "No ID"));
+        UnityWebRequest req = UnityWebRequest.Get("http://192.168.8.118:3000/account/game-basic-info/"+ PlayerPrefs.GetString("id", "No ID"));
         
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();

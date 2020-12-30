@@ -8,7 +8,7 @@ public class GameSceneManager : MonoBehaviour
 {
     public static void GoToLobby()
     {
-        string status = PlayerPrefs.GetString("game_status", "No Game Status");
+        string status = PlayerPrefs.GetString("status", "No Game Status");
 
         if(status == "waiting"){
             Debug.Log("Go To Lobby!");
