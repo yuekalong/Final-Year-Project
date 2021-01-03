@@ -10,15 +10,23 @@ public class CatchManager : MonoBehaviour
     private Networking networking = null;
     private List<Networking.NetworkDevice> connectedDeviceList = null;
 
-    private Networking.NetworkDevice deviceToSkip = null;
+    // private Networking.NetworkDevice deviceToSkip = null;
+    private bool isServer;
 
-    public String NetworkName;
-    public String ClientName;
+    private String serverName;
+    private String clientName;
 
     public Text TextStatus;
+    public Text ConnectedText;
+
+    private String groupType;
 
     private void Start()
-    {
+    {   
+        TextStatus.text = "";
+        ConnectedText.text = "";
+        groupType = PlayerPrefs.GetString("group_type", "No Group Type");
+
         if (networking == null)
         {
             networking = GetComponent<Networking>();
@@ -37,12 +45,22 @@ public class CatchManager : MonoBehaviour
         // StartServer();
     }
 
-    public void StartServer()
-    {
-        TextStatus.text = "";
+    public void Update(){
+        if(networking != null && groupType == "hunter" && !isServer){
+            StartServer();
+        }
+    }
 
-        networking.StartServer(NetworkName, (connectedDevice) =>
-                    {
+    public void StartServer()
+    {   
+        isServer = true;
+
+        serverName = PlayerPrefs.GetString("name", "No Name");
+        // serverName = "hlong";
+
+        networking.StartServer(serverName, (connectedDevice) => // onDeviceReady
+                    {   
+                        // device connected
                         if (connectedDeviceList == null)
                             connectedDeviceList = new List<Networking.NetworkDevice>();
 
@@ -51,29 +69,53 @@ public class CatchManager : MonoBehaviour
                             connectedDeviceList.Add(connectedDevice);
                             TextStatus.color = Color.red;
                         }
-                    }, (disconnectedDevice) =>
-                    {
+                        
+                        clientName = connectedDevice.Name;
+
+                        ConnectedText.text = "Server Connected! Client Name: " + clientName;
+                        SendSignal("Client Connected!");
+
+                    }, (disconnectedDevice) => // onDeviceDisconnected
+                    {   
+                        // device disconnected
                         if (connectedDeviceList != null && connectedDeviceList.Contains(disconnectedDevice))
                             connectedDeviceList.Remove(disconnectedDevice);
-                    }, (dataDevice, characteristic, bytes) =>
+                        
+                        ConnectedText.text = "Client Disconnected!";
+
+                    }, (dataDevice, characteristic, bytes) => // onDeviceData
                     {
-                        deviceToSkip = dataDevice;
-                        // ParseCubePosition(bytes);
+                        // client data received
                     });
     }
 
     public void StartConnect()
     {
-        TextStatus.text = "";
+        isServer = false;
 
-        networking.StartClient(NetworkName, ClientName, () =>
-                    {
+        serverName = "hlong";
+        clientName = PlayerPrefs.GetString("name", "No Name");
+
+        networking.StartClient(serverName, clientName, () => // onStartedAdvertising
+                    {   
+                        // when finding server
                         networking.StatusMessage = "Started advertising";
-                    }, (clientName, characteristic, bytes) =>
-                    {
-                        // if (Cube != null)
-                        //     Cube.SetActive(true);
-                        // ParseCubePosition(bytes);
+                    }, (clientName, characteristic, bytes) => // onCharacteristicWritten
+                    {   
+                        // receive server data
+                        ConnectedText.text = System.Text.Encoding.ASCII.GetString(bytes);
                     });
+        
+    }
+
+    public void SendSignal(String signal){
+        byte[] bytes = System.Text.Encoding.ASCII.GetBytes(signal);
+
+        if(isServer){
+            networking.WriteDevice(connectedDeviceList[0], bytes, ()=>{});
+        }
+        else{
+            networking.SendFromClient(bytes);
+        }
     }
 }

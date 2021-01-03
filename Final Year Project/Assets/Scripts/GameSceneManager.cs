@@ -21,7 +21,8 @@ public class GameSceneManager : MonoBehaviour
     public static void StartGame()
     {
         // get the player type (hunter or protector)
-        SceneManager.LoadScene("MapScene");
+        // SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene("Playground");
     }
 
     public static void GoToChatroom()
