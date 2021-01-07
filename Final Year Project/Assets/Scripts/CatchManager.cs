@@ -21,6 +21,8 @@ public class CatchManager : MonoBehaviour
 
     private String groupType;
 
+    public int respawnTime;
+
     private void Start()
     {   
         TextStatus.text = "";
@@ -42,10 +44,10 @@ public class CatchManager : MonoBehaviour
                 BluetoothLEHardwareInterface.Log("Message: " + message);
             });
         }
-        // StartServer();
     }
 
     public void Update(){
+        // if network is ready
         if(networking != null && groupType == "hunter" && !isServer){
             StartServer();
         }
@@ -55,8 +57,7 @@ public class CatchManager : MonoBehaviour
     {   
         isServer = true;
 
-        serverName = PlayerPrefs.GetString("name", "No Name");
-        // serverName = "hlong";
+        serverName = PlayerPrefs.GetString("group_id", "No Group ID");
 
         networking.StartServer(serverName, (connectedDevice) => // onDeviceReady
                     {   
@@ -81,19 +82,38 @@ public class CatchManager : MonoBehaviour
                         if (connectedDeviceList != null && connectedDeviceList.Contains(disconnectedDevice))
                             connectedDeviceList.Remove(disconnectedDevice);
                         
-                        ConnectedText.text = "Client Disconnected!";
+                        StopServer();
 
                     }, (dataDevice, characteristic, bytes) => // onDeviceData
                     {
                         // client data received
+                        ConnectedText.text = System.Text.Encoding.ASCII.GetString(bytes);
+
+                        if(ConnectedText.text == "disconnect"){
+                            StopServer();
+                        }
                     });
     }
 
-    public void StartConnect()
+    public void StopServer()
+    {
+        networking.StopServer(()=>{});
+
+        StartCoroutine(StartServerAgain());
+    }
+
+    public IEnumerator StartServerAgain()
+    {
+        yield return new WaitForSeconds(respawnTime);
+
+        StartServer();
+    }
+
+    public void StartClient()
     {
         isServer = false;
 
-        serverName = "hlong";
+        serverName = PlayerPrefs.GetString("opponent_id", "No Opponent ID");
         clientName = PlayerPrefs.GetString("name", "No Name");
 
         networking.StartClient(serverName, clientName, () => // onStartedAdvertising
@@ -104,8 +124,17 @@ public class CatchManager : MonoBehaviour
                     {   
                         // receive server data
                         ConnectedText.text = System.Text.Encoding.ASCII.GetString(bytes);
+                        StopClient();
                     });
         
+    }
+
+    public void StopClient()
+    {
+        networking.StopClient(()=>{
+            ConnectedText.text = "Client Disconnected!";       
+        });
+        SendSignal("disconnect");
     }
 
     public void SendSignal(String signal){

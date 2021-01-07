@@ -721,7 +721,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1279525011}
         m_TargetAssemblyTypeName: CatchManager, Assembly-CSharp
-        m_MethodName: StartConnect
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
