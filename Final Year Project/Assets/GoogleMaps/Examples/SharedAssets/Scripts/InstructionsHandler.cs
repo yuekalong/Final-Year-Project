@@ -52,7 +52,7 @@ namespace Google.Maps.Examples.Shared {
 
       ShowHideDialog(false);
     }
-    int map=1;
+    int map=3;
     public void Update()
     {
       LatLng latLng;
@@ -75,8 +75,12 @@ namespace Google.Maps.Examples.Shared {
       }
       if(map==3)
       {
+        if(latLng.Lat<22.332517 )
           ShowHideDialog(false);
+        else 
+          ShowHideDialog(true);
       }
+      InstructionsText.text =latLng.Lat.ToString();
 
     }
     /// <summary>

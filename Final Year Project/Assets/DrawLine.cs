@@ -7,11 +7,10 @@ public class DrawLine : MonoBehaviour
     private Vector2 mousePos;
     public Vector2 currentBall;
     public Vector2 startPoint;
-    public Vector2 tempPoint;
+    public Vector3 tempPoint;
     Vector2 currentPoint;
-    Collision collision;
     int num;
-
+    float[] order;
     void Awake()
     {
         num = 1;
@@ -21,19 +20,21 @@ public class DrawLine : MonoBehaviour
         line.positionCount = 2;
         line.SetWidth(0.1f, 0.1f);
         line.SetColors(Color.green, Color.green);
-        //line.useWorldSpace = true;
+        
     }
     void Update()
     {
+        
         if(Input.GetMouseButtonDown(0) && num==1)
         {
             startPoint.x=tempPoint.x;
             startPoint.y=tempPoint.y;
             currentPoint.x=tempPoint.x;
             currentPoint.y=tempPoint.y;
+            order[0]=tempPoint.y;
             num=2;
         }
-        if(Input.GetMouseButtonDown(0) && num<9)
+        if(num==2)
         {
             line.SetPosition(0,new Vector3(startPoint.x,startPoint.y,0));
         }
@@ -51,6 +52,10 @@ public class DrawLine : MonoBehaviour
             num=num+1;
             line.positionCount = num;
 
+        }
+        if(num==1)
+        {
+            line.SetPosition(0,new Vector3(mousePos.x,mousePos.y,0));
         }
         if(num>9)
         {

@@ -1197,10 +1197,8 @@ GameObject:
   m_Component:
   - component: {fileID: 446526937}
   - component: {fileID: 446526942}
-  - component: {fileID: 446526941}
   - component: {fileID: 446526940}
   - component: {fileID: 446526939}
-  - component: {fileID: 446526938}
   m_Layer: 5
   m_Name: Dialog
   m_TagString: Untagged
@@ -1231,21 +1229,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 353.3302}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &446526938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446526936}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f94978d7e8b04890acfd5cc1787af34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InstructionsText: {fileID: 1476525130}
-  InstructionsDialog: {fileID: 0}
-  GlassPanel: {fileID: 0}
 --- !u!114 &446526939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,19 +1302,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &446526941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446526936}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f644be717ed6a4c019665f831aaf7559, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Slider: {fileID: 0}
 --- !u!222 &446526942
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1823,7 +1793,17 @@ MonoBehaviour:
   - {fileID: 100000, guid: a159e1242b1a54329a736023bcc3df92, type: 3}
   - {fileID: 100000, guid: a159e1242b1a54329a736023bcc3df92, type: 3}
   - {fileID: 100000, guid: a159e1242b1a54329a736023bcc3df92, type: 3}
-  SuppressionRadiuses: []
+  SuppressionRadiuses:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   SpawnReference: {fileID: 620685966}
   SpawnRadius: 2000
 --- !u!1001 &637356653
