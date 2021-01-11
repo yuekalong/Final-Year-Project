@@ -57,8 +57,8 @@ public class AuthManager : MonoBehaviour
 
             if(userInfo["game_status"].Equals("playing")){
                 Debug.Log("GetBasicGameInfo");
-                // StartCoroutine(GetBasicGameInfo());
-                GameSceneManager.GoToLobby();
+                StartCoroutine(GetBasicGameInfo());
+                // GameSceneManager.GoToLobby();
             }
             else GameSceneManager.GoToLobby();
                    
