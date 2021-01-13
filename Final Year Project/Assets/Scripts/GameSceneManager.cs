@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +22,9 @@ public class GameSceneManager : MonoBehaviour
     public static void StartGame()
     {
         // get the player type (hunter or protector)
-        // SceneManager.LoadScene("MapScene");
-        SceneManager.LoadScene("Playground");
+        TimeCountDown.StartCountDown(TimeSpan.FromMinutes(5));
+        SceneManager.LoadScene("MapScene");
+        // SceneManager.LoadScene("Playground");
     }
 
     public static void GoToChatroom()

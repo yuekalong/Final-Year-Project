@@ -1106,8 +1106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: {fileID: 430477589}
-  timeLimit: 10
-  current: 0
 --- !u!1 &441629768
 GameObject:
   m_ObjectHideFlags: 0
