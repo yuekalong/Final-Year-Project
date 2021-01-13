@@ -14,13 +14,13 @@ public class GetTimeCount : MonoBehaviour
     {
         // set the current time into time limit
         Debug.Log(TimeCountDown.TimeLeft.ToString());
-        timer.text = TimeCountDown.TimeLeft.ToString();
+        timer.text = String.Format("{0:00}:{1:00}", TimeCountDown.TimeLeft.Minutes, TimeCountDown.TimeLeft.Seconds);
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.Log(TimeCountDown.TimeLeft.ToString());
-        timer.text = TimeCountDown.TimeLeft.ToString();
+        timer.text = String.Format("{0:00}:{1:00}", TimeCountDown.TimeLeft.Minutes, TimeCountDown.TimeLeft.Seconds);
     }
 }
