@@ -31,15 +31,17 @@ const auth = require("./init-passport");
 const authRouter = require("./routers/AuthRouter.js");
 const accountRouter = require("./routers/AccountRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
+const hintRouter = require("./routers/HintRouter.js");
 
 // make express app use the router
 app.use("/auth", authRouter);
 // app.use("/account", auth.authenticate, accountRouter);
 app.use("/account", accountRouter);
+app.use("/hint", hintRouter);
 app.use(chatroomRouter(io));
 
 // testing route
 app.get("/", async (req, res) => {
-  const result = await knex("chatroom_history").select("*");
+  // const result = await knex("chatroom_history").select("*");
   res.send({ status: true, data: result });
 });
