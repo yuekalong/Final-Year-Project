@@ -17,12 +17,14 @@ public class GameSceneManager : MonoBehaviour
         else if(status == "playing"){
             StartGame();
         }
+    } 
+
+    public static void InitGame(){
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public static void StartGame()
     {
-        // get the player type (hunter or protector)
-        TimeCountDown.StartCountDown(TimeSpan.FromMinutes(5));
         SceneManager.LoadScene("MapScene");
         // SceneManager.LoadScene("Playground");
     }
