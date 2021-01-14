@@ -49,11 +49,9 @@ public class InitGame : MonoBehaviour
 
     bool AddProgress(float value)
     {
+        circularImg.fillAmount += value;
         TimeCountDown.StartCountDown(TimeSpan.FromMilliseconds(500));
-        while (TimeCountDown.TimeLeft != TimeSpan.Zero)
-        {
-            circularImg.fillAmount = (float)(value * (500 - TimeCountDown.TimeLeft.TotalMilliseconds) / 500);
-        }
+        while (TimeCountDown.TimeLeft != TimeSpan.Zero) { }
         return true;
     }
 }
