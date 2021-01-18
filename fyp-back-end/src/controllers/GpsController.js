@@ -12,7 +12,7 @@ postLocation: function (req, res, next) {
       return standardServiceResponse(
         res,
         next,
-        gpsServices.postLocation(1,123,123)
+        gpsServices.postLocation(req.params.id,req.params.locx,req.params.locy)
       );
     } catch (err) {
       // catch exception and shows the error message
