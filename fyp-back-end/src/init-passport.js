@@ -5,7 +5,7 @@ const passportJWT = require("passport-jwt");
 
 const JWTStrategy = passportJWT.Strategy;
 const extractJWT = passportJWT.ExtractJwt;
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const secret_key = "secret";
 const loginStrategy = new LocalStrategy(
   {

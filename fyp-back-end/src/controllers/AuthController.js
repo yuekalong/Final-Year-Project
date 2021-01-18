@@ -5,7 +5,32 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const secret_key = "secret";
 
+const { standardServiceResponse } = require("../utils/ResponseHandler");
+
+const authServices = require("../services/AuthServices.js");
+
 module.exports = {
+  // this is for signup for account
+  signUp: async function (req, res, next) {
+    try {
+      console.log("authServices.signUp started!");
+
+      const { username, password } = req.body;
+
+      return standardServiceResponse(
+        res,
+        next,
+        authServices.signUp(username, password)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: authServices.signUp: " + JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+
   //  this is for log in request
   login: async function (req, res, next) {
     try {

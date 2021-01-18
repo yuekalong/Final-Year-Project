@@ -6,6 +6,7 @@ const router = express.Router();
 const authContoller = require("../controllers/AuthController.js");
 
 //  this route is for logging in our app
+router.post("/sign-up", authContoller.signUp);
 router.post("/login", authContoller.login);
 
 module.exports = router;
