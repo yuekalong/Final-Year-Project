@@ -31,9 +31,11 @@ const auth = require("./init-passport");
 const authRouter = require("./routers/AuthRouter.js");
 const accountRouter = require("./routers/AccountRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
+const gpsRouter = require("./routers/GpsRouter.js");
 
 // make express app use the router
 app.use("/auth", authRouter);
+app.use("/gps", gpsRouter);
 // app.use("/account", auth.authenticate, accountRouter);
 app.use("/account", accountRouter);
 app.use(chatroomRouter(io));
