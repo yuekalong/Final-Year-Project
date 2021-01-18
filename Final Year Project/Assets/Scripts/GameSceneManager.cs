@@ -15,7 +15,8 @@ public class GameSceneManager : MonoBehaviour
             Debug.Log("Go To Lobby!");
         }
         else if(status == "playing"){
-            StartGame();
+            // StartGame();
+            InitGame();
         }
     } 
 
