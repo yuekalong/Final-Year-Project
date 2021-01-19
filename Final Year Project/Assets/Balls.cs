@@ -13,21 +13,18 @@ public class Balls : MonoBehaviour
     }
     void OnMouseOver()
     {
-        if(start==0)
+
+        obj.GetComponent<DrawLine>().tempPoint.x=transform.position.x;
+        obj.GetComponent<DrawLine>().tempPoint.y=transform.position.y;
+        obj.GetComponent<DrawLine>().tempPoint.z=transform.position.z;
+        //Debug.Log(transform.position);
+        if(gameObject.GetComponent<Renderer>().material.color!=Color.red)
         {
-            obj.GetComponent<DrawLine>().tempPoint.x=transform.position.x;
-            obj.GetComponent<DrawLine>().tempPoint.y=transform.position.y;
-            obj.GetComponent<DrawLine>().tempPoint.z=transform.position.z;
-            start=1;
-        }
-        if(gameObject.GetComponent<Renderer>().material.color!=Color.red && start==1)
-        {
-            Debug.Log("Mouse is over GameObject.");
-            obj.GetComponent<DrawLine>().tempPoint.x=transform.position.x;
-            obj.GetComponent<DrawLine>().tempPoint.y=transform.position.y;
-            obj.GetComponent<DrawLine>().tempPoint.z=transform.position.z;
             gameObject.GetComponent<Renderer>().material.color=Color.red;
+            obj.GetComponent<DrawLine>().passed+=1;
         }
+        
+
         //If your mouse hovers over the GameObject with the script attached, output this message
 
     }
