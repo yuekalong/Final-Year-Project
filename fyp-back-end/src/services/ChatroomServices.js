@@ -2,7 +2,11 @@ const knex = require("knex")(require("../../knexfile.js")["development"]);
 const { v4: uuid } = require("uuid");
 
 module.exports = {
-  getHistory: async function (connection, roomID, socketID) {
+  getHistory: async function (connection, user) {
+    const roomID = (
+      await knex("group").first("id").where("user_id", "=", user.id)
+    ).id;
+
     const records = await knex("chatroom_history")
       .select("user.name", "chatroom_history.linetxt")
       .join("user", "user.id", "=", "chatroom_history.user_id")
@@ -10,7 +14,7 @@ module.exports = {
       .orderBy("chatroom_history.created_at", "asc");
 
     records.forEach((record) => {
-      connection.io.to(socketID).emit("receive-msg", {
+      connection.io.to(user.socketID).emit("receive-msg", {
         name: record.name,
         msg: record.linetxt,
       });
@@ -28,7 +32,7 @@ module.exports = {
     console.log(`Room ${roomID} Join!`);
 
     // get history
-    this.getHistory(connection, roomID, user.socketID);
+    // this.getHistory(connection, roomID, user.socketID);
   },
   sendMsg: async function (connection, data) {
     const roomID = (

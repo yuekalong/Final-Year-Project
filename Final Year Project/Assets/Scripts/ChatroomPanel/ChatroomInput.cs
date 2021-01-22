@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class ChatroomInput : MonoBehaviour
 {
-    public SocketManager socket;
+    private SocketManager socketManager;
 
     public void sendMsg()
     {
         string input = GetComponent<InputField>().text;
-        socket.sendMsg(input);
+
+        socketManager = FindObjectOfType<SocketManager>();
+        socketManager.sendMsg(input);
+        
         GetComponent<InputField>().text = "";
     }
 }

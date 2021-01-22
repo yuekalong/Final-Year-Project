@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using SocketIO;
 
 public class SocketManager : MonoBehaviour
 {
     SocketIOComponent socket;
-    public ChatroomDisplay chatroom;
+    private Text chatroomDisplay;
     Dictionary<string, string> user = new Dictionary<string, string>();
 
     // Start is called before the first frame update
@@ -30,6 +31,10 @@ public class SocketManager : MonoBehaviour
 
             socket.On("receive-msg", receiveMsg);
         }
+    }
+
+    public void SetChatroomDisplay(Text inputChatroomDisplay){
+        chatroomDisplay = inputChatroomDisplay;
     }
 
     #region event
@@ -77,6 +82,20 @@ public class SocketManager : MonoBehaviour
     {
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
-        chatroom.addText(data.GetField("name").str + ": " + data.GetField("msg").str);
+
+        if (chatroomDisplay.text != "")
+        {
+            // content.text = content.text + "\n" + msg;
+            chatroomDisplay.text = chatroomDisplay.text + "\n" + data.GetField("name").str + ": " + data.GetField("msg").str;
+        }
+        else
+        {
+            chatroomDisplay.text = data.GetField("name").str + ": " + data.GetField("msg").str;
+        }
+    }
+
+    public void GetHistory()
+    {
+        socket.Emit("get-history", new JSONObject(user));
     }
 }

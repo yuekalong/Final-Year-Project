@@ -16,8 +16,8 @@ public class CatchManager : MonoBehaviour
     private String serverName;
     private String clientName;
 
-    public Text textStatus;
-    public Text connectedText;
+    private Text textStatus;
+    private Text connectedText;
 
     private String groupType;
 

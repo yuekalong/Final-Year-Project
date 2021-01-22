@@ -25,6 +25,11 @@ module.exports = function (io) {
       chatroomController.sendMsg(connection, data);
     });
 
+    // get history
+    socket.on("get-history", (user) => {
+      chatroomController.getHistory(connection, user);
+    });
+
     // when disconnect
     socket.on("disconnect", function () {
       console.log("Disconnect Socket.io!");

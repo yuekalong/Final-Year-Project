@@ -9,6 +9,8 @@ public class InitGame : MonoBehaviour
 {
     [SerializeField] Image circularImg;
     [SerializeField] CatchManager networking;
+    [SerializeField] GameObject socket;
+
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
 
@@ -62,6 +64,7 @@ public class InitGame : MonoBehaviour
         }
 
         // set socket
+        DontDestroyOnLoad(socket);
         yield return AddProgress(0.1f);
         yield return AddProgress(0.1f);
         yield return AddProgress(0.1f);
