@@ -16,8 +16,10 @@ namespace Google.Maps.Examples {
     /// The coordinates of each stamp.
     /// </summary>
     public GameObject PL;
-    GameObject Player;
+    private GameObject Player;
     public List<LatLng> LatLngs;
+
+    public Vector3 pos;
 
     /// <summary>
     /// The prefabs to use for each stamp.
@@ -143,8 +145,8 @@ namespace Google.Maps.Examples {
     
     private Vector3 GetStampPosition(int index) {
       LatLng latLng = LatLngs[index];
-      LocationFollower script= GetComponent<LocationFollower>();
-      latLng=script.currentLocation;        
+      //LocationFollower script= GetComponent<LocationFollower>();
+      //latLng=script.currentLocation;        
       GameObject bomb = GameObject.Find("Bomb");
       bomb add= bomb.GetComponent<bomb>();
       if(x-1==add.count && index==x-1)
@@ -180,8 +182,8 @@ namespace Google.Maps.Examples {
       }
 
       if ((!shouldExist) && (exists)) {
-        Destroy(InstanceMap[index]);
-        InstanceMap.Remove(index);
+        //Destroy(InstanceMap[index]);
+        //InstanceMap.Remove(index);
       }
     }
 
@@ -200,7 +202,7 @@ namespace Google.Maps.Examples {
       }
 
       for (int i = 0; i < LatLngs.Count; i++) {
-        SuppressStructuresNearStamp(i);
+        //SuppressStructuresNearStamp(i);
       }
 
       UncheckedStructures.Clear();
@@ -226,6 +228,8 @@ namespace Google.Maps.Examples {
         x=1;
       }
       Player.transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
+      //latLng=LatLngs[0];
+      pos = MapsService.Coords.FromLatLngToVector3(latLng);
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Google.Maps.Examples ;
@@ -8,40 +8,43 @@ using Google.Maps.Coord;
 public class testcam : MonoBehaviour
 {
     public float speed;
-    LocationFollower script;
+    private Vector3 pos;
     float temp=150;
+
+    //private Vector3 campos;
     
     // Start is called before the first frame update
     void Start()
     {
-        script = GetComponent<LocationFollower>();
-        transform.position = new Vector3(script.pos.x,temp,script.pos.z);
+        pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;
+        //transform.position = new Vector3(pos.x,temp,pos.z);
+        //campos=transform.position;
+        Camera.main.transform.LookAt(pos);
+        transform.position = new Vector3(0,temp,0);
+
     }
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(script.pos.x,temp,script.pos.z);
+        Camera.main.transform.LookAt(pos);
+        pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;;
+        //transform.position = new Vector3(pos.x,temp,pos.z);
         if(Input.touchCount ==1 && Input.GetTouch (0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch (0).deltaPosition;
             transform.Rotate (0,-touchDeltaPosition.x*speed,0);
+            
         }
         if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            if(temp >= 100 && temp <=200)
-            {
-                temp+=-touchDeltaPosition.y * speed;
-            }
-            if(temp < 100)
-            {
-                transform.position = new Vector3(script.pos.x,100,script.pos.z);
-            }
-            if(temp > 200)
-            {
-                transform.position = new Vector3(script.pos.x,200,script.pos.z);
-            }
-            
+            //transform.Rotate (0,-touchDeltaPosition.x*speed,0);
+            temp+=-touchDeltaPosition.y * speed;
+            transform.position = new Vector3(0,temp,0);
         }
+        
+        //campos=transform.position;
+        //Camera.main.transform.position = new Vector3(campos.x,temp,campos.z-80);
     }
 }
+                                                
