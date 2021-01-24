@@ -8,7 +8,7 @@ public class Balls : MonoBehaviour
     int start=0;
     void Awake()
     {
-        obj = GameObject.Find("GameObject");
+        obj = GameObject.Find("Button");
         
     }
     void OnMouseOver()

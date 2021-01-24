@@ -11,6 +11,8 @@ public class DrawLine : MonoBehaviour
     Vector3 currentPoint;
     private int num=1;
     public int passed=0;
+    private float[] drawed = {0,0,0,0,0,0,0,0,0};
+    private GameObject obj;
     private List<float> pattern= new List<float>();
     void Awake()
     {
@@ -28,6 +30,7 @@ public class DrawLine : MonoBehaviour
             startPoint.y=tempPoint.y;
             startPoint.z=0;
             pattern.Add(tempPoint.z);
+            drawed[0]=tempPoint.z;
             currentPoint=tempPoint;
             num=2;
             line.positionCount = 2; 
@@ -40,12 +43,23 @@ public class DrawLine : MonoBehaviour
         }
         else if(Input.GetMouseButton(0) && currentPoint!=tempPoint && num!=1 && passed<9)
         {
-            currentPoint=tempPoint;
-            pattern.Add(tempPoint.z);
-            line.SetPosition(num-1,new Vector3(tempPoint.x,tempPoint.y,0));
-            line.positionCount+=1;
-            num+=1;
-            line.SetPosition(num-1,new Vector3(mousePos.x,mousePos.y,0));
+            int notDraw=0;
+            for(int i=0;i<9;i++)
+            {
+                if(drawed[i]==tempPoint.z)
+                    notDraw=1;
+            }
+            if(notDraw==0)
+            {
+                 currentPoint=tempPoint;
+                pattern.Add(tempPoint.z);
+                drawed[num-1]=tempPoint.z;
+                line.SetPosition(num-1,new Vector3(tempPoint.x,tempPoint.y,0));
+                line.positionCount+=1;
+                num+=1;
+                line.SetPosition(num-1,new Vector3(mousePos.x,mousePos.y,0));
+            }
+
         }
         if(passed==9)
         {
@@ -60,6 +74,27 @@ public class DrawLine : MonoBehaviour
     void Print(float s)
     {
         Debug.Log(s);
+    }
+    public void reset()
+    {
+        num=1;
+        passed=0;
+        line.positionCount=0;
+        pattern.Clear();
+        for(int i=0;i<9;i++)
+        {
+            drawed[i]=0;
+        }
+        GameObject.Find("Sphere").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (1)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (2)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (3)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (4)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (5)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (6)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (7)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (8)").GetComponent<Renderer>().material.color=Color.black;
+        GameObject.Find("Sphere (9)").GetComponent<Renderer>().material.color=Color.black;
     }
 
 
