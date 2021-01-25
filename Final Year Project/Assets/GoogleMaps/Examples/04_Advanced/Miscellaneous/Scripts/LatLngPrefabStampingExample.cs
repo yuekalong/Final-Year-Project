@@ -16,7 +16,7 @@ namespace Google.Maps.Examples {
     /// The coordinates of each stamp.
     /// </summary>
     public GameObject PL;
-    private GameObject Player;
+    public GameObject Player;
     public List<LatLng> LatLngs;
 
     public Vector3 pos;
@@ -228,8 +228,10 @@ namespace Google.Maps.Examples {
         x=1;
       }
       Player.transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
+      GameObject.Find("Cam Controll").transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
+      // Camera.main.transform.LookAt(MapsService.Coords.FromLatLngToVector3(latLng));
       //latLng=LatLngs[0];
-      pos = MapsService.Coords.FromLatLngToVector3(latLng);
+      pos = script.pos;
     }
   }
 }

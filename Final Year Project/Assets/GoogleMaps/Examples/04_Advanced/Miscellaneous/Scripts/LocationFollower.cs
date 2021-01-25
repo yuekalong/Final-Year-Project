@@ -102,7 +102,7 @@ namespace Google.Maps.Examples {
           new LatLng(Input.location.lastData.latitude, Input.location.lastData.longitude);
       Vector3 currentWorldLocation = MapsService.Coords.FromLatLngToVector3(currentLocation);
       pos=currentWorldLocation;
-      /* Move the camera to the current map location.
+      /*\ Move the camera to the current map location.
       Vector3 targetCameraPosition = new Vector3(currentWorldLocation.x,
           Camera.main.transform.position.y, currentWorldLocation.z);
       Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,

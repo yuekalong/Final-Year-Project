@@ -80,7 +80,7 @@ namespace Google.Maps.Examples.Shared {
         else 
           ShowHideDialog(true);
       }
-      InstructionsText.text =latLng.Lat.ToString();
+      InstructionsText.text =script.pos.ToString();
 
     }
     /// <summary>
