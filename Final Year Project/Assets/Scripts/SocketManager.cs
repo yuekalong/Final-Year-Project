@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using SocketIO;
 
 public class SocketManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class SocketManager : MonoBehaviour
     SocketIOComponent socket;
     private Text chatroomDisplay;
     Dictionary<string, string> user = new Dictionary<string, string>();
+
+    public int unseenMsg;
 
     // Start is called before the first frame update
     // set the socket system
@@ -44,6 +47,10 @@ public class SocketManager : MonoBehaviour
         if(socket.sid != null){
             Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
             user["socketID"] = socket.sid;
+
+            // assume no close of game
+            unseenMsg = 0;
+
             // join room
             joinRoom();
         }
@@ -83,14 +90,23 @@ public class SocketManager : MonoBehaviour
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
 
-        if (chatroomDisplay.text != "")
-        {
-            // content.text = content.text + "\n" + msg;
-            chatroomDisplay.text = chatroomDisplay.text + "\n" + data.GetField("name").str + ": " + data.GetField("msg").str;
+        if(SceneManager.GetActiveScene().name != "ChatroomScene"){
+            
+            // if not in chatroom scene
+            unseenMsg++;
         }
-        else
-        {
-            chatroomDisplay.text = data.GetField("name").str + ": " + data.GetField("msg").str;
+        else{
+
+            // if in chatroom scene
+            if (chatroomDisplay.text != "")
+            {
+                // content.text = content.text + "\n" + msg;
+                chatroomDisplay.text = chatroomDisplay.text + "\n" + data.GetField("name").str + ": " + data.GetField("msg").str;
+            }
+            else
+            {
+                chatroomDisplay.text = data.GetField("name").str + ": " + data.GetField("msg").str;
+            }
         }
     }
 
