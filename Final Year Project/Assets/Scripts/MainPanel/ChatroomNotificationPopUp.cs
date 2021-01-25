@@ -20,11 +20,14 @@ public class ChatroomNotificationPopUp : MonoBehaviour
         if (socketManager.unseenMsg > 0)
         {
             msgNo.text = socketManager.unseenMsg.ToString();
-            gameObject.SetActive(true);
+
+            // enable the popup
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
-            gameObject.SetActive(false);
+            // hide the popup
+            gameObject.transform.localScale = new Vector3(0, 0, 0);
         }
     }
 }

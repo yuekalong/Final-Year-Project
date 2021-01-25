@@ -36,15 +36,17 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    public void SetChatroomDisplay(Text inputChatroomDisplay){
+    public void SetChatroomDisplay(Text inputChatroomDisplay)
+    {
         chatroomDisplay = inputChatroomDisplay;
     }
 
     #region event
     private void openEvent(SocketIOEvent ev)
-    {   
+    {
         // ensure it connected the socket and have the sid
-        if(socket.sid != null){
+        if (socket.sid != null)
+        {
             Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
             user["socketID"] = socket.sid;
 
@@ -69,7 +71,7 @@ public class SocketManager : MonoBehaviour
     private void joinRoom()
     {
         socket.Emit("join-room", new JSONObject(user));
-        
+
         Debug.Log("Room Join!");
     }
 
@@ -90,12 +92,14 @@ public class SocketManager : MonoBehaviour
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
 
-        if(SceneManager.GetActiveScene().name != "ChatroomScene"){
-            
+        if (SceneManager.GetActiveScene().name != "ChatroomScene")
+        {
+
             // if not in chatroom scene
             unseenMsg++;
         }
-        else{
+        else
+        {
 
             // if in chatroom scene
             if (chatroomDisplay.text != "")
@@ -113,5 +117,6 @@ public class SocketManager : MonoBehaviour
     public void GetHistory()
     {
         socket.Emit("get-history", new JSONObject(user));
+        unseenMsg = 0;
     }
 }
