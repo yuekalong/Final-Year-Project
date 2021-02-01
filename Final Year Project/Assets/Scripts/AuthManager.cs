@@ -29,7 +29,7 @@ public class AuthManager : MonoBehaviour
         form.AddField("username", username.text);
         form.AddField("password", password.text);
 
-        UnityWebRequest req = UnityWebRequest.Post("http://10.13.112.227:3000/auth/login", form);
+        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/auth/login", form);
         
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
@@ -73,7 +73,7 @@ public class AuthManager : MonoBehaviour
     IEnumerator GetBasicGameInfo(){
         Debug.Log(PlayerPrefs.GetString("id", "No ID"));
 
-        UnityWebRequest req = UnityWebRequest.Get("http://10.13.112.227:3000/account/game-basic-info/"+ PlayerPrefs.GetString("id", "No ID"));
+        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/account/game-basic-info/"+ PlayerPrefs.GetString("id", "No ID"));
         
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
