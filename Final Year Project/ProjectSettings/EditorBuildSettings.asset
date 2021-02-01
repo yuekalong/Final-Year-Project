@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Shatalmic/Example/NetworkTest.unity
     guid: b03b4f2d4d7404569b8603a6eead368c
   - enabled: 0
-    path: Assets/Scenes/Playground.unity
-    guid: b28a3d8c4866d4902885a73e1a072909
-  - enabled: 0
     path: Assets/Scenes/New Scene.unity
     guid: f213c568fba5d2e4f9a89cee470599b1
   m_configObjects: {}

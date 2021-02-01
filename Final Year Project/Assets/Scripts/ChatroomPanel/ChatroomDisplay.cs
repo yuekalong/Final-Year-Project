@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class ChatroomDisplay : MonoBehaviour
 {
     private SocketManager socketManager;
-    Text content;
+    public Text content;
+    public ScrollRect scrollRect;
     // Start is called before the first frame update
     void Start()
     {
-        content = GetComponent<Text>();
         content.text = "";
 
         socketManager = FindObjectOfType<SocketManager>();
-        socketManager.SetChatroomDisplay(content);
+        socketManager.SetChatroomDisplay(content, scrollRect);
 
         socketManager.GetHistory();
     }

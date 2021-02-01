@@ -9,6 +9,7 @@ public class SocketManager : MonoBehaviour
 {
     SocketIOComponent socket;
     private Text chatroomDisplay;
+    private ScrollRect scrollRect;
     Dictionary<string, string> user = new Dictionary<string, string>();
 
     public int unseenMsg;
@@ -36,9 +37,10 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    public void SetChatroomDisplay(Text inputChatroomDisplay)
+    public void SetChatroomDisplay(Text inputChatroomDisplay, ScrollRect inputScrollRect)
     {
         chatroomDisplay = inputChatroomDisplay;
+        scrollRect = inputScrollRect;
     }
 
     #region event
@@ -111,6 +113,9 @@ public class SocketManager : MonoBehaviour
             {
                 chatroomDisplay.text = data.GetField("name").str + ": " + data.GetField("msg").str;
             }
+
+            scrollRect.verticalNormalizedPosition = 0f;
+            Canvas.ForceUpdateCanvases();
         }
     }
 
