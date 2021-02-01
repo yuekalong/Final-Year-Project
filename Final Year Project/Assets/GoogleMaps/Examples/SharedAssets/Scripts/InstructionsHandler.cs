@@ -22,6 +22,9 @@ namespace Google.Maps.Examples.Shared {
     /// Information text adjusted depending on deployed platform.
     /// </summary>
     public Text InstructionsText;
+
+    private GameObject gameZone;
+    public int map=0;
     /// <summary>
     /// Dialog box controlled by the help button.
     /// </summary>
@@ -52,7 +55,6 @@ namespace Google.Maps.Examples.Shared {
 
       ShowHideDialog(false);
     }
-    int map=3;
     public void Update()
     {
       LatLng latLng;
@@ -61,35 +63,33 @@ namespace Google.Maps.Examples.Shared {
       
       if(map==1 && latLng.Lat>0)
       {
-        if(latLng.Lat>22.417259 && latLng.Lat<22.417515 && latLng.Lng>114.209442 && latLng.Lng<114.212139)
+        gameZone= GameObject.Find("Map1");
+        gameZone.transform.position = new Vector3 (gameZone.transform.position.x,0.5f,gameZone.transform.position.y);
+        if(latLng.Lat>22.424400 && latLng.Lat<22.420000 && latLng.Lng>114.200540 && latLng.Lng<114.207000)
           ShowHideDialog(false);
+          
         else 
           ShowHideDialog(true);
       }
-      if(map==2&& latLng.Lat>0)
+      if(map==2 && latLng.Lat>0)
       {
-        if(latLng.Lat<22.419931 && latLng.Lat>22.419784 && latLng.Lng>114.209212 && latLng.Lng<114.202928)
+        gameZone= GameObject.Find("Map2");
+        gameZone.transform.position = new Vector3 (gameZone.transform.position.x,0.5f,gameZone.transform.position.y);
+        if(latLng.Lat<22.420000 && latLng.Lat>22.417350 && latLng.Lng>114.202500 && latLng.Lng<114.209440)
           ShowHideDialog(false);
         else 
           ShowHideDialog(true);
       }
-      if(map==3)
+      if(map==3 && latLng.Lat>0)
       {
-        if(latLng.Lat<22.332517 )
-          ShowHideDialog(false);
-        else 
-          ShowHideDialog(true);
+        gameZone= GameObject.Find("Map3");
+        gameZone.transform.position = new Vector3 (gameZone.transform.position.x,0.5f,gameZone.transform.position.y);
       }
-      InstructionsText.text =latLng.Lat.ToString();
 
     }
     /// <summary>
     /// Event triggered when the help button is clicked on.
     /// </summary>
-    public void OnClick() {
-      map+=1;
-      map=map%3+1;
-    }
 
     /// <summary>
     /// Event triggered by any click/touch on the glass panel.

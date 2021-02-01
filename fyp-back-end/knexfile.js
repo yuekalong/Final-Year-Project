@@ -7,9 +7,9 @@ module.exports = {
     connection: {
       host: "127.0.0.1",
       port: 3306,
-      user: process.env.DB_DEVELOPMENT_USER,
-      password: process.env.DB_DEVELOPMENT_PASSWORD,
-      database: process.env.DB_DEVELOPMENT_DBNAME,
+      user: "root",
+      password: "1234",
+      database: "fypdb",
     },
     debug: true,
     migrations: {

@@ -6,6 +6,6 @@ const router = express.Router();
 const gpsContoller = require("../controllers/GpsController.js");
 
 //  this route is for logging in our app
-router.post("/location/:id/:locx/:locy", gpsContoller.postLocation);
+router.post("/location/:id", gpsContoller.postLocation);
 
 module.exports = router;

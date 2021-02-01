@@ -1,28 +1,60 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Google.Maps.Examples ;
+using Google.Maps.Unity;
+using Google.Maps.Coord;
 
 public class testcam : MonoBehaviour
 {
     public float speed;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private Vector3 pos;
+    float temp=120;
+    private GameObject Player;
+    private Vector2 previoustDistance;
+
+
+    void Start(){
+        pos= GameObject.Find("MobileMaleFreeSimpleMovement1(Clone)").transform.position; 
+        transform.position = new Vector3(pos.x,temp,pos.z);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update(){
+        pos= GameObject.Find("MobileMaleFreeSimpleMovement1(Clone)").transform.position; 
+        transform.position = new Vector3(pos.x,temp,pos.z-temp*0.1f);
+        
+        Camera.main.transform.LookAt(pos);
         if(Input.touchCount ==1 && Input.GetTouch (0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch (0).deltaPosition;
-            transform.Translate (-touchDeltaPosition.x*speed,0,-touchDeltaPosition.y*speed);
+            transform.Rotate (0,-touchDeltaPosition.x*speed,0);      
         }
-        if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        else if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved)
         {
+            Vector2 firstpre = Input.GetTouch (0).position-Input.GetTouch (0).deltaPosition;
+            Vector2 secondpre = Input.GetTouch (1).position-Input.GetTouch (1).deltaPosition;
+
+            Vector2 preDistance =firstpre-secondpre;
+            Vector2 cureDistance =Input.GetTouch (0).position-Input.GetTouch (1).position;
+
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            transform.Translate(0,-touchDeltaPosition.y * speed,0);
+            if(temp>20 && temp<350 )
+            {
+                temp+=(preDistance.magnitude-cureDistance.magnitude) * speed ;
+            }
+            if(temp<20)
+            {
+                temp=22;
+            }
+            if(temp>350)
+            {
+                temp=345;
+            }
+
+            
         }
     }
+
 }
+                                                

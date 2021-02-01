@@ -9,10 +9,11 @@ postLocation: function (req, res, next) {
      // const  {userID}  = req.params;
       
       console.log(req.params);
+      const { Lat, Lng } = req.body;
       return standardServiceResponse(
         res,
         next,
-        gpsServices.postLocation(req.params.id,req.params.locx,req.params.locy)
+        gpsServices.postLocation(req.params.id,Lat,Lng)
       );
     } catch (err) {
       // catch exception and shows the error message
