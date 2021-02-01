@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 public class DrawLine : MonoBehaviour
 {
     private LineRenderer line;
@@ -96,6 +97,9 @@ public class DrawLine : MonoBehaviour
         GameObject.Find("Sphere (8)").GetComponent<Renderer>().material.color=Color.black;
         GameObject.Find("Sphere (9)").GetComponent<Renderer>().material.color=Color.black;
     }
-
+    public void confirm()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
 
 }

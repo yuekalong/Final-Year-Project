@@ -26,25 +26,29 @@ public class PlaceBomb : MonoBehaviour
         button = GameObject.Find("Bombs");
         MapsService = GetComponent<MapsService>();
         LocationFollower = GetComponent<LocationFollower>();
+        script = button.GetComponent<bomb>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        script = button.GetComponent<bomb>();
         if(num_bomb==script.count)
         {
             Bombs[num_bomb]=GameObject.Instantiate(BomePrefab);
             Bombs[num_bomb].AddComponent<BoxCollider>();
+            Bombs[num_bomb].AddComponent<bombCollision>();
+            Bombs[num_bomb].AddComponent<GameSceneManager>();
+            Bombs[num_bomb].GetComponent<bombCollision>().index=num_bomb;
             Bombs[num_bomb].transform.position = MapsService.Coords.FromLatLngToVector3(LocationFollower.currentLocation);
             LatLngs[num_bomb] = LocationFollower.currentLocation;
             num_bomb=num_bomb+1;
         }
+
         if(num_bomb>0)
         {
             for(int i=0;i<num_bomb;i++)
             {
-                Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(LatLngs[i]);
+                //Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(LatLngs[i]);
             }
         }
     }

@@ -15,12 +15,9 @@ public class testcam : MonoBehaviour
 
 
     void Start(){
-        // pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;
-        // pos= GetComponent<LocationFollower>().pos; 
         pos= GameObject.Find("MobileMaleFreeSimpleMovement1(Clone)").transform.position; 
         transform.position = new Vector3(pos.x,temp,pos.z);
-        //Camera.main.transform.position=new Vector3(pos.x,temp,pos.z-120);
-        // Camera.main.transform.LookAt(pos);
+
     }
 
     void Update(){
@@ -58,5 +55,6 @@ public class testcam : MonoBehaviour
             
         }
     }
+
 }
                                                 
