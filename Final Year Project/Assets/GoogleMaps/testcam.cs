@@ -11,44 +11,7 @@ public class testcam : MonoBehaviour
     private Vector3 pos;
     float temp=120;
     private GameObject Player;
-    //private Vector3 campos;
-    
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;
-    //     Player= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().Player;
-    //     //transform.position = new Vector3(pos.x,temp,pos.z);
-    //     //campos=transform.position;
-        
-    //     transform.position = new Vector3(pos.x,temp,pos.z);
-    //     Camera.main.transform.position=new Vector3(pos.x,temp,pos.z-80);
-    //     Camera.main.transform.LookAt(pos);
-
-    // }
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     Camera.main.transform.LookAt(pos);
-    //     pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;;
-    //     //transform.position = new Vector3(pos.x,temp,pos.z);
-    //     if(Input.touchCount ==1 && Input.GetTouch (0).phase == TouchPhase.Moved)
-    //     {
-    //         Vector2 touchDeltaPosition = Input.GetTouch (0).deltaPosition;
-    //         Player.transform.Rotate (0,-touchDeltaPosition.x*speed,0);
-            
-    //     }
-    //     if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
-    //     {
-    //         Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-    //         transform.Rotate (0,-touchDeltaPosition.x*speed,0);
-    //         temp+=-touchDeltaPosition.y * speed;
-    //         //transform.position= new Vector3(0,temp,0);
-    //     }
-        
-    //     //campos=transform.position;
-    //     //Camera.main.transform.position = new Vector3(campos.x,temp,campos.z-80);
-    // }
+    private Vector2 previoustDistance;
 
 
     void Start(){
@@ -70,13 +33,18 @@ public class testcam : MonoBehaviour
             Vector2 touchDeltaPosition = Input.GetTouch (0).deltaPosition;
             transform.Rotate (0,-touchDeltaPosition.x*speed,0);      
         }
-        else if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        else if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved)
         {
+            Vector2 firstpre = Input.GetTouch (0).position-Input.GetTouch (0).deltaPosition;
+            Vector2 secondpre = Input.GetTouch (1).position-Input.GetTouch (1).deltaPosition;
+
+            Vector2 preDistance =firstpre-secondpre;
+            Vector2 cureDistance =Input.GetTouch (0).position-Input.GetTouch (1).position;
+
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            //transform.Rotate (0,-touchDeltaPosition.x*speed,0);
-            if(temp>20 && temp<300)
+            if(temp>20 && temp<350 )
             {
-                temp+=-touchDeltaPosition.y * speed;
+                temp+=(preDistance.magnitude-cureDistance.magnitude) * speed ;
             }
             if(temp<20)
             {
@@ -84,8 +52,9 @@ public class testcam : MonoBehaviour
             }
             if(temp>350)
             {
-                temp=348;
+                temp=345;
             }
+
             
         }
     }
