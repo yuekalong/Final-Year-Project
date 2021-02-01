@@ -40,7 +40,7 @@ public class GpsManager : MonoBehaviour
             //form.AddField("Lat", "1234");
             //form.AddField("Lng", "1234");
 
-            UnityWebRequest req = UnityWebRequest.Post("http://192.168.0.155:3000/gps/location/"+PlayerPrefs.GetString("id","No ID"),form);
+            UnityWebRequest req = UnityWebRequest.Post("http://192.168.0.155:3000/gps/location/"+PlayerPrefs.GetString("id","1"),form);
 
             // stop the function and return the state to Login(), if access this function again will start from here
             yield return req.SendWebRequest();

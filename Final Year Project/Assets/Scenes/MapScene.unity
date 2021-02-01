@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196657865}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BombButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,6 +882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstructionsText: {fileID: 1476525130}
+  map: 0
   InstructionsDialog: {fileID: 446526936}
   GlassPanel: {fileID: 898345044}
 --- !u!114 &384900575
@@ -1636,6 +1637,7 @@ GameObject:
   - component: {fileID: 620685971}
   - component: {fileID: 620685970}
   - component: {fileID: 620685973}
+  - component: {fileID: 620685974}
   m_Layer: 0
   m_Name: WorldContainer
   m_TagString: Untagged
@@ -1845,27 +1847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PL: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
   Player: {fileID: 0}
-  LatLngs:
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
-  - _Lat: 0
-    _Lng: 0
+  LatLngs: []
   pos: {x: 0, y: 0, z: 0}
   Prefabs:
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
@@ -1878,10 +1860,9 @@ MonoBehaviour:
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  SuppressionRadiuses:
-  - 1
+  SuppressionRadiuses: []
   SpawnReference: {fileID: 620685966}
-  SpawnRadius: 1
+  SpawnRadius: 2000
 --- !u!114 &620685973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1895,6 +1876,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   error: {fileID: 734474065}
+--- !u!114 &620685974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620685966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c7cd5aed0bb434dbe762c57186b7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LatLngs: []
+  BomePrefab: {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
 --- !u!1001 &637356653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3030,7 +3025,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202106763}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 344ebe44db4d14b70994f3c80b72fa96, type: 3}
   m_Name: 
@@ -3842,7 +3837,7 @@ GameObject:
   - component: {fileID: 1944256382}
   - component: {fileID: 1944256381}
   m_Layer: 5
-  m_Name: Bomb
+  m_Name: Bombs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

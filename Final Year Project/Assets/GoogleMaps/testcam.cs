@@ -9,7 +9,6 @@ public class testcam : MonoBehaviour
 {
     public float speed;
     private Vector3 pos;
-    // float temp=150;
     float temp=120;
     private GameObject Player;
     //private Vector3 campos;
@@ -54,12 +53,8 @@ public class testcam : MonoBehaviour
 
     void Start(){
         // pos= GameObject.Find("WorldContainer").GetComponent<LatLngPrefabStampingExample>().pos;
-
         // pos= GetComponent<LocationFollower>().pos; 
         pos= GameObject.Find("MobileMaleFreeSimpleMovement1(Clone)").transform.position; 
-
-
-
         transform.position = new Vector3(pos.x,temp,pos.z);
         //Camera.main.transform.position=new Vector3(pos.x,temp,pos.z-120);
         // Camera.main.transform.LookAt(pos);
@@ -67,7 +62,7 @@ public class testcam : MonoBehaviour
 
     void Update(){
         pos= GameObject.Find("MobileMaleFreeSimpleMovement1(Clone)").transform.position; 
-        transform.position = new Vector3(pos.x,temp,pos.z);
+        transform.position = new Vector3(pos.x,temp,pos.z-temp*0.1f);
         
         Camera.main.transform.LookAt(pos);
         if(Input.touchCount ==1 && Input.GetTouch (0).phase == TouchPhase.Moved)
@@ -79,7 +74,19 @@ public class testcam : MonoBehaviour
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
             //transform.Rotate (0,-touchDeltaPosition.x*speed,0);
-            temp+=-touchDeltaPosition.y * speed;
+            if(temp>20 && temp<300)
+            {
+                temp+=-touchDeltaPosition.y * speed;
+            }
+            if(temp<20)
+            {
+                temp=22;
+            }
+            if(temp>350)
+            {
+                temp=348;
+            }
+            
         }
     }
 }

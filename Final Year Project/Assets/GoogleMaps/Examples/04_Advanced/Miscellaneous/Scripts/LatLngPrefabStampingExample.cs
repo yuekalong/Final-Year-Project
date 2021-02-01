@@ -51,6 +51,7 @@ namespace Google.Maps.Examples {
     /// Reference to <see cref="MapsService"/>.
     /// </summary>
     private MapsService MapsService;
+    LocationFollower script;
 
     /// <summary>
     /// Structures that have yet to be checked against the stamps for the need for suppression.
@@ -83,6 +84,7 @@ namespace Google.Maps.Examples {
     /// Sets up event handlers to handle structure spawning.
     /// </summary>
     private void Start() {
+      script= GetComponent<LocationFollower>();
       MapsService.Events.ExtrudedStructureEvents.DidCreate.AddListener(
           args => { HandleStructureSpawn(args.GameObject); });
 
@@ -145,18 +147,6 @@ namespace Google.Maps.Examples {
     
     private Vector3 GetStampPosition(int index) {
       LatLng latLng = LatLngs[index];
-      //LocationFollower script= GetComponent<LocationFollower>();
-      //latLng=script.currentLocation;        
-      GameObject bomb = GameObject.Find("Bomb");
-      bomb add= bomb.GetComponent<bomb>();
-      if(x-1==add.count && index==x-1)
-      {
-        LatLng temp= latLng;
-        LatLngs[index]=temp;
-        latLng = temp;
-        x+=1;
-      }
-
 
       return MapsService.Coords.FromLatLngToVector3(latLng);
     }
@@ -182,8 +172,8 @@ namespace Google.Maps.Examples {
       }
 
       if ((!shouldExist) && (exists)) {
-        //Destroy(InstanceMap[index]);
-        //InstanceMap.Remove(index);
+        Destroy(InstanceMap[index]);
+        InstanceMap.Remove(index);
       }
     }
 
@@ -211,26 +201,23 @@ namespace Google.Maps.Examples {
     /// <summary>
     /// Performs per-frame update tasks.
     /// </summary>
-    int x=0;
+    int buildPlayer=0;
     private void Update() {
-      for (int i = 0; i < LatLngs.Count; i++) {
-        SpawnOrDespawnStamp(i);
-      }
-
+       for (int i = 0; i < LatLngs.Count; i++) {
+         SpawnOrDespawnStamp(i);
+       }
       SuppressUncheckedStructures();
+
       LatLng latLng;
-      LocationFollower script= GetComponent<LocationFollower>();
       latLng=script.currentLocation;  
-      if(x==0)
+      if(buildPlayer==0)
       {
         Player = GameObject.Instantiate(PL);
         Player.AddComponent<BoxCollider>();
-        x=1;
+        buildPlayer=1;
       }
       Player.transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
       GameObject.Find("Cam Controll").transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
-      // Camera.main.transform.LookAt(MapsService.Coords.FromLatLngToVector3(latLng));
-      //latLng=LatLngs[0];
       pos = script.pos;
     }
   }
