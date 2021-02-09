@@ -7,5 +7,7 @@ const gpsContoller = require("../controllers/GpsController.js");
 
 //  this route is for logging in our app
 router.post("/location/:id", gpsContoller.postLocation);
+router.get("/locationTeammates/:playerid/:groupid", gpsContoller.getTeamLocation);
+router.get("/locationOpps/:groupid", gpsContoller.getOppLocation);
 
 module.exports = router;

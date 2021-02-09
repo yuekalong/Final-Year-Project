@@ -17,7 +17,17 @@ namespace Google.Maps.Examples {
     /// </summary>
     public GameObject PL;
     public GameObject Player;
+
+    private GameObject[] Teammates = new GameObject[2];
+    private LatLng[] TeammateLoc = new LatLng[2];
+    private GameObject[] Opps = new GameObject[3];
+    private LatLng[] OppLoc = new LatLng[3];
     public List<LatLng> LatLngs;
+
+    
+    public double[] x= new double[5];
+    public double[] y= new double[5];
+
 
     public Vector3 pos;
 
@@ -207,18 +217,47 @@ namespace Google.Maps.Examples {
          SpawnOrDespawnStamp(i);
        }
       SuppressUncheckedStructures();
-
-      LatLng latLng;
-      latLng=script.currentLocation;  
+ 
       if(buildPlayer==0)
       {
         Player = GameObject.Instantiate(PL);
         Player.AddComponent<BoxCollider>();
+
+        Teammates[0] = GameObject.Instantiate(PL);
+        Teammates[0].AddComponent<BoxCollider>();
+        Teammates[1] = GameObject.Instantiate(PL);
+        Teammates[1].AddComponent<BoxCollider>();
+
+        Opps[0] = GameObject.Instantiate(PL);
+        Opps[0].AddComponent<BoxCollider>();
+        Opps[1] = GameObject.Instantiate(PL);
+        Opps[1].AddComponent<BoxCollider>();
+        Opps[2] = GameObject.Instantiate(PL);
+        Opps[2].AddComponent<BoxCollider>();
+
+        Opps[0].SetActive(false);
+        Opps[1].SetActive(false);
+        Opps[2].SetActive(false);
+
         buildPlayer=1;
       }
+
+      playerPosUpdate();
+
+    }
+    private void playerPosUpdate(){
+      
+      LatLng latLng;
+      latLng=script.currentLocation; 
+
+      TeammateLoc[0] = new LatLng(x[0],y[0]);
+      TeammateLoc[1] = new LatLng(x[1],y[1]);
       Player.transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
+      Teammates[0].transform.position = MapsService.Coords.FromLatLngToVector3(TeammateLoc[0]);
+      Teammates[1].transform.position = MapsService.Coords.FromLatLngToVector3(TeammateLoc[1]);
+
       GameObject.Find("Cam Controll").transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
-      pos = script.pos;
+
     }
   }
 }

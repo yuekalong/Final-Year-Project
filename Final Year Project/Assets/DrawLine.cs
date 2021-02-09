@@ -52,7 +52,7 @@ public class DrawLine : MonoBehaviour
             }
             if(notDraw==0)
             {
-                 currentPoint=tempPoint;
+                currentPoint=tempPoint;
                 pattern.Add(tempPoint.z);
                 drawed[num-1]=tempPoint.z;
                 line.SetPosition(num-1,new Vector3(tempPoint.x,tempPoint.y,0));
