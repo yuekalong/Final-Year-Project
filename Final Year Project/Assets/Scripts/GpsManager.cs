@@ -12,7 +12,7 @@ public class GpsManager : MonoBehaviour
 {
     public Text error;
     private LatLng latLng;
-    private LatLng current;
+    public LatLng current;
     LocationFollower script;
 
     LatLngPrefabStampingExample location_script;
@@ -23,8 +23,11 @@ public class GpsManager : MonoBehaviour
         script= GetComponent<LocationFollower>();
         location_script= GetComponent<LatLngPrefabStampingExample>();
 
-        StartCoroutine(PlayerGpsUpdate());
+        StartCoroutine(HintsGpsUpdate());
         StartCoroutine(TeamGpsUpdate());
+        StartCoroutine(OppGpsUpdate());
+        StartCoroutine(PlayerGpsUpdate());
+        
 
     }
 
@@ -104,6 +107,33 @@ public class GpsManager : MonoBehaviour
             }
             
             yield return new WaitForSeconds(10);
+        }
+    }
+    IEnumerator HintsGpsUpdate(){
+        while(true)
+        {
+            UnityWebRequest req = UnityWebRequest.Get("http://192.168.0.155:3000/gps/hints/"+PlayerPrefs.GetString("game_id", "1"));
+
+            // stop the function and return the state to Login(), if access this function again will start from here
+            yield return req.SendWebRequest();
+
+            JSONNode res = JSON.Parse(req.downloadHandler.text);
+            JSONNode data = res["data"];
+
+            for(int i=0;i<10;i++)
+            {
+                location_script.hint_x[i] = data[i]["loc_x"];
+                location_script.hint_y[i] = data[i]["loc_y"];
+            }
+            
+
+            if(req.isNetworkError || req.isHttpError){
+                Debug.LogError(req.error);
+                error.text=req.error;
+                yield break;
+            }
+            
+            yield return new WaitForSeconds(30);
         }
     }
     

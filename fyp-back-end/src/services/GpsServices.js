@@ -36,4 +36,12 @@ module.exports = {
 
         return opps_loc;
     },
+    getHintsLocation: async function (gameid) {
+      const hints_id = await knex("game_hints_mapping")
+        .where("game_hints_mapping.game_id", gameid)
+        .join('hint', 'hint.id', '=', 'game_hints_mapping.hint_id')
+        .select("id","hint_words","loc_x","loc_y")
+
+        return hints_id;
+    },
 };

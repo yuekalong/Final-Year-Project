@@ -94,6 +94,7 @@ public class AuthManager : MonoBehaviour
             PlayerPrefs.SetString("group_id", data["group"]["id"]);
             PlayerPrefs.SetString("group_type", data["group"]["type"]);
             PlayerPrefs.SetString("opponent_id", data["opponent"]["id"]);
+            PlayerPrefs.SetInt("num_of_bombs", 3);
 
             Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
             Debug.Log("Area ID: " + PlayerPrefs.GetString("area_id", "No Area ID"));
@@ -101,6 +102,7 @@ public class AuthManager : MonoBehaviour
             Debug.Log("Group ID: " + PlayerPrefs.GetString("group_id", "No Group ID"));
             Debug.Log("Group Type: " + PlayerPrefs.GetString("group_type", "No Group Type"));
             Debug.Log("Opponent ID: " + PlayerPrefs.GetString("opponent_id", "No Opponent ID"));
+            Debug.Log("Number of Bombs: " + PlayerPrefs.GetString("num_of_bombs", "No num_of_bombs"));
 
             GameSceneManager.GoToLobby();
         }

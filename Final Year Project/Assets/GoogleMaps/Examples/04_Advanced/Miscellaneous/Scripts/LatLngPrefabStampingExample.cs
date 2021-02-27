@@ -15,21 +15,29 @@ namespace Google.Maps.Examples {
     /// <summary>
     /// The coordinates of each stamp.
     /// </summary>
-    public GameObject PL;
+    public GameObject TEAM;
+    public GameObject HINT;
+    public GameObject OPP;
     public GameObject Player;
+
+    private GameObject[] Hints = new GameObject[10];
 
     private GameObject[] Teammates = new GameObject[2];
     private LatLng[] TeammateLoc = new LatLng[2];
     private GameObject[] Opps = new GameObject[3];
-    private LatLng[] OppLoc = new LatLng[3];
     public List<LatLng> LatLngs;
+
+    private int buildPlayer=0;
+
+    private int buildHints=0;
 
     
     public double[] x= new double[5];
     public double[] y= new double[5];
 
+    public double[] hint_x= new double[10];
 
-    public Vector3 pos;
+    public double[] hint_y= new double[10];
 
     /// <summary>
     /// The prefabs to use for each stamp.
@@ -211,38 +219,17 @@ namespace Google.Maps.Examples {
     /// <summary>
     /// Performs per-frame update tasks.
     /// </summary>
-    int buildPlayer=0;
     private void Update() {
        for (int i = 0; i < LatLngs.Count; i++) {
          SpawnOrDespawnStamp(i);
        }
       SuppressUncheckedStructures();
  
-      if(buildPlayer==0)
-      {
-        Player = GameObject.Instantiate(PL);
-        Player.AddComponent<BoxCollider>();
-
-        Teammates[0] = GameObject.Instantiate(PL);
-        Teammates[0].AddComponent<BoxCollider>();
-        Teammates[1] = GameObject.Instantiate(PL);
-        Teammates[1].AddComponent<BoxCollider>();
-
-        Opps[0] = GameObject.Instantiate(PL);
-        Opps[0].AddComponent<BoxCollider>();
-        Opps[1] = GameObject.Instantiate(PL);
-        Opps[1].AddComponent<BoxCollider>();
-        Opps[2] = GameObject.Instantiate(PL);
-        Opps[2].AddComponent<BoxCollider>();
-
-        Opps[0].SetActive(false);
-        Opps[1].SetActive(false);
-        Opps[2].SetActive(false);
-
-        buildPlayer=1;
-      }
-
+      playerInit();
+      hintsInit();
+      
       playerPosUpdate();
+      hintsUpdate();
 
     }
     private void playerPosUpdate(){
@@ -257,6 +244,56 @@ namespace Google.Maps.Examples {
       Teammates[1].transform.position = MapsService.Coords.FromLatLngToVector3(TeammateLoc[1]);
 
       GameObject.Find("Cam Controll").transform.position = MapsService.Coords.FromLatLngToVector3(latLng);
+
+    }
+    private void playerInit(){
+      
+      if(buildPlayer==0)
+      {
+        Player = GameObject.Instantiate(TEAM);
+        Player.AddComponent<BoxCollider>();
+
+        Teammates[0] = GameObject.Instantiate(TEAM);
+        Teammates[0].AddComponent<BoxCollider>();
+        Teammates[1] = GameObject.Instantiate(TEAM);
+        Teammates[1].AddComponent<BoxCollider>();
+
+        Opps[0] = GameObject.Instantiate(OPP);
+        Opps[0].AddComponent<BoxCollider>();
+        Opps[1] = GameObject.Instantiate(OPP);
+        Opps[1].AddComponent<BoxCollider>();
+        Opps[2] = GameObject.Instantiate(OPP);
+        Opps[2].AddComponent<BoxCollider>();
+
+        Opps[0].SetActive(false);
+        Opps[1].SetActive(false);
+        Opps[2].SetActive(false);
+
+        buildPlayer=1;
+      }
+
+    }
+    private void hintsInit(){
+      
+      if(buildHints==0)
+      {
+        for(int i=0;i<10;i++)
+        {
+          Hints[i] = GameObject.Instantiate(HINT);
+          Hints[i].AddComponent<BoxCollider>();
+        }
+
+        buildHints=1;
+      }
+
+    }
+    private void hintsUpdate(){
+
+    for(int i=0;i<10;i++)
+    {
+      LatLng temp = new LatLng(hint_x[i],hint_y[i]);
+      Hints[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+    }
 
     }
   }

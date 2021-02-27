@@ -15,6 +15,8 @@ public class PlaceBomb : MonoBehaviour
     public LatLng[] LatLngs = new LatLng[10];
     private LocationFollower LocationFollower;
 
+    private GpsManager GpsManager;
+
     private bomb script;
 
     public GameObject BomePrefab;
@@ -26,6 +28,7 @@ public class PlaceBomb : MonoBehaviour
         button = GameObject.Find("Bombs");
         MapsService = GetComponent<MapsService>();
         LocationFollower = GetComponent<LocationFollower>();
+        GpsManager = GetComponent<GpsManager>();
         script = button.GetComponent<bomb>();
     }
 

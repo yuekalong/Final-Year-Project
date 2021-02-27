@@ -50,4 +50,19 @@ module.exports = {
       next(err);
     }
   },
+  getHintsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.getHintsLocation started!");
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.getHintsLocation(req.params.gameid)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
 };

@@ -274,7 +274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196657864}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -298.97644, y: -796.361, z: 84.092026}
+  m_LocalPosition: {x: -399, y: -934.6, z: 84.092026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1944256380}
@@ -1924,10 +1924,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b9baff8f6a459f9b6386c10876a39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PL: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+  TEAM: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+  HINT: {fileID: 2938277103828573581, guid: 03b993560aeea4c618f1c3785a025026, type: 3}
+  OPP: {fileID: 1144978573833690, guid: bc0b15b73807884489b6c6682a3fae14, type: 3}
   Player: {fileID: 0}
   LatLngs: []
-  pos: {x: 0, y: 0, z: 0}
+  x:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  y:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  hint_x:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  hint_y:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   Prefabs:
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
@@ -1955,6 +1990,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   error: {fileID: 734474065}
+  current:
+    _Lat: 0
+    _Lng: 0
 --- !u!114 &620685974
 MonoBehaviour:
   m_ObjectHideFlags: 0
