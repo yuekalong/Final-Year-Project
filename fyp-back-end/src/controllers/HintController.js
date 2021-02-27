@@ -3,16 +3,56 @@ const hintServices = require("../services/HintServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
-  validatePattern: function (req, res, next) {
+  avaliableHints: function (req, res, next) {
     try {
-      console.log("HintController.validatePattern started!");
+      console.log("HintController.avaliableHints started!");
 
-      const { id, input } = req.query;
+      const { gameID } = req.params;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.validatePattern(id, input)
+        hintServices.avaliableHints(gameID)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: HintController.avaliableHints: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+  hintDetail: function (req, res, next) {
+    try {
+      console.log("HintController.hintDetail started!");
+
+      const { gameID, groupID } = req.params;
+
+      return standardServiceResponse(
+        res,
+        next,
+        hintServices.hintDetail(gameID, groupID)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: HintController.hintDetail: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+  validatePattern: function (req, res, next) {
+    try {
+      console.log("HintController.validatePattern started!");
+
+      const { groupID, hintID, input } = req.query;
+
+      return standardServiceResponse(
+        res,
+        next,
+        hintServices.validatePattern(groupID, hintID, input)
       );
     } catch (err) {
       // catch exception and shows the error message
