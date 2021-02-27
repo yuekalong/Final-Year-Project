@@ -39,6 +39,10 @@ namespace Google.Maps.Examples {
 
     public double[] hint_y= new double[10];
 
+    public int[] hint_id= new int[10];
+
+    public string[] hint_words= new string[10];
+
     /// <summary>
     /// The prefabs to use for each stamp.
     /// </summary>
@@ -281,6 +285,8 @@ namespace Google.Maps.Examples {
         {
           Hints[i] = GameObject.Instantiate(HINT);
           Hints[i].AddComponent<BoxCollider>();
+          Hints[i].AddComponent<hintCollision>();
+
         }
 
         buildHints=1;
@@ -293,6 +299,8 @@ namespace Google.Maps.Examples {
     {
       LatLng temp = new LatLng(hint_x[i],hint_y[i]);
       Hints[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+      Hints[i].GetComponent<hintCollision>().index=hint_id[i];
+      Hints[i].GetComponent<hintCollision>().words=hint_words[i];
     }
 
     }

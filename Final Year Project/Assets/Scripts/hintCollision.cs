@@ -11,9 +11,12 @@ public class hintCollision : MonoBehaviour
 {
 
     public int index;
+    public string words;
+
+    private GameObject Dialog;
     void Start()
     {
-
+        Dialog=GameObject.Find("ListButton");
     }
 
 
@@ -26,28 +29,12 @@ public class hintCollision : MonoBehaviour
     {
         if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)")
         {
-            
+            Dialog.GetComponent<HintList>().haveHint=1;
+            Dialog.GetComponent<HintList>().hint_words=words+"\n";
+
         }
     }
-    IEnumerator Upload()
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("Nothing", "");
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://www.my-server.com/myform", form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Got Hint");
-            }
-        }
-    }
 
 
 }

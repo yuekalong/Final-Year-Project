@@ -15,7 +15,6 @@ public class bomb : MonoBehaviour
         text = GameObject.Find("Number");
         text.GetComponent<Text>().text=(3).ToString();
         PlayerPrefs.SetInt("num_of_bombs", 3);
-        num = PlayerPrefs.GetInt("num_of_bombs", 3);
     }
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -34,6 +33,7 @@ public class bomb : MonoBehaviour
     }
     public void addbomb()
     {
+        num = PlayerPrefs.GetInt("num_of_bombs", 3);
         Debug.Log(num);
         if(num!=0)
         {   num-=1;

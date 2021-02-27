@@ -124,6 +124,10 @@ public class GpsManager : MonoBehaviour
             {
                 location_script.hint_x[i] = data[i]["loc_x"];
                 location_script.hint_y[i] = data[i]["loc_y"];
+
+                location_script.hint_id[i] = data[i]["id"];
+                location_script.hint_words[i] = data[i]["hint_words"];
+                //Debug.Log(location_script.hint_words[i]);
             }
             
 
