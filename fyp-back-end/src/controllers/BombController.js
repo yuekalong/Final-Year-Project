@@ -3,16 +3,37 @@ const bombServices = require("../services/BombServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
-  validatePattern: function (req, res, next) {
+  createBomb: function (req, res, next) {
     try {
-      console.log("BombController.validatePattern started!");
+      console.log("BombController.createBomb started!");
 
-      const { id, input } = req.query;
+      const { gameID, input, bombID, locX, locY } = req.body;
 
       return standardServiceResponse(
         res,
         next,
-        bombServices.validatePattern(id, input)
+        bombServices.createBomb(gameID, input, bombID, locX, locY)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: BombController.createBomb: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+  validatePattern: function (req, res, next) {
+    try {
+      console.log("BombController.validatePattern started!");
+
+      const { lockID } = req.params;
+      const { input } = req.query;
+
+      return standardServiceResponse(
+        res,
+        next,
+        bombServices.validatePattern(lockID, input)
       );
     } catch (err) {
       // catch exception and shows the error message

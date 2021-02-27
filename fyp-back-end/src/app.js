@@ -32,6 +32,7 @@ const authRouter = require("./routers/AuthRouter.js");
 const accountRouter = require("./routers/AccountRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
 const hintRouter = require("./routers/HintRouter.js");
+const bombRouter = require("./routers/BombRouter.js");
 const gpsRouter = require("./routers/GpsRouter.js");
 
 // make express app use the router
@@ -40,6 +41,7 @@ app.use("/gps", gpsRouter);
 // app.use("/account", auth.authenticate, accountRouter);
 app.use("/account", accountRouter);
 app.use("/hint", hintRouter);
+app.use("/bomb", bombRouter);
 app.use(chatroomRouter(io));
 
 // testing route

@@ -12,6 +12,6 @@ router.get("/:gameID", hintController.avaliableHints);
 router.get("/:gameID/group/:groupID", hintController.hintDetail);
 
 // validate the input pattern
-router.get("/validate-pattern", hintController.validatePattern);
+router.get("/:gameID/validate-pattern", hintController.validatePattern);
 
 module.exports = router;

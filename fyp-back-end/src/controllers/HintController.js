@@ -47,12 +47,13 @@ module.exports = {
     try {
       console.log("HintController.validatePattern started!");
 
+      const { gameID } = req.params;
       const { groupID, hintID, input } = req.query;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.validatePattern(groupID, hintID, input)
+        hintServices.validatePattern(gameID, groupID, hintID, input)
       );
     } catch (err) {
       // catch exception and shows the error message

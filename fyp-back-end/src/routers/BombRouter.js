@@ -5,7 +5,10 @@ const router = express.Router();
 // importing the controller to controll the action for specific route
 const bombController = require("../controllers/BombController.js");
 
-//  this route is for logging in our app
-router.get("/validate-pattern", hintController.validatePattern);
+// create bomb
+router.post("/create-bomb", bombController.createBomb);
+
+//  validate the input pattern
+router.get("/:lockID/validate-pattern", bombController.validatePattern);
 
 module.exports = router;

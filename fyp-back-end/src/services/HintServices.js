@@ -20,17 +20,21 @@ module.exports = {
 
     return hints;
   },
-  validatePattern: async function (groupID, hintID, input) {
+  validatePattern: async function (gameID, groupID, hintID, input) {
     const patternLockID = (
       await knex("game_hints_mapping")
         .first("pattern_lock_id")
         .where("hint_id", "=", hintID)
+        .andWhere("game_id", "=", gameID)
     ).pattern_lock_id;
 
     const isValid = await patternLockServices.validInput(patternLockID, input);
 
     if (isValid) {
-      await knex("game_hints_mapping").update({ groupID: groupID });
+      await knex("game_hints_mapping")
+        .where("hint_id", "=", hintID)
+        .andWhere("game_id", "=", gameID)
+        .update({ group_id: groupID });
     }
 
     return isValid;
