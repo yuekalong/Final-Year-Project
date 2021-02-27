@@ -25,8 +25,25 @@ public class LockPattern : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetString("lock_id", "1");
-        PlayerPrefs.SetString("lock_type", "hint-unlock");
+        /*
+            lock_detail
+                hint:
+                {
+                    id:
+                    type: hint-unlock
+                    hintID:
+                }
+
+                bomb:
+                {
+                    id:
+                    type: bomb-set/bomb-unlock
+                    
+                    lockID:
+                    (if bomb-unlock)
+                }
+        */
+        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 515efdac-a36e-4706-89a7-8ae2776fe2f8 }");
 
         circles = new Dictionary<int, Circle>();
         lines = new List<Circle>();
@@ -131,7 +148,8 @@ public class LockPattern : MonoBehaviour
             Debug.Log(id);
         }
 
-        string lockType = PlayerPrefs.GetString("lock_type");
+        string lockType = JSON.Parse(PlayerPrefs.GetString("lock_detail"))["type"];
+        Debug.Log(lockType);
 
         switch(lockType){
             
@@ -139,10 +157,10 @@ public class LockPattern : MonoBehaviour
                 StartCoroutine(HintValidate());
                 break;
             case "bomb-set":
-                // StartCoroutine(BombSet());
+                StartCoroutine(BombSet());
                 break;
             case "bomb-unlock":
-                // StartCoroutine(BombValidate());
+                StartCoroutine(BombValidate());
                 break;
         }
 
@@ -151,9 +169,8 @@ public class LockPattern : MonoBehaviour
     }
 
     IEnumerator HintValidate(){
-        
         // generate the query path
-        string queryPath = "?id=" + PlayerPrefs.GetString("lock_id") + "&input=";
+        string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
         
         string inputString = "";
         
@@ -171,7 +188,83 @@ public class LockPattern : MonoBehaviour
 
         }
         
-        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/validate-pattern" + queryPath + inputString);
+        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + "1" + "/validate-pattern" + queryPath + inputString);
+
+        // stop the function and return the state to Login(), if access this function again will start from here
+        yield return req.SendWebRequest();
+        // parse the json response
+        JSONNode res = JSON.Parse(req.downloadHandler.text);
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            yield break;
+        }
+        if(res["success"]){
+            Debug.Log(res["data"]);
+        }
+    }
+
+    IEnumerator BombSet(){
+        
+        // generate the input string        
+        string inputString = "";
+        
+        for(int i = 0; i < result.Count; i++){
+
+            if(i==0){
+                inputString = "[" + result[i] + ",";
+            }
+            else if (i == result.Count - 1){
+                inputString += result[i] + "]";
+            }
+            else{
+                inputString += result[i] + ",";
+            }
+
+        }
+        WWWForm form = new WWWForm();
+        form.AddField("gameID", "1"); // PlayerPrefs.GetString("game_id"));
+        form.AddField("input", inputString);
+        form.AddField("bombID", "1"); // get bomb id
+        form.AddField("locX", "1"); // get loc x
+        form.AddField("locY", "1"); // get loc y
+
+        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
+
+        // stop the function and return the state to Login(), if access this function again will start from here
+        yield return req.SendWebRequest();
+        // parse the json response
+        JSONNode res = JSON.Parse(req.downloadHandler.text);
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            yield break;
+        }
+        if(res["success"]){
+            Debug.Log("Create Successfully!");
+        }
+    }
+
+    IEnumerator BombValidate(){
+        
+        string queryPath = "?input=";
+
+        // generate the query path        
+        string inputString = "";
+        
+        for(int i = 0; i < result.Count; i++){
+
+            if(i==0){
+                inputString = "[" + result[i] + ",";
+            }
+            else if (i == result.Count - 1){
+                inputString += result[i] + "]";
+            }
+            else{
+                inputString += result[i] + ",";
+            }
+
+        }
+        
+        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"]+"/validate-pattern" + queryPath+ inputString);
 
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
