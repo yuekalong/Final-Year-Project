@@ -3,6 +3,21 @@ const bombServices = require("../services/BombServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
+  allBombs: function (req, res, next) {
+    try {
+      console.log("BombController.allBombs started!");
+
+      const { gameID } = req.params;
+
+      return standardServiceResponse(res, next, bombServices.allBombs(gameID));
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: BombController.allBombs: " + JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
   createBomb: function (req, res, next) {
     try {
       console.log("BombController.createBomb started!");

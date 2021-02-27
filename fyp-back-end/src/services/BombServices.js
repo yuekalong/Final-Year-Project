@@ -4,6 +4,19 @@ const patternLockServices = require("./PatternLockService.js");
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
+  allBombs: async function (gameID) {
+    const bombs = await knex("game_bombs_mapping")
+      .select("type", "range", "loc_x", "loc_y", "order")
+      .join("bomb", "bomb.id", "=", "game_bombs_mapping.bomb_id")
+      .join(
+        "pattern_lock",
+        "pattern_lock.id",
+        "=",
+        "game_bombs_mapping.pattern_lock_id"
+      );
+
+    return bombs;
+  },
   createBomb: async function (gameID, input, bombID, locX, locY) {
     const lockID = uuidv4();
     // insert lock order in `pattern_lock` table
