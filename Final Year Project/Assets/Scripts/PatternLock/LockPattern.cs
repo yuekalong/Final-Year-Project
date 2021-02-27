@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using SimpleJSON;
 
 public class LockPattern : MonoBehaviour
 {
@@ -23,6 +25,9 @@ public class LockPattern : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.SetString("lock_id", "1");
+        PlayerPrefs.SetString("lock_type", "hint-unlock");
+
         circles = new Dictionary<int, Circle>();
         lines = new List<Circle>();
         result = new List<int>();
@@ -63,7 +68,7 @@ public class LockPattern : MonoBehaviour
 
     GameObject CreateLine(Vector3 pos, int id){
         GameObject line = GameObject.Instantiate(lineObject, canvas.transform);
-        // line.transform.SetAsFirstSibling();
+        line.transform.SetAsFirstSibling();
         
         line.transform.localPosition = new Vector3(pos.x - 25, pos.y, pos.z);
         // Debug.Log(line.transform.localPosition);
@@ -125,8 +130,60 @@ public class LockPattern : MonoBehaviour
         {
             Debug.Log(id);
         }
-        result.Clear();
-        ResetLine();
+
+        string lockType = PlayerPrefs.GetString("lock_type");
+
+        switch(lockType){
+            
+            case "hint-unlock":
+                StartCoroutine(HintValidate());
+                break;
+            case "bomb-set":
+                // StartCoroutine(BombSet());
+                break;
+            case "bomb-unlock":
+                // StartCoroutine(BombValidate());
+                break;
+        }
+
+        // result.Clear();
+        // ResetLine();
+    }
+
+    IEnumerator HintValidate(){
+        
+        // generate the query path
+        string queryPath = "?id=" + PlayerPrefs.GetString("lock_id") + "&input=";
+        
+        string inputString = "";
+        
+        for(int i = 0; i < result.Count; i++){
+
+            if(i==0){
+                inputString = "[" + result[i] + ",";
+            }
+            else if (i == result.Count - 1){
+                inputString += result[i] + "]";
+            }
+            else{
+                inputString += result[i] + ",";
+            }
+
+        }
+        
+        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/validate-pattern" + queryPath + inputString);
+
+        // stop the function and return the state to Login(), if access this function again will start from here
+        yield return req.SendWebRequest();
+        // parse the json response
+        JSONNode res = JSON.Parse(req.downloadHandler.text);
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            yield break;
+        }
+        if(res["success"]){
+            Debug.Log(res["data"]);
+        }
     }
 
     public void OnMouseEnterCircle(Circle circle){
