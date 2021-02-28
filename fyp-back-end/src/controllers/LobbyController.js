@@ -36,6 +36,7 @@ module.exports = {
 
       const { userID, gameID } = req.body;
 
+      console.log(userID, gameID);
       return standardServiceResponse(
         res,
         next,

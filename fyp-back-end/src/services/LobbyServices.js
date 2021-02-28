@@ -12,19 +12,25 @@ module.exports = {
     let rooms = [];
 
     for (let room of gameInfo) {
-      const hunterCount = (
-        await knex("group")
-          .count("user_id as count")
-          .groupBy("id")
-          .where("id", "=", room.hunter_group_id)
-      )[0].count;
+      let hunterCount = 0;
+      if (!!room.hunter_group_id) {
+        hunterCount = (
+          await knex("group")
+            .count("user_id as count")
+            .groupBy("id")
+            .where("id", "=", room.hunter_group_id)
+        )[0].count;
+      }
 
-      const protectorCount = (
-        await knex("group")
-          .count("user_id as count")
-          .groupBy("id")
-          .where("id", "=", room.protector_group_id)
-      )[0].count;
+      let protectorCount = 0;
+      if (!!room.protector_group_id) {
+        protectorCount = (
+          await knex("group")
+            .count("user_id as count")
+            .groupBy("id")
+            .where("id", "=", room.protector_group_id)
+        )[0].count;
+      }
 
       const lobbyInfo = {
         game_id: room.game_id,
@@ -48,6 +54,8 @@ module.exports = {
     return roomID;
   },
   joinRoom: async function (userID, gameID) {
+    // TODO: get all user id and check already in room or not
+
     const roomDetail = await knex("game").first("*").where("id", "=", gameID);
 
     // if no hunter group
@@ -66,6 +74,10 @@ module.exports = {
         .where("id", "=", gameID)
         .update({ hunter_group_id: hunterID });
 
+      await knex("user")
+        .update({ game_status: "waiting" })
+        .where("id", "=", userID);
+
       return true;
     }
     // if no protector group
@@ -83,6 +95,10 @@ module.exports = {
       await knex("game")
         .where("id", "=", gameID)
         .update({ protector_group_id: protectorID });
+
+      await knex("user")
+        .update({ game_status: "waiting" })
+        .where("id", "=", userID);
 
       return true;
     }
@@ -103,6 +119,10 @@ module.exports = {
           type: "hunter",
         });
 
+        await knex("user")
+          .update({ game_status: "waiting" })
+          .where("id", "=", userID);
+
         return true;
       }
 
@@ -120,6 +140,10 @@ module.exports = {
           user_id: userID,
           type: "protector",
         });
+
+        await knex("user")
+          .update({ game_status: "waiting" })
+          .where("id", "=", userID);
 
         return true;
       }

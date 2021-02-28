@@ -30,6 +30,7 @@ const auth = require("./init-passport");
 // import routers
 const authRouter = require("./routers/AuthRouter.js");
 const lobbyRouter = require("./routers/LobbyRouter.js");
+const waitingRoomRouter = require("./routers/WaitingRoomRouter.js");
 const accountRouter = require("./routers/AccountRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
 const hintRouter = require("./routers/HintRouter.js");
@@ -45,6 +46,7 @@ app.use("/account", accountRouter);
 app.use("/hint", hintRouter);
 app.use("/bomb", bombRouter);
 app.use(chatroomRouter(io));
+app.use(waitingRoomRouter(io));
 
 // testing route
 app.get("/", async (req, res) => {

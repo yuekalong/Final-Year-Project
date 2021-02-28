@@ -12,6 +12,6 @@ router.get("/", lobbyContoller.getRoom);
 router.post("/create-room", lobbyContoller.createRoom);
 
 // join room
-router.put("/join", lobbyContoller.joinRoom);
+router.post("/join", lobbyContoller.joinRoom);
 
 module.exports = router;

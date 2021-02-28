@@ -241,7 +241,7 @@ public class LockPattern : MonoBehaviour
         }
 
         string lockType = JSON.Parse(PlayerPrefs.GetString("lock_detail"))["type"];
-        Debug.Log(lockType);
+        // Debug.Log(lockType);
 
         switch(lockType){
             
