@@ -48,8 +48,9 @@ public class LockPattern : MonoBehaviour
                     (if bomb-unlock)
                 }
         */
-        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
-        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 515efdac-a36e-4706-89a7-8ae2776fe2f8 }");
+        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
+        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
+        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 9bdd8927-095e-4b07-8b11-9c781f7e6fc1 }");
 
         circles = new Dictionary<int, Circle>();
         lines = new List<Circle>();
@@ -80,10 +81,10 @@ public class LockPattern : MonoBehaviour
                 req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + "1" + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
                 break;
             case "bomb-set":
-                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/bomb/" + "1" + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
-                break;
-            case "bomb-unlock":
                 yield break;
+            case "bomb-unlock":
+                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"] + "/pattern-lock/");
+                break;
         }
 
         yield return req.SendWebRequest();

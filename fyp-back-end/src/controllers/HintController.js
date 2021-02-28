@@ -43,21 +43,21 @@ module.exports = {
       next(err);
     }
   },
-  patternLockStartPt: function (req, res, next) {
+  patternLockOrder: function (req, res, next) {
     try {
-      console.log("HintController.patternLockStartPt started!");
+      console.log("HintController.patternLockOrder started!");
 
       const { gameID, hintID } = req.params;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.patternLockStartPt(gameID, hintID)
+        hintServices.patternLockOrder(gameID, hintID)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.patternLockStartPt: " +
+        "Error: HintController.patternLockOrder: " +
           JSON.parse(err.message)["message"]
       );
       next(err);

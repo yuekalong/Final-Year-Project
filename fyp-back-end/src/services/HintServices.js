@@ -22,7 +22,7 @@ module.exports = {
 
     return hints;
   },
-  patternLockStartPt: async function (gameID, hintID) {
+  patternLockOrder: async function (gameID, hintID) {
     const hint = await knex("hint")
       .first("hint.id", "order")
       .join("game_hints_mapping", "game_hints_mapping.hint_id", "=", "hint.id")
@@ -34,6 +34,10 @@ module.exports = {
       )
       .where("game_id", "=", gameID)
       .andWhere("hint_id", "=", hintID);
+
+    if (!hint) {
+      return null;
+    }
 
     const details = {
       id: hint.id,

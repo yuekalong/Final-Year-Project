@@ -11,8 +11,8 @@ router.get("/:gameID", hintController.getAllHint);
 // get group archive hints
 router.get("/:gameID/group/:groupID", hintController.groupArchiveHint);
 
-// get specific hint pattern lock start point
-router.get("/:gameID/pattern-lock/:hintID", hintController.patternLockStartPt);
+// get specific hint pattern lock order
+router.get("/:gameID/pattern-lock/:hintID", hintController.patternLockOrder);
 
 // validate the input pattern
 router.get("/:gameID/validate-pattern", hintController.validatePattern);

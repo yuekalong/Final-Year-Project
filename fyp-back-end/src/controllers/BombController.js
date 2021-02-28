@@ -38,6 +38,26 @@ module.exports = {
       next(err);
     }
   },
+  patternLockOrder: function (req, res, next) {
+    try {
+      console.log("BombController.patternLockOrder started!");
+
+      const { lockID } = req.params;
+
+      return standardServiceResponse(
+        res,
+        next,
+        bombServices.patternLockOrder(lockID)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: BombController.patternLockOrder: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
   validatePattern: function (req, res, next) {
     try {
       console.log("BombController.validatePattern started!");

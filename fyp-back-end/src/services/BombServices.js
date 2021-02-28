@@ -31,6 +31,20 @@ module.exports = {
       pattern_lock_id: lockID,
     });
   },
+  patternLockOrder: async function (lockID) {
+    const bomb = await knex("pattern_lock").first("*").where("id", "=", lockID);
+
+    if (!bomb) {
+      return null;
+    }
+
+    const details = {
+      id: bomb.id,
+      start_pt: JSON.parse(bomb.order)[0],
+      order: JSON.parse(bomb.order),
+    };
+    return details;
+  },
   validatePattern: async function (lockID, input) {
     const isValid = await patternLockServices.validInput(lockID, input);
 

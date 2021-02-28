@@ -11,6 +11,9 @@ router.get("/:gameID", bombController.allBombs);
 // create bomb
 router.post("/create-bomb", bombController.createBomb);
 
+// get specific bomb pattern lock order
+router.get("/:lockID/pattern-lock", bombController.patternLockOrder);
+
 //  validate the input pattern
 router.get("/:lockID/validate-pattern", bombController.validatePattern);
 
