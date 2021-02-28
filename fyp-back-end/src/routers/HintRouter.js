@@ -5,11 +5,14 @@ const router = express.Router();
 // importing the controller to controll the action for specific route
 const hintController = require("../controllers/HintController.js");
 
-// get all avaliable hints
-router.get("/:gameID", hintController.avaliableHints);
+// get all hints
+router.get("/:gameID", hintController.getAllHint);
 
 // get group archive hints
-router.get("/:gameID/group/:groupID", hintController.hintDetail);
+router.get("/:gameID/group/:groupID", hintController.groupArchiveHint);
+
+// get specific hint pattern lock start point
+router.get("/:gameID/pattern-lock/:hintID", hintController.patternLockStartPt);
 
 // validate the input pattern
 router.get("/:gameID/validate-pattern", hintController.validatePattern);

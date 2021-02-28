@@ -22,6 +22,11 @@ public class LockPattern : MonoBehaviour
     // final result
     private List<int> result;
 
+
+    // line
+    private Color lineColor = Color.cyan;
+    private int siblingIdx = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +48,13 @@ public class LockPattern : MonoBehaviour
                     (if bomb-unlock)
                 }
         */
-        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 515efdac-a36e-4706-89a7-8ae2776fe2f8 }");
+        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
+        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 515efdac-a36e-4706-89a7-8ae2776fe2f8 }");
 
         circles = new Dictionary<int, Circle>();
         lines = new List<Circle>();
         result = new List<int>();
+        lineColor.a = 0.85f;
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -58,6 +65,87 @@ public class LockPattern : MonoBehaviour
 
             circles.Add(i, circle);
         }
+
+        StartCoroutine(ShowPattern());
+    }
+
+    
+    IEnumerator ShowPattern(){
+        // Debug.Log(JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
+
+        UnityWebRequest req = new UnityWebRequest();
+        string type = JSON.Parse(PlayerPrefs.GetString("lock_detail"))["type"];
+        switch(type){
+            case "hint-unlock":
+                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + "1" + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
+                break;
+            case "bomb-set":
+                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/bomb/" + "1" + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
+                break;
+            case "bomb-unlock":
+                yield break;
+        }
+
+        yield return req.SendWebRequest();
+        // parse the json response
+        JSONNode res = JSON.Parse(req.downloadHandler.text);
+        if(req.isNetworkError || req.isHttpError){
+            Debug.LogError(req.error);
+            yield break;
+        }
+        if(res["success"]){
+            // Debug.Log(res["data"]);
+            // Debug.Log(res["data"]["order"]);
+            // Debug.Log(res["data"]["order"][0]);
+            bool setStart = false;
+
+            foreach(var order in res["data"]["order"]){
+                foreach(var circle in circles){                    
+                    if(circle.Value.id == res["data"]["start_pt"] && !setStart){
+                        circle.Value.GetComponent<UnityEngine.UI.Image>().color = Color.cyan;
+                        
+                        // set new line
+                        lineOnEdit = CreateShadow(circle.Value.transform.localPosition, circle.Value.id);
+                        lineOnEditRcTs = lineOnEdit.GetComponent<RectTransform>();
+                        circleOnEdit = circle.Value;
+
+                        setStart = true;
+                    }
+                    
+                    else if(circle.Value.id == order.Value){
+                        Debug.Log(circle.Value.id);
+                        // end previous line
+                        lineOnEditRcTs.sizeDelta = new Vector2(lineOnEditRcTs.sizeDelta.x, Vector3.Distance(circleOnEdit.transform.localPosition, circle.Value.transform.localPosition));
+                        lineOnEditRcTs.rotation = Quaternion.FromToRotation(
+                            Vector3.up,
+                            (circle.Value.transform.localPosition - circleOnEdit.transform.localPosition).normalized
+                        );
+
+                        // set new line
+                        lineOnEdit = CreateShadow(circle.Value.transform.localPosition, circle.Value.id);
+                        lineOnEditRcTs = lineOnEdit.GetComponent<RectTransform>();
+                        circleOnEdit = circle.Value;
+                    }
+                }
+                siblingIdx += 1;
+            }
+        }
+    }
+
+
+    GameObject CreateShadow(Vector3 pos, int id){
+        GameObject line = GameObject.Instantiate(lineObject, canvas.transform);
+        line.transform.SetAsFirstSibling();
+        
+        line.transform.localPosition = new Vector3(pos.x - 25, pos.y, pos.z);
+
+        var lineIdf = line.AddComponent<Circle>();
+
+        lineIdf.id = id;
+        
+        // lines.Add(lineIdf);
+
+        return line;
     }
 
     // Update is called once per frame
@@ -83,12 +171,15 @@ public class LockPattern : MonoBehaviour
         }
     }
 
+
     GameObject CreateLine(Vector3 pos, int id){
         GameObject line = GameObject.Instantiate(lineObject, canvas.transform);
-        line.transform.SetAsFirstSibling();
+        line.transform.SetSiblingIndex(siblingIdx);
         
         line.transform.localPosition = new Vector3(pos.x - 25, pos.y, pos.z);
+        line.GetComponent<UnityEngine.UI.Image>().color = lineColor;
         // Debug.Log(line.transform.localPosition);
+
         var lineIdf = line.AddComponent<Circle>();
 
         lineIdf.id = id;
@@ -118,7 +209,7 @@ public class LockPattern : MonoBehaviour
         // enabled = false;
         
         foreach(var circle in circles){
-            circle.Value.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+            // circle.Value.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             circle.Value.GetComponent<Animator>().enabled = false;
         }
 
@@ -168,7 +259,7 @@ public class LockPattern : MonoBehaviour
         // ResetLine();
     }
 
-    IEnumerator HintValidate(){
+    IEnumerator HintValidate(){        
         // generate the query path
         string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
         
@@ -190,7 +281,6 @@ public class LockPattern : MonoBehaviour
         
         UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + "1" + "/validate-pattern" + queryPath + inputString);
 
-        // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
         // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);
@@ -230,7 +320,6 @@ public class LockPattern : MonoBehaviour
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 
-        // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
         // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);
@@ -266,7 +355,6 @@ public class LockPattern : MonoBehaviour
         
         UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"]+"/validate-pattern" + queryPath+ inputString);
 
-        // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
         // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);

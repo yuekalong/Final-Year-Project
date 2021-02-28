@@ -3,41 +3,61 @@ const hintServices = require("../services/HintServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
-  avaliableHints: function (req, res, next) {
+  getAllHint: function (req, res, next) {
     try {
-      console.log("HintController.avaliableHints started!");
+      console.log("HintController.getAllHint started!");
 
       const { gameID } = req.params;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.avaliableHints(gameID)
+        hintServices.getAllHint(gameID)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.avaliableHints: " +
+        "Error: HintController.getAllHint: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
     }
   },
-  hintDetail: function (req, res, next) {
+  groupArchiveHint: function (req, res, next) {
     try {
-      console.log("HintController.hintDetail started!");
+      console.log("HintController.groupArchiveHint started!");
 
       const { gameID, groupID } = req.params;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.hintDetail(gameID, groupID)
+        hintServices.groupArchiveHint(gameID, groupID)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.hintDetail: " +
+        "Error: HintController.groupArchiveHint: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+  patternLockStartPt: function (req, res, next) {
+    try {
+      console.log("HintController.patternLockStartPt started!");
+
+      const { gameID, hintID } = req.params;
+
+      return standardServiceResponse(
+        res,
+        next,
+        hintServices.patternLockStartPt(gameID, hintID)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: HintController.patternLockStartPt: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
