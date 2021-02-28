@@ -50,7 +50,6 @@ using UnityEngine.UI;
       InstructionsText.text = "You Have No Hint!!!\nGo And Find It Before Your Enermy Take It!!!";
 
 
-
       ShowHideDialog(false);
     }
     public void Update()
@@ -58,6 +57,11 @@ using UnityEngine.UI;
         if(haveHint!=0)
         {
             InstructionsText.text=hint_words;
+            PlayerPrefs.SetString("hint_stored",hint_words);
+        }
+        if(haveHint==0)
+        {
+            hint_words=PlayerPrefs.GetString("hint_stored","Empty");
         }
 
     }

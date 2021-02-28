@@ -11,7 +11,7 @@ public class hintCollision : MonoBehaviour
 {
 
     public int index;
-    public string words;
+    public string words="";
 
     private GameObject Dialog;
     void Start()
@@ -27,10 +27,10 @@ public class hintCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)")
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" & words!="")
         {
             Dialog.GetComponent<HintList>().haveHint=1;
-            Dialog.GetComponent<HintList>().hint_words=words+"\n";
+            Dialog.GetComponent<HintList>().hint_words+=words+"\n";
 
         }
     }
