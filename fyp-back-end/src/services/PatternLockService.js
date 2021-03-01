@@ -8,8 +8,11 @@ module.exports = {
       await knex("pattern_lock").first("order").where("id", "=", lockID)
     ).order;
 
-    return (
-      order == JSON.stringify(arr) || order == JSON.stringify(arr.reverse())
-    );
+    // reverse order also valid
+    // return (
+    //   order == JSON.stringify(arr) || order == JSON.stringify(arr.reverse())
+    // );
+
+    return order == JSON.stringify(arr);
   },
 };

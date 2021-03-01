@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // import controller
-const chatroomController = require("../controllers/ChatroomController.js");
+const waitingRoomController = require("../controllers/WaitingRoomController.js");
 
 module.exports = function (io) {
   // when connect the socket.io service
@@ -16,18 +16,8 @@ module.exports = function (io) {
     };
 
     // join room
-    socket.on("join-chatroom", (user) => {
-      chatroomController.joinRoom(connection, user);
-    });
-
-    // send message
-    socket.on("send-msg", (data) => {
-      chatroomController.sendMsg(connection, data);
-    });
-
-    // get history
-    socket.on("get-history", (user) => {
-      chatroomController.getHistory(connection, user);
+    socket.on("join-waiting-room", (user) => {
+      waitingRoomController.joinRoom(connection, user);
     });
 
     // when disconnect

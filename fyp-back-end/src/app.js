@@ -29,18 +29,24 @@ const auth = require("./init-passport");
 
 // import routers
 const authRouter = require("./routers/AuthRouter.js");
+const lobbyRouter = require("./routers/LobbyRouter.js");
+const waitingRoomRouter = require("./routers/WaitingRoomRouter.js");
 const accountRouter = require("./routers/AccountRouter.js");
 const chatroomRouter = require("./routers/ChatroomRouter.js");
 const hintRouter = require("./routers/HintRouter.js");
+const bombRouter = require("./routers/BombRouter.js");
 const gpsRouter = require("./routers/GpsRouter.js");
 
 // make express app use the router
 app.use("/auth", authRouter);
+app.use("/lobby", lobbyRouter);
 app.use("/gps", gpsRouter);
 // app.use("/account", auth.authenticate, accountRouter);
 app.use("/account", accountRouter);
 app.use("/hint", hintRouter);
+app.use("/bomb", bombRouter);
 app.use(chatroomRouter(io));
+app.use(waitingRoomRouter(io));
 
 // testing route
 app.get("/", async (req, res) => {

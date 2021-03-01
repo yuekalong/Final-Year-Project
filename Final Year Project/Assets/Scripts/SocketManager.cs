@@ -14,6 +14,8 @@ public class SocketManager : MonoBehaviour
 
     public int unseenMsg;
 
+    private string sceneName;
+
     // Start is called before the first frame update
     // set the socket system
     void Start()
@@ -21,7 +23,8 @@ public class SocketManager : MonoBehaviour
         socket = GetComponent<SocketIOComponent>();
         user["id"] = PlayerPrefs.GetString("id", "No ID");
         user["name"] = PlayerPrefs.GetString("name", "No Name");
-
+        sceneName = SceneManager.GetActiveScene().name;
+        
         if (socket != null)
         {
             // set for open message
@@ -50,13 +53,21 @@ public class SocketManager : MonoBehaviour
         if (socket.sid != null)
         {
             Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
-            user["socketID"] = socket.sid;
+            
+            Debug.Log(sceneName);
 
-            // assume no close of game
-            unseenMsg = 0;
+            if(sceneName == "LoadingScene"){
+                user["socketID"] = socket.sid;
 
-            // join room
-            joinRoom();
+                // assume no close of game
+                unseenMsg = 0;
+                
+                // join chatroom
+                joinChatoom();
+            }
+            else if (sceneName == "WaitingRoomScene"){
+                joinWaitingRoom();
+            }
         }
     }
     private void errorEvent(SocketIOEvent ev)
@@ -70,11 +81,18 @@ public class SocketManager : MonoBehaviour
     }
     #endregion
 
-    private void joinRoom()
+    private void joinChatoom()
     {
-        socket.Emit("join-room", new JSONObject(user));
+        socket.Emit("join-chatroom", new JSONObject(user));
 
-        Debug.Log("Room Join!");
+        Debug.Log("Chatroom Join!");
+    }
+
+    private void joinWaitingRoom()
+    {
+        socket.Emit("join-waiting-room", new JSONObject(user));
+
+        Debug.Log("Waiting Room Join!");
     }
 
     public void sendMsg(string msg)

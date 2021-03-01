@@ -1,43 +1,38 @@
 // import the service
-const hintServices = require("../services/HintServices.js");
+const bombServices = require("../services/BombServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
-  getAllHint: function (req, res, next) {
+  allBombs: function (req, res, next) {
     try {
-      console.log("HintController.getAllHint started!");
+      console.log("BombController.allBombs started!");
 
       const { gameID } = req.params;
 
-      return standardServiceResponse(
-        res,
-        next,
-        hintServices.getAllHint(gameID)
-      );
+      return standardServiceResponse(res, next, bombServices.allBombs(gameID));
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.getAllHint: " +
-          JSON.parse(err.message)["message"]
+        "Error: BombController.allBombs: " + JSON.parse(err.message)["message"]
       );
       next(err);
     }
   },
-  groupArchiveHint: function (req, res, next) {
+  createBomb: function (req, res, next) {
     try {
-      console.log("HintController.groupArchiveHint started!");
+      console.log("BombController.createBomb started!");
 
-      const { gameID, groupID } = req.params;
+      const { gameID, input, bombID, locX, locY } = req.body;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.groupArchiveHint(gameID, groupID)
+        bombServices.createBomb(gameID, input, bombID, locX, locY)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.groupArchiveHint: " +
+        "Error: BombController.createBomb: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
@@ -45,19 +40,19 @@ module.exports = {
   },
   patternLockOrder: function (req, res, next) {
     try {
-      console.log("HintController.patternLockOrder started!");
+      console.log("BombController.patternLockOrder started!");
 
-      const { gameID, hintID } = req.params;
+      const { lockID } = req.params;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.patternLockOrder(gameID, hintID)
+        bombServices.patternLockOrder(lockID)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.patternLockOrder: " +
+        "Error: BombController.patternLockOrder: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
@@ -65,20 +60,20 @@ module.exports = {
   },
   validatePattern: function (req, res, next) {
     try {
-      console.log("HintController.validatePattern started!");
+      console.log("BombController.validatePattern started!");
 
-      const { gameID } = req.params;
-      const { groupID, hintID, input } = req.query;
+      const { lockID } = req.params;
+      const { input } = req.query;
 
       return standardServiceResponse(
         res,
         next,
-        hintServices.validatePattern(gameID, groupID, hintID, input)
+        bombServices.validatePattern(lockID, input)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: HintController.validatePattern: " +
+        "Error: BombController.validatePattern: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
