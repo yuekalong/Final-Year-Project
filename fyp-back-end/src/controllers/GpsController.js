@@ -65,4 +65,21 @@ module.exports = {
       next(err);
     }
   },
+  removeHintsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.removeHintsLocation started!");
+
+      const index = req.body.index;
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.removeHintsLocation(index)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
 };

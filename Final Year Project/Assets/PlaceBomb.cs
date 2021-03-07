@@ -42,7 +42,7 @@ public class PlaceBomb : MonoBehaviour
             Bombs[num_bomb].AddComponent<bombCollision>();
             Bombs[num_bomb].GetComponent<bombCollision>().index=num_bomb;
             Bombs[num_bomb].transform.position = MapsService.Coords.FromLatLngToVector3(LocationFollower.currentLocation);
-            LatLngs[num_bomb] = LocationFollower.currentLocation;
+            //LatLngs[num_bomb] = LocationFollower.currentLocation;
             num_bomb=num_bomb+1;
         }
 

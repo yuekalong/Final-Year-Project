@@ -44,4 +44,11 @@ module.exports = {
 
         return hints_id;
     },
+    removeHintsLocation: async function (index) {
+      const hints_id = await knex("hint")
+        .update("loc_x",0)
+        .update("loc_y",0)
+        .where("id", index)
+
+    },
 };
