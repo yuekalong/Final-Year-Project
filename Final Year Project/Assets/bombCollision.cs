@@ -25,9 +25,11 @@ public class bombCollision : MonoBehaviour
     {
         if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)")
         {
-            SceneManager.LoadScene("PatternLock");
+            //SceneManager.LoadScene("NewPatternLock");
         }
     }
+
+
 
 
 }

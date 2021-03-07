@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Google.Maps.Coord;
-using Google.Maps.Unity;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+
 
 namespace Google.Maps.Examples {
 public class PlaceBomb : MonoBehaviour
@@ -43,16 +44,14 @@ public class PlaceBomb : MonoBehaviour
             Bombs[num_bomb].GetComponent<bombCollision>().index=num_bomb;
             Bombs[num_bomb].transform.position = MapsService.Coords.FromLatLngToVector3(LocationFollower.currentLocation);
             //LatLngs[num_bomb] = LocationFollower.currentLocation;
+            LatLng loc = LocationFollower.currentLocation;
+            PlayerPrefs.SetString("loc_x",loc.Lat.ToString());
+            PlayerPrefs.SetString("loc_y",loc.Lng.ToString());
             num_bomb=num_bomb+1;
+            SceneManager.LoadScene("NewPatternLock");
         }
 
-        if(num_bomb>0)
-        {
-            for(int i=0;i<num_bomb;i++)
-            {
-                //Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(LatLngs[i]);
-            }
-        }
     }
+
 }
 }

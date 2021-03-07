@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class LockPattern : MonoBehaviour
 {
@@ -49,8 +50,8 @@ public class LockPattern : MonoBehaviour
                 }
         */
         // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
-        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
-        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 9bdd8927-095e-4b07-8b11-9c781f7e6fc1 }");
+        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
+        //PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 1589e619-931d-47ca-8296-cbda34af080f }");
 
         circles = new Dictionary<int, Circle>();
         lines = new List<Circle>();
@@ -316,8 +317,10 @@ public class LockPattern : MonoBehaviour
         form.AddField("gameID", "1"); // PlayerPrefs.GetString("game_id"));
         form.AddField("input", inputString);
         form.AddField("bombID", "1"); // get bomb id
-        form.AddField("locX", "1"); // get loc x
-        form.AddField("locY", "1"); // get loc y
+        string locX=PlayerPrefs.GetString("loc_x","Empty");
+        string locY=PlayerPrefs.GetString("loc_y","Empty");
+        form.AddField("locX", locX); // get loc x
+        form.AddField("locY", locY); // get loc y
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 
@@ -331,6 +334,8 @@ public class LockPattern : MonoBehaviour
         if(res["success"]){
             Debug.Log("Create Successfully!");
         }
+
+        SceneManager.LoadScene("MapScene");
     }
 
     IEnumerator BombValidate(){

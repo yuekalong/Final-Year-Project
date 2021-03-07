@@ -53,7 +53,6 @@ public class hintCollision : MonoBehaviour
             yield break;
         }
         
-
     }
 
 
