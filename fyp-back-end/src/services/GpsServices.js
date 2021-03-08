@@ -1,10 +1,11 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
-    postLocation: async function (userID,locx,locy) {
+    postLocation: async function (userID,locx,locy,visable) {
     const group = await knex("user")
       .update("loc_x",locx)
       .update("loc_y",locy)
+      .update("visable",visable)
       .where("id", "=", userID);
     },
 
@@ -27,7 +28,7 @@ module.exports = {
         .from("group")
         .where("id", groupid)
 
-      const opps_loc = await knex.select("loc_x","loc_y")
+      const opps_loc = await knex.select("loc_x","loc_y","visable")
         .from("user")
         .where("id", opps_id[0].user_id)
         .orWhere("id", opps_id[1].user_id)

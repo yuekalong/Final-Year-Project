@@ -84,8 +84,7 @@ public class PlaceBomb : MonoBehaviour
 
                 for(int i=0;i<20;i++)
                 {
-                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
-                    Destroy(Bombs[i]);
+                    Destroy(Bombs[0]);
                 }
 
                 yield break;
@@ -97,25 +96,28 @@ public class PlaceBomb : MonoBehaviour
             {   
                 if(i<count && group_id==data[0]["group_id"])
                 {
-                    
+                    Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(BomePrefab);
                     temp = new LatLng(data[i]["loc_x"],data[i]["loc_y"]);
                     Bombs[i].SetActive(true);
                     Bombs[i].AddComponent<bombCollision>();
+                    Bombs[i].AddComponent<BoxCollider>();
                     Bombs[i].GetComponent<bombCollision>().check_group=group_id;
                     Bombs[i].GetComponent<bombCollision>().pattern_id=data[i]["pattern_lock_id"];
-                    Debug.Log(Bombs[i].GetComponent<bombCollision>().pattern_id);
-                    Debug.Log(data[i]["order"]);
+                    
                     Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
                 }
                 else if(i<count && group_id!=data[0]["group_id"])
                 {
+                    Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
                     temp = new LatLng(data[i]["loc_x"],data[i]["loc_y"]);
                     Bombs[i].SetActive(true);
                     Bombs[i].AddComponent<bombCollision>();
+                    Bombs[i].AddComponent<BoxCollider>();
                     Bombs[i].GetComponent<bombCollision>().check_group=data[i]["group_id"];
                     Bombs[i].GetComponent<bombCollision>().pattern_id=data[i]["pattern_lock_id"];
+                    Debug.Log(Bombs[i].GetComponent<bombCollision>().check_group);
                     Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
                 }
                 else

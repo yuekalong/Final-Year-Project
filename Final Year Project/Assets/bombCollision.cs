@@ -25,10 +25,12 @@ public class bombCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
+        Debug.Log("collide");
         if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && group_id!=check_group)
         {
-            Debug.Log(pattern_id);
+            Debug.Log("collide ok");
             PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_id+" }");
+            PlayerPrefs.SetString("visable","y");
             SceneManager.LoadScene("NewPatternLock");
         }
     }

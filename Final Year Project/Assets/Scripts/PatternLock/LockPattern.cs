@@ -372,6 +372,7 @@ public class LockPattern : MonoBehaviour
         if(res["success"]){
             Debug.Log(res["data"]);
             SceneManager.LoadScene("MapScene");
+            PlayerPrefs.SetString("visable","n");
         }
     }
 
