@@ -50,7 +50,7 @@ public class LockPattern : MonoBehaviour
                 }
         */
         // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
-        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
+        //PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
         //PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 1589e619-931d-47ca-8296-cbda34af080f }");
 
         circles = new Dictionary<int, Circle>();
@@ -321,6 +321,7 @@ public class LockPattern : MonoBehaviour
         string locY=PlayerPrefs.GetString("loc_y","Empty");
         form.AddField("locX", locX); // get loc x
         form.AddField("locY", locY); // get loc y
+        form.AddField("groupID", "1");
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 
@@ -370,6 +371,7 @@ public class LockPattern : MonoBehaviour
         }
         if(res["success"]){
             Debug.Log(res["data"]);
+            SceneManager.LoadScene("MapScene");
         }
     }
 

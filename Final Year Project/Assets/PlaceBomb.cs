@@ -3,6 +3,10 @@ using UnityEngine;
 using Google.Maps.Coord;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using SimpleJSON;
+using System.Collections.Generic;
+using Google.Maps.Unity;
+
 
 
 namespace Google.Maps.Examples {
@@ -20,9 +24,16 @@ public class PlaceBomb : MonoBehaviour
 
     private bomb script;
 
+    private string group_id;
+
     public GameObject BomePrefab;
 
-    private GameObject[] Bombs = new GameObject[10];
+    public GameObject OppsBombPrefab;
+
+    private LatLng temp;
+
+    private GameObject[] Bombs = new GameObject[20];
+
 
     void Start()
     {
@@ -31,6 +42,14 @@ public class PlaceBomb : MonoBehaviour
         LocationFollower = GetComponent<LocationFollower>();
         GpsManager = GetComponent<GpsManager>();
         script = button.GetComponent<bomb>();
+
+        num_bomb=script.count+1;
+
+        group_id=PlayerPrefs.GetString("group_id","1");
+        StartCoroutine(GetBomb());
+
+
+
     }
 
     // Update is called once per frame
@@ -38,19 +57,77 @@ public class PlaceBomb : MonoBehaviour
     {
         if(num_bomb==script.count)
         {
-            Bombs[num_bomb]=GameObject.Instantiate(BomePrefab);
-            Bombs[num_bomb].AddComponent<BoxCollider>();
-            Bombs[num_bomb].AddComponent<bombCollision>();
-            Bombs[num_bomb].GetComponent<bombCollision>().index=num_bomb;
-            Bombs[num_bomb].transform.position = MapsService.Coords.FromLatLngToVector3(LocationFollower.currentLocation);
-            //LatLngs[num_bomb] = LocationFollower.currentLocation;
+            
             LatLng loc = LocationFollower.currentLocation;
             PlayerPrefs.SetString("loc_x",loc.Lat.ToString());
             PlayerPrefs.SetString("loc_y",loc.Lng.ToString());
-            num_bomb=num_bomb+1;
+            num_bomb+=1;
+            PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
             SceneManager.LoadScene("NewPatternLock");
         }
 
+    }
+    IEnumerator GetBomb(){
+        while(true)
+        {
+            string game_id = PlayerPrefs.GetString("game_id","1");
+            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress+"/bomb/"+game_id);
+
+            yield return req.SendWebRequest();
+
+            JSONNode res = JSON.Parse(req.downloadHandler.text);
+            JSONNode data = res["data"];
+
+
+            if(req.isNetworkError || req.isHttpError){
+                Debug.LogError(req.error);
+
+                for(int i=0;i<20;i++)
+                {
+                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
+                    Destroy(Bombs[i]);
+                }
+
+                yield break;
+            }
+            
+            int count = data[0]["count"];
+            
+            for(int i=0;i<20;i++)
+            {   
+                if(i<count && group_id==data[0]["group_id"])
+                {
+                    
+                    Bombs[i] = GameObject.Instantiate(BomePrefab);
+                    temp = new LatLng(data[i]["loc_x"],data[i]["loc_y"]);
+                    Bombs[i].SetActive(true);
+                    Bombs[i].AddComponent<bombCollision>();
+                    Bombs[i].GetComponent<bombCollision>().check_group=group_id;
+                    Bombs[i].GetComponent<bombCollision>().pattern_id=data[i]["pattern_lock_id"];
+                    Debug.Log(Bombs[i].GetComponent<bombCollision>().pattern_id);
+                    Debug.Log(data[i]["order"]);
+                    Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+                }
+                else if(i<count && group_id!=data[0]["group_id"])
+                {
+                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
+                    temp = new LatLng(data[i]["loc_x"],data[i]["loc_y"]);
+                    Bombs[i].SetActive(true);
+                    Bombs[i].AddComponent<bombCollision>();
+                    Bombs[i].GetComponent<bombCollision>().check_group=data[i]["group_id"];
+                    Bombs[i].GetComponent<bombCollision>().pattern_id=data[i]["pattern_lock_id"];
+                    Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+                }
+                else
+                {
+                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
+                    Destroy(Bombs[i]);
+                }
+                              
+            }
+
+            yield return new WaitForSeconds(5);
+        }
     }
 
 }

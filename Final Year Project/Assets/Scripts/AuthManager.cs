@@ -103,6 +103,7 @@ public class AuthManager : MonoBehaviour
             Debug.Log("Group Type: " + PlayerPrefs.GetString("group_type", "No Group Type"));
             Debug.Log("Opponent ID: " + PlayerPrefs.GetString("opponent_id", "No Opponent ID"));
             Debug.Log("Number of Bombs: " + PlayerPrefs.GetString("num_of_bombs", "No num_of_bombs"));
+            
 
             GameSceneManager.GoToLobby();
         }

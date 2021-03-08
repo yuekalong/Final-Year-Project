@@ -8,11 +8,13 @@ using UnityEngine.SceneManagement;
 
 public class bombCollision : MonoBehaviour
 {
+    private string group_id;
 
-    public int index;
+    public string check_group;
+    public string pattern_id;
     void Start()
     {
-
+        group_id = PlayerPrefs.GetString("group_id","1");
     }
 
 
@@ -23,9 +25,11 @@ public class bombCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)")
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && group_id!=check_group)
         {
-            //SceneManager.LoadScene("NewPatternLock");
+            Debug.Log(pattern_id);
+            PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_id+" }");
+            SceneManager.LoadScene("NewPatternLock");
         }
     }
 

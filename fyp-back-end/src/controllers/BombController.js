@@ -8,6 +8,7 @@ module.exports = {
       console.log("BombController.allBombs started!");
 
       const { gameID } = req.params;
+      
 
       return standardServiceResponse(res, next, bombServices.allBombs(gameID));
     } catch (err) {
@@ -22,12 +23,12 @@ module.exports = {
     try {
       console.log("BombController.createBomb started!");
 
-      const { gameID, input, bombID, locX, locY } = req.body;
+      const { gameID, input, bombID, locX, locY ,groupID} = req.body;
 
       return standardServiceResponse(
         res,
         next,
-        bombServices.createBomb(gameID, input, bombID, locX, locY)
+        bombServices.createBomb(gameID, input, bombID, locX, locY ,groupID)
       );
     } catch (err) {
       // catch exception and shows the error message
