@@ -72,8 +72,8 @@ public class InitGame : MonoBehaviour
         yield return AddProgress(0.1f);
 
         // set time limit
-        GameSceneManager.StartGame();
         TimeCountDown.StartCountDown(TimeSpan.FromMinutes(2));
+        GameSceneManager.StartGame();
     }
 
     bool AddProgress(float value)

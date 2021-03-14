@@ -19,8 +19,8 @@ public class Room : MonoBehaviour
     {
         Debug.Log(id);
         WWWForm form = new WWWForm();
-        form.AddField("gameID", id); // PlayerPrefs.GetString("game_id"));
-        form.AddField("userID", "2");// PlayerPrefs.GetString("id"));
+        form.AddField("gameID", id);
+        form.AddField("userID", PlayerPrefs.GetString("id"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/lobby/join", form);
 
@@ -38,6 +38,7 @@ public class Room : MonoBehaviour
             Debug.Log("Join Successfully!");
             PlayerPrefs.SetString("game_id", id);
             PlayerPrefs.SetString("group_id", res["data"]["group_id"]);
+            PlayerPrefs.SetString("group_type", res["data"]["group_type"]);
             GameSceneManager.GoToWaitingRoom();
         }
     }
