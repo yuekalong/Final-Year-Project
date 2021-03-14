@@ -7,11 +7,11 @@ module.exports = {
     try {
       console.log("GpsController.postLocation started!");
 
-      const { Lat, Lng ,Visable} = req.body;
+      const { Lat, Lng ,Visiable} = req.body;
       return standardServiceResponse(
         res,
         next,
-        gpsServices.postLocation(req.params.id,Lat,Lng,Visable)
+        gpsServices.postLocation(req.params.id,Lat,Lng,Visiable)
       );
     } catch (err) {
       // catch exception and shows the error message

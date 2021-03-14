@@ -34,7 +34,7 @@ namespace Google.Maps.Examples {
 
     private int buildHints=0;
 
-    public int visable=0;
+    public int visiable=0;
 
     
     public double[] x= new double[5];
@@ -252,7 +252,7 @@ namespace Google.Maps.Examples {
       Teammates[0].transform.position = MapsService.Coords.FromLatLngToVector3(TeammateLoc[0]);
       Teammates[1].transform.position = MapsService.Coords.FromLatLngToVector3(TeammateLoc[1]);
 
-      if(visable==1)
+      if(visiable==1)
       {
         OppsLoc[0] = new LatLng(x[2],y[2]);
         OppsLoc[1] = new LatLng(x[3],y[3]);
