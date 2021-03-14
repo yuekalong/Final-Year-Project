@@ -1,10 +1,11 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
-    postLocation: async function (userID,locx,locy) {
+    postLocation: async function (userID,locx,locy,visiable) {
     const group = await knex("user")
       .update("loc_x",locx)
       .update("loc_y",locy)
+      .update("visiable",visiable)
       .where("id", "=", userID);
     },
 
@@ -27,7 +28,7 @@ module.exports = {
         .from("group")
         .where("id", groupid)
 
-      const opps_loc = await knex.select("loc_x","loc_y")
+      const opps_loc = await knex.select("loc_x","loc_y","visiable")
         .from("user")
         .where("id", opps_id[0].user_id)
         .orWhere("id", opps_id[1].user_id)
@@ -43,5 +44,12 @@ module.exports = {
         .select("id","hint_words","loc_x","loc_y")
 
         return hints_id;
+    },
+    removeHintsLocation: async function (index) {
+      const hints_id = await knex("hint")
+        .update("loc_x",0)
+        .update("loc_y",0)
+        .where("id", index)
+
     },
 };

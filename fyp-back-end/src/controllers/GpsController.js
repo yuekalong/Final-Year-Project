@@ -7,11 +7,11 @@ module.exports = {
     try {
       console.log("GpsController.postLocation started!");
 
-      const { Lat, Lng } = req.body;
+      const { Lat, Lng ,Visiable} = req.body;
       return standardServiceResponse(
         res,
         next,
-        gpsServices.postLocation(req.params.id,Lat,Lng)
+        gpsServices.postLocation(req.params.id,Lat,Lng,Visiable)
       );
     } catch (err) {
       // catch exception and shows the error message
@@ -58,6 +58,23 @@ module.exports = {
         res,
         next,
         gpsServices.getHintsLocation(req.params.gameid)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
+  removeHintsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.removeHintsLocation started!");
+
+      const index = req.body.index;
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.removeHintsLocation(index)
       );
     } catch (err) {
       // catch exception and shows the error message

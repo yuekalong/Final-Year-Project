@@ -36,7 +36,7 @@ using UnityEngine.UI;
 
     public int haveHint =0;
 
-    public string hint_words="Empty";
+    public string hint_words="";
 
     private bool x=false;
 
@@ -58,10 +58,6 @@ using UnityEngine.UI;
         {
             InstructionsText.text=hint_words;
             PlayerPrefs.SetString("hint_stored",hint_words);
-        }
-        if(haveHint==0)
-        {
-            hint_words=PlayerPrefs.GetString("hint_stored","Empty");
         }
 
     }

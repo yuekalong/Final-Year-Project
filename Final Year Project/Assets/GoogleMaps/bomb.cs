@@ -13,14 +13,8 @@ public class bomb : MonoBehaviour
     {
         count=-1;
         text = GameObject.Find("Number");
-        text.GetComponent<Text>().text=(3).ToString();
         PlayerPrefs.SetInt("num_of_bombs", 3);
-    }
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update()
-    {
+        text.GetComponent<Text>().text=PlayerPrefs.GetInt("num_of_bombs", 3).ToString();
         if(text.GetComponent<Text>().text=="0")
         {
             GetComponent<Button>().interactable = false;
@@ -29,20 +23,31 @@ public class bomb : MonoBehaviour
         {
             GetComponent<Button>().interactable = true;
         }
-            
     }
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+
     public void addbomb()
     {
         num = PlayerPrefs.GetInt("num_of_bombs", 3);
-        Debug.Log(num);
-        if(num!=0)
-        {   num-=1;
-            PlayerPrefs.SetInt("num_of_bombs", num);
-            count+=1;
-            text.GetComponent<Text>().text=(num).ToString();
+
+        num-=1;
+        PlayerPrefs.SetInt("num_of_bombs", num);
+
+        count+=1;
+        
+        text.GetComponent<Text>().text=(num).ToString();
+
+        if(text.GetComponent<Text>().text=="0")
+        {
+            GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            GetComponent<Button>().interactable = true;
         }
         
-
             
     }
 }

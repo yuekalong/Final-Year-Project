@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,6 +40,7 @@ public class GpsManager : MonoBehaviour
 
             form.AddField("Lat", latLng.Lat.ToString());
             form.AddField("Lng", latLng.Lng.ToString());
+            form.AddField("Visiable", PlayerPrefs.GetString("visiable","n"));
 
             UnityWebRequest req = UnityWebRequest.Post("http://192.168.0.155:3000/gps/location/"+PlayerPrefs.GetString("id","1"),form);
 
@@ -99,6 +100,13 @@ public class GpsManager : MonoBehaviour
             location_script.y[3] = data[1]["loc_y"];
             location_script.x[4] = data[2]["loc_x"];
             location_script.y[4] = data[3]["loc_y"];
+
+            location_script.visiable=0;
+            for(int i =0;i<3;i++)
+            {
+                if(data[i]["visiable"]=="y")
+                    location_script.visiable=1;
+            }
 
             if(req.isNetworkError || req.isHttpError){
                 Debug.LogError(req.error);
