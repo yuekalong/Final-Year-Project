@@ -922,7 +922,7 @@ RectTransform:
   - {fileID: 1026990482}
   - {fileID: 1012376830}
   m_Father: {fileID: 2115191282}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1218,7 +1218,7 @@ RectTransform:
   m_LocalScale: {x: 1.18294, y: 1.18294, z: 1.18294}
   m_Children: []
   m_Father: {fileID: 2115191282}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1616,11 +1616,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1748961516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402e002f4e3e44ab1a4638ff0c05070e, type: 3}
+  m_Script: {fileID: 11500000, guid: b243ce40896c8419cb27d3b7955b3187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   username: {fileID: 846544930}
   password: {fileID: 1518937478}
+  confirmPassword: {fileID: 899538037}
   error: {fileID: 1038996329}
 --- !u!114 &1748961519
 MonoBehaviour:
@@ -1666,8 +1667,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1748961518}
-        m_TargetAssemblyTypeName: AuthManager, Assembly-CSharp
-        m_MethodName: Login
+        m_TargetAssemblyTypeName: RegisterManager, Assembly-CSharp
+        m_MethodName: Register
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

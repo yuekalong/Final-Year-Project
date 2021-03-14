@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    public static void GoToLogin(){
+        SceneManager.LoadScene("LoginScene");
+    }
+    
     public static void GoToRegistration(){
         SceneManager.LoadScene("RegistrationScene");
     }

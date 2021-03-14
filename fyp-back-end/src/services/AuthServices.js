@@ -8,12 +8,12 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   signUp: async function (username, password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
     return await knex("user").insert({
       id: uuidv4(),
       name: username,
-      password: hashedPassword,
+      password: password, //hashedPassword,
     });
   },
 };
