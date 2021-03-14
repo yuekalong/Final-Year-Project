@@ -22,12 +22,12 @@ module.exports = {
     try {
       console.log("BombController.createBomb started!");
 
-      const { gameID, input, bombID, locX, locY } = req.body;
+      const { gameID, groupID, input, bombID, locX, locY } = req.body;
 
       return standardServiceResponse(
         res,
         next,
-        bombServices.createBomb(gameID, input, bombID, locX, locY)
+        bombServices.createBomb(gameID, groupID, input, bombID, locX, locY)
       );
     } catch (err) {
       // catch exception and shows the error message

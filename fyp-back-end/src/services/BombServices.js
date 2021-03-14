@@ -17,7 +17,7 @@ module.exports = {
 
     return bombs;
   },
-  createBomb: async function (gameID, input, bombID, locX, locY) {
+  createBomb: async function (gameID, groupID, input, bombID, locX, locY) {
     const lockID = uuidv4();
     // insert lock order in `pattern_lock` table
     await knex("pattern_lock").insert({ id: lockID, order: input });
@@ -29,6 +29,7 @@ module.exports = {
       loc_x: locX,
       loc_y: locY,
       pattern_lock_id: lockID,
+      group_id: groupID,
     });
   },
   patternLockOrder: async function (lockID) {

@@ -24,25 +24,26 @@ public class SocketManager : MonoBehaviour
         if (socket != null)
         {
             // set for open message
-            socket.On("open", openEvent);
+            socket.On("open", OpenEvent);
 
             // set for error message
-            socket.On("error", errorEvent);
+            socket.On("error", ErrorEvent);
 
             // set for close message
-            socket.On("close", closeEvent);
+            socket.On("close", CloseEvent);
 
 
             // chatroom
-            socket.On("receive-msg", receiveMsg);
+            socket.On("receive-msg", ReceiveMsg);
 
             // waiting room
-            socket.On("player-count", updatePlayerCount);
+            socket.On("player-count", UpdatePlayerCount);
+            socket.On("start-game", InitGame);
         }
     }
 
     #region socketEvent
-    private void openEvent(SocketIOEvent ev)
+    private void OpenEvent(SocketIOEvent ev)
     {
         // ensure it connected the socket and have the sid
         if (socket.sid != null)
@@ -65,12 +66,12 @@ public class SocketManager : MonoBehaviour
             }
         }
     }
-    private void errorEvent(SocketIOEvent ev)
+    private void ErrorEvent(SocketIOEvent ev)
     {
         Debug.Log("Socket.io Error!\n");
         Debug.Log(ev);
     }
-    private void closeEvent(SocketIOEvent ev)
+    private void CloseEvent(SocketIOEvent ev)
     {
         Debug.Log("Closed Socket.io!");
     }
@@ -91,7 +92,7 @@ public class SocketManager : MonoBehaviour
         waitingRoomDisplay = inputWaitingRoomDisplay;
     }
 
-    public void updatePlayerCount(SocketIOEvent ev)
+    public void UpdatePlayerCount(SocketIOEvent ev)
     {
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
@@ -101,6 +102,10 @@ public class SocketManager : MonoBehaviour
 
     public void GetCurrentWaitingCount(){
         socket.Emit("get-current-player-count", new JSONObject(user));
+    }
+
+    public void InitGame(SocketIOEvent ev){
+        GameSceneManager.InitGame();
     }
     #endregion
 
@@ -134,7 +139,7 @@ public class SocketManager : MonoBehaviour
         socket.Emit("send-msg", new JSONObject(data));
     }
 
-    public void receiveMsg(SocketIOEvent ev)
+    public void ReceiveMsg(SocketIOEvent ev)
     {
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;

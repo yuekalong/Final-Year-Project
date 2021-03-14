@@ -78,7 +78,7 @@ module.exports = {
         .update({ game_status: "waiting" })
         .where("id", "=", userID);
 
-      return true;
+      return { group_id: hunterID };
     }
     // if no protector group
     else if (!roomDetail.protector_group_id) {
@@ -100,7 +100,7 @@ module.exports = {
         .update({ game_status: "waiting" })
         .where("id", "=", userID);
 
-      return true;
+      return { group_id: protectorID };
     }
     // if both group having at least 1 person
     else {
@@ -123,7 +123,7 @@ module.exports = {
           .update({ game_status: "waiting" })
           .where("id", "=", userID);
 
-        return true;
+        return { group_id: roomDetail.hunter_group_id };
       }
 
       const protectorCount = (
@@ -145,7 +145,7 @@ module.exports = {
           .update({ game_status: "waiting" })
           .where("id", "=", userID);
 
-        return true;
+        return { group_id: roomDetail.protector_group_id };
       }
 
       // if room full

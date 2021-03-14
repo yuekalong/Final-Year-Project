@@ -3,6 +3,8 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   getHistory: async function (connection, user) {
+    console.log(user);
+
     const roomID = (
       await knex("group").first("id").where("user_id", "=", user.id)
     ).id;
