@@ -9,16 +9,14 @@ public class GameSceneManager : MonoBehaviour
 {
     public static void GoToLobby()
     {
-        string status = PlayerPrefs.GetString("status", "No Game Status");
+        // TODO: care about the status, retrieve back the data if the player is still in game
 
-        if(status == "waiting"){
-            Debug.Log("Go To Lobby!");
-        }
-        else if(status == "playing"){
-            // StartGame();
-            InitGame();
-        }
+        SceneManager.LoadScene("LobbyScene");
     } 
+
+    public static void GoToWaitingRoom(){
+        SceneManager.LoadScene("WaitingRoomScene");
+    }
 
     public static void InitGame(){
         SceneManager.LoadScene("LoadingScene");
@@ -27,16 +25,15 @@ public class GameSceneManager : MonoBehaviour
     public static void StartGame()
     {
         SceneManager.LoadScene("MapScene");
-        // SceneManager.LoadScene("Playground");
-    }
-
-    public static void GoToChatroom()
-    {
-        SceneManager.LoadScene("ChatroomScene");
     }
 
     public static void GoToMap()
     {
         SceneManager.LoadScene("MapScene");
+    }
+
+    public static void GoToChatroom()
+    {
+        SceneManager.LoadScene("ChatroomScene");
     }
 }

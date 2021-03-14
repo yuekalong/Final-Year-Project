@@ -20,6 +20,10 @@ module.exports = function (io) {
       waitingRoomController.joinRoom(connection, user);
     });
 
+    socket.on("get-current-player-count", (user) => {
+      waitingRoomController.getCurrentPlayerCount(connection, user);
+    });
+
     // when disconnect
     socket.on("disconnect", function () {
       console.log("Disconnect Socket.io!");

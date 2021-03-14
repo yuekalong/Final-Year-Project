@@ -8,12 +8,7 @@ using SocketIO;
 public class SocketManager : MonoBehaviour
 {
     SocketIOComponent socket;
-    private Text chatroomDisplay;
-    private ScrollRect scrollRect;
     Dictionary<string, string> user = new Dictionary<string, string>();
-
-    public int unseenMsg;
-
     private string sceneName;
 
     // Start is called before the first frame update
@@ -22,6 +17,7 @@ public class SocketManager : MonoBehaviour
     {
         socket = GetComponent<SocketIOComponent>();
         user["id"] = PlayerPrefs.GetString("id", "No ID");
+        user["game_id"] = PlayerPrefs.GetString("game_id", "No Game ID");
         user["name"] = PlayerPrefs.GetString("name", "No Name");
         sceneName = SceneManager.GetActiveScene().name;
         
@@ -36,17 +32,16 @@ public class SocketManager : MonoBehaviour
             // set for close message
             socket.On("close", closeEvent);
 
+
+            // chatroom
             socket.On("receive-msg", receiveMsg);
+
+            // waiting room
+            socket.On("player-count", updatePlayerCount);
         }
     }
 
-    public void SetChatroomDisplay(Text inputChatroomDisplay, ScrollRect inputScrollRect)
-    {
-        chatroomDisplay = inputChatroomDisplay;
-        scrollRect = inputScrollRect;
-    }
-
-    #region event
+    #region socketEvent
     private void openEvent(SocketIOEvent ev)
     {
         // ensure it connected the socket and have the sid
@@ -81,6 +76,39 @@ public class SocketManager : MonoBehaviour
     }
     #endregion
 
+    #region waitingRoomEvent
+    private Text waitingRoomDisplay;
+
+    private void joinWaitingRoom()
+    {
+        socket.Emit("join-waiting-room", new JSONObject(user));
+
+        Debug.Log("Waiting Room Join!");
+    }
+
+    public void SetWaitingRoomDisplay(Text inputWaitingRoomDisplay)
+    {
+        waitingRoomDisplay = inputWaitingRoomDisplay;
+    }
+
+    public void updatePlayerCount(SocketIOEvent ev)
+    {
+        Debug.Log("Receive Message: " + ev.data);
+        JSONObject data = ev.data;
+
+        waitingRoomDisplay.text = data["count"] + " / " + data["maximum_count"];
+    }
+
+    public void GetCurrentWaitingCount(){
+        socket.Emit("get-current-player-count", new JSONObject(user));
+    }
+    #endregion
+
+    #region chatroomEvent
+    private Text chatroomDisplay;
+    private ScrollRect scrollRect;
+    public int unseenMsg;
+
     private void joinChatoom()
     {
         socket.Emit("join-chatroom", new JSONObject(user));
@@ -88,11 +116,10 @@ public class SocketManager : MonoBehaviour
         Debug.Log("Chatroom Join!");
     }
 
-    private void joinWaitingRoom()
+    public void SetChatroomDisplay(Text inputChatroomDisplay, ScrollRect inputScrollRect)
     {
-        socket.Emit("join-waiting-room", new JSONObject(user));
-
-        Debug.Log("Waiting Room Join!");
+        chatroomDisplay = inputChatroomDisplay;
+        scrollRect = inputScrollRect;
     }
 
     public void sendMsg(string msg)
@@ -142,4 +169,5 @@ public class SocketManager : MonoBehaviour
         socket.Emit("get-history", new JSONObject(user));
         unseenMsg = 0;
     }
+    #endregion
 }

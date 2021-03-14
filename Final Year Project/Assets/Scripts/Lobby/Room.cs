@@ -36,6 +36,8 @@ public class Room : MonoBehaviour
         if (res["success"])
         {
             Debug.Log("Join Successfully!");
+            PlayerPrefs.SetString("game_id", id);
+            GameSceneManager.GoToWaitingRoom();
         }
     }
 }
