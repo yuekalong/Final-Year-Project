@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    public static void GoToRegistration(){
+        SceneManager.LoadScene("RegistrationScene");
+    }
+
     public static void GoToLobby()
     {
         // TODO: care about the status, retrieve back the data if the player is still in game
