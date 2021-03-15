@@ -24,7 +24,6 @@ module.exports = {
   },
 
   joinRoom: async function (connection, user) {
-    console.log(user.id);
     const roomID = (
       await knex("group").first("id").where("user_id", "=", user.id)
     ).id;
