@@ -37,7 +37,7 @@ public class PlaceBomb : MonoBehaviour
 
     void Start()
     {
-        button = GameObject.Find("Bombs");
+        button = GameObject.Find("BombButton");
         MapsService = GetComponent<MapsService>();
         LocationFollower = GetComponent<LocationFollower>();
         GpsManager = GetComponent<GpsManager>();

@@ -37,8 +37,6 @@ public class Room : MonoBehaviour
         {
             Debug.Log("Join Successfully!");
             PlayerPrefs.SetString("game_id", id);
-            PlayerPrefs.SetString("group_id", res["data"]["group_id"]);
-            PlayerPrefs.SetString("group_type", res["data"]["group_type"]);
             GameSceneManager.GoToWaitingRoom();
         }
     }
