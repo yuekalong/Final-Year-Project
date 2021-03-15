@@ -30,7 +30,7 @@ public class bombCollision : MonoBehaviour
         {
             Debug.Log("collide ok");
             PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_id+" }");
-            PlayerPrefs.SetString("visiable","y");
+            PlayerPrefs.SetString("visible","y");
             Destroy(this);
             SceneManager.LoadScene("NewPatternLock");
             
