@@ -314,14 +314,14 @@ public class LockPattern : MonoBehaviour
 
         }
         WWWForm form = new WWWForm();
-        form.AddField("gameID", "1"); // PlayerPrefs.GetString("game_id"));
+        form.AddField("gameID", PlayerPrefs.GetString("game_id"));
         form.AddField("input", inputString);
         form.AddField("bombID", "1"); // get bomb id
         string locX=PlayerPrefs.GetString("loc_x","Empty");
         string locY=PlayerPrefs.GetString("loc_y","Empty");
         form.AddField("locX", locX); // get loc x
         form.AddField("locY", locY); // get loc y
-        form.AddField("groupID", "1");
+        form.AddField("groupID", PlayerPrefs.GetString("group_id"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 
