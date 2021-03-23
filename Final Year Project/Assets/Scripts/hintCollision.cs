@@ -44,7 +44,7 @@ public class hintCollision : MonoBehaviour
 
         form.AddField("index",index);
 
-        UnityWebRequest req = UnityWebRequest.Post("http://192.168.0.155:3000/gps/hintRemove",form);
+        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/hintRemove",form);
 
         yield return req.SendWebRequest();
 

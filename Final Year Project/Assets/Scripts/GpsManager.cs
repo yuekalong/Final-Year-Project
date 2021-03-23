@@ -42,7 +42,7 @@ public class GpsManager : MonoBehaviour
             form.AddField("Lng", latLng.Lng.ToString());
             form.AddField("Visible", PlayerPrefs.GetString("visible","n"));
 
-            UnityWebRequest req = UnityWebRequest.Post("http://192.168.0.155:3000/gps/location/"+PlayerPrefs.GetString("id","1"),form);
+            UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/location/"+PlayerPrefs.GetString("id","1"),form);
 
             // stop the function and return the state to Login(), if access this function again will start from here
             yield return req.SendWebRequest();
@@ -60,7 +60,7 @@ public class GpsManager : MonoBehaviour
         while(true)
         {
 
-            UnityWebRequest req = UnityWebRequest.Get("http://192.168.0.155:3000/gps/locationTeammates/"+PlayerPrefs.GetString("id","1")+"/"+PlayerPrefs.GetString("group_id", "1"));
+            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/locationTeammates/"+PlayerPrefs.GetString("id","1")+"/"+PlayerPrefs.GetString("group_id", "1"));
 
             // stop the function and return the state to Login(), if access this function again will start from here
             yield return req.SendWebRequest();
@@ -86,7 +86,7 @@ public class GpsManager : MonoBehaviour
         while(true)
         {
 
-            UnityWebRequest req = UnityWebRequest.Get("http://192.168.0.155:3000/gps/locationOpps/"+PlayerPrefs.GetString("opponent_id", "2"));
+            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/locationOpps/"+PlayerPrefs.GetString("opponent_id", "2"));
 
             // stop the function and return the state to Login(), if access this function again will start from here
             yield return req.SendWebRequest();
@@ -120,7 +120,7 @@ public class GpsManager : MonoBehaviour
     IEnumerator HintsGpsUpdate(){
         while(true)
         {
-            UnityWebRequest req = UnityWebRequest.Get("http://192.168.0.155:3000/gps/hints/"+PlayerPrefs.GetString("game_id", "1"));
+            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/hints/"+PlayerPrefs.GetString("game_id", "1"));
 
             // stop the function and return the state to Login(), if access this function again will start from here
             yield return req.SendWebRequest();

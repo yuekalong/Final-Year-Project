@@ -51,5 +51,5 @@ app.use(waitingRoomRouter(io));
 // testing route
 app.get("/", async (req, res) => {
   // const result = await knex("chatroom_history").select("*");
-  res.send({ status: true, data: result });
+  res.send({ status: true, data: "Connection ready" });
 });
