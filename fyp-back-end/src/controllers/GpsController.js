@@ -22,6 +22,8 @@ module.exports = {
   getTeamLocation: function (req, res, next) {
     try {
       console.log("GpsController.getTeamLocation started!");
+      console.log(req.params.groupid);
+      console.log(req.params.playerid);
 
 
       return standardServiceResponse(
