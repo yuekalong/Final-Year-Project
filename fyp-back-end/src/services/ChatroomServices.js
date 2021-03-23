@@ -5,9 +5,7 @@ module.exports = {
   getHistory: async function (connection, user) {
     console.log(user);
 
-    const roomID = (
-      await knex("group").first("id").where("user_id", "=", user.id)
-    ).id;
+    const roomID = user.group_id;
 
     const records = await knex("chatroom_history")
       .select("user.name", "chatroom_history.linetxt")
@@ -24,9 +22,7 @@ module.exports = {
   },
 
   joinRoom: async function (connection, user) {
-    const roomID = (
-      await knex("group").first("id").where("user_id", "=", user.id)
-    ).id;
+    const roomID = user.group_id;
 
     // join the room
     connection.socket.join(roomID);
@@ -36,9 +32,7 @@ module.exports = {
     // this.getHistory(connection, roomID, user.socketID);
   },
   sendMsg: async function (connection, data) {
-    const roomID = (
-      await knex("group").first("id").where("user_id", "=", data.id)
-    ).id;
+    const roomID = data.group_id;
 
     await knex("chatroom_history").insert({
       id: uuid(),
