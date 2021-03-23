@@ -36,6 +36,13 @@ public class InitGame : MonoBehaviour
 
     IEnumerator Initialize()
     {
+        // get player details
+        yield return StartCoroutine(GetBasicGameInfo());
+
+        yield return AddProgress(0.1f);
+        yield return AddProgress(0.1f);
+        yield return AddProgress(0.1f);
+
         // get the player type (hunter or protector)
         // set BLE
         DontDestroyOnLoad(networking);
@@ -68,10 +75,7 @@ public class InitGame : MonoBehaviour
 
         // set socket
         DontDestroyOnLoad(socket);
-        yield return AddProgress(0.1f);
-        StartCoroutine(GetBasicGameInfo());
-        yield return AddProgress(0.1f);
-        yield return AddProgress(0.1f);
+    
         yield return AddProgress(0.1f);
         yield return AddProgress(0.1f);
 

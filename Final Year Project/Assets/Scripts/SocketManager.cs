@@ -16,9 +16,13 @@ public class SocketManager : MonoBehaviour
     void Start()
     {
         socket = GetComponent<SocketIOComponent>();
+
+        // set ids
         user["id"] = PlayerPrefs.GetString("id", "No ID");
         user["game_id"] = PlayerPrefs.GetString("game_id", "No Game ID");
+        user["group_id"] = PlayerPrefs.GetString("group_id", "No Game ID");
         user["name"] = PlayerPrefs.GetString("name", "No Name");
+
         sceneName = SceneManager.GetActiveScene().name;
         
         if (socket != null)
