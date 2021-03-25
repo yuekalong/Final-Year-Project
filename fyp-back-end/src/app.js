@@ -48,8 +48,14 @@ app.use("/bomb", bombRouter);
 app.use(chatroomRouter(io));
 app.use(waitingRoomRouter(io));
 
+require("dotenv").config();
+
 // testing route
 app.get("/", async (req, res) => {
   // const result = await knex("chatroom_history").select("*");
-  res.send({ status: true, data: "Connection ready" });
+  res.send({
+    status: true,
+    data: "Connection ready",
+    MAXIMUM_NUMBER_OF_PLAYER: process.env.MAXIMUM_NUMBER_OF_PLAYER,
+  });
 });
