@@ -1,12 +1,14 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
-  postLocation: async function (userID, locx, locy, visiable) {
+  postLocation: async function (userID, locx, locy, visible) {
     const group = await knex("user")
       .update("loc_x", locx)
       .update("loc_y", locy)
-      .update("visiable", visiable)
+      .update("visible", visible == "true")
       .where("id", "=", userID);
+
+    return group;
   },
 
   getTeamLocation: async function (playerid, groupid) {
@@ -15,14 +17,17 @@ module.exports = {
       .from("group")
       .where("id", groupid)
       .whereNot("user_id", playerid);
-    const teammates_loc = await knex
-      .select("loc_x", "loc_y")
-      .from("user")
-      .where("id", teammates_id[0].user_id)
-      .orWhere("id", teammates_id[1].user_id);
-    console.log(teammates_loc);
 
-    return teammates_loc;
+    // required number of player is 6
+
+    // const teammates_loc = await knex
+    //   .select("loc_x", "loc_y")
+    //   .from("user")
+    //   .where("id", teammates_id[0].user_id)
+    //   .orWhere("id", teammates_id[1].user_id);
+
+    // return teammates_loc;
+    return teammates_id;
   },
 
   getOppLocation: async function (groupid) {
@@ -31,13 +36,13 @@ module.exports = {
       .from("group")
       .where("id", groupid);
 
+    // required number of player is 6
     const opps_loc = await knex
-      .select("loc_x", "loc_y", "visiable")
+      .select("loc_x", "loc_y", "visible")
       .from("user")
-      .where("id", opps_id[0].user_id)
-      .orWhere("id", opps_id[1].user_id)
-      .orWhere("id", opps_id[2].user_id);
-    console.log(opps_loc);
+      .where("id", opps_id[0].user_id);
+    // .orWhere("id", opps_id[1].user_id)
+    // .orWhere("id", opps_id[2].user_id);
 
     return opps_loc;
   },
@@ -54,5 +59,7 @@ module.exports = {
       .update("loc_x", 0)
       .update("loc_y", 0)
       .where("id", index);
+
+    return hints_id;
   },
 };

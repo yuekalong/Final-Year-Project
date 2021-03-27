@@ -7,11 +7,11 @@ module.exports = {
     try {
       console.log("GpsController.postLocation started!");
 
-      const { Lat, Lng ,Visiable} = req.body;
+      const { Lat, Lng, Visible } = req.body;
       return standardServiceResponse(
         res,
         next,
-        gpsServices.postLocation(req.params.id,Lat,Lng,Visiable)
+        gpsServices.postLocation(req.params.id, Lat, Lng, Visible)
       );
     } catch (err) {
       // catch exception and shows the error message
@@ -23,11 +23,10 @@ module.exports = {
     try {
       console.log("GpsController.getTeamLocation started!");
 
-
       return standardServiceResponse(
         res,
         next,
-        gpsServices.getTeamLocation(req.params.playerid,req.params.groupid)
+        gpsServices.getTeamLocation(req.params.playerid, req.params.groupid)
       );
     } catch (err) {
       // catch exception and shows the error message
