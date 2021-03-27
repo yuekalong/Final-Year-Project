@@ -54,6 +54,8 @@ public class InitGame : MonoBehaviour
 
 
         networking.Initialize();
+        Debug.Log("Start initialize BLE");
+
         yield return AddProgress(0.1f);
         // if network is ready
         bool startedServer = false;
@@ -64,7 +66,7 @@ public class InitGame : MonoBehaviour
                 networking.StartServer();
                 startedServer = true;
             }
-            else if (groupType == "protector")
+            else if (networking != null && groupType == "protector")
             {
                 yield return AddProgress(0.2f);
                 break;
