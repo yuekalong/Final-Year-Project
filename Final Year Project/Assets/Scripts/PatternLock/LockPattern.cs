@@ -263,7 +263,7 @@ public class LockPattern : MonoBehaviour
 
     IEnumerator HintValidate(){        
         // generate the query path
-        string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
+        string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id","1") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
         
         string inputString = "";
         
@@ -315,14 +315,14 @@ public class LockPattern : MonoBehaviour
 
         }
         WWWForm form = new WWWForm();
-        form.AddField("gameID", PlayerPrefs.GetString("game_id"));
+        form.AddField("gameID", PlayerPrefs.GetString("game_id","1"));
         form.AddField("input", inputString);
         form.AddField("bombID", "1"); // get bomb id
         string locX=PlayerPrefs.GetString("loc_x","Empty");
         string locY=PlayerPrefs.GetString("loc_y","Empty");
         form.AddField("locX", locX); // get loc x
         form.AddField("locY", locY); // get loc y
-        form.AddField("groupID", PlayerPrefs.GetString("group_id"));
+        form.AddField("groupID", PlayerPrefs.GetString("group_id","1"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 

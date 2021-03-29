@@ -145,7 +145,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(10);
         }
     }
     

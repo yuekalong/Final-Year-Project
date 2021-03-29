@@ -31,7 +31,7 @@ module.exports = {
     bombs[0]["count"] = count[0]["count(*)"];
     }
     catch(err) {
-      console.log(bombs);
+      console.log(bombs[0]["count"]);
     }
 
 
