@@ -64,9 +64,7 @@ module.exports = {
     // if no hunter group
     if (!roomDetail.hunter_group_id) {
       // generate hunter id
-      // const hunterID = uuidv4();
       const hunterID = await nanoid();
-      console.log(hunterID);
 
       // insert hunter group
       await knex("group").insert({
@@ -91,7 +89,6 @@ module.exports = {
     // if no protector group
     else if (!roomDetail.protector_group_id) {
       // generate protector id
-      // const protectorID = uuidv4();
       const protectorID = await nanoid();
 
       // insert protector group
