@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using Google.Maps.Coord;
-using Google.Maps.Unity;
 using SimpleJSON;
 
 
@@ -14,7 +12,7 @@ public class Treasure : MonoBehaviour
 
     public GameObject inputfield;
 
-    public GameObject input;
+    public InputField input;
 
     bool  show=false;
     void Start()
@@ -22,11 +20,6 @@ public class Treasure : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log(input.GetComponent<Text>().text);
-    }
 
     public void onclick()
     {
@@ -42,8 +35,9 @@ public class Treasure : MonoBehaviour
     while(true)
     {
         WWWForm form = new WWWForm();
-
-        form.AddField("input",input.GetComponent<Text>().text);
+        string user_input = input.text;
+        
+        form.AddField("input",user_input);
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/treasure/"+PlayerPrefs.GetString("game_id", "1"),form);
 
@@ -55,7 +49,7 @@ public class Treasure : MonoBehaviour
 
         if(data==false)
         {
-            input.GetComponent<Text>().text="Wrong Input";
+            input.text="Wrong Input";
         }
 
         if(req.isNetworkError || req.isHttpError){

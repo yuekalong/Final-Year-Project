@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 135384452}
   - component: {fileID: 135384451}
   - component: {fileID: 135384450}
+  - component: {fileID: 135384453}
   m_Layer: 5
   m_Name: ConfirmBtn
   m_TagString: Untagged
@@ -217,15 +218,15 @@ RectTransform:
   m_GameObject: {fileID: 135384448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.5867913, y: 3.4810455, z: 1.9065999}
+  m_LocalScale: {x: 0.7202393, y: 0.5590742, z: 1.9065999}
   m_Children:
   - {fileID: 855661988}
-  m_Father: {fileID: 1449437024}
-  m_RootOrder: 1
+  m_Father: {fileID: 454087350}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 284, y: 246.2991}
+  m_AnchoredPosition: {x: 30.742981, y: -1.5382385}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &135384450
@@ -271,9 +272,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClose
+      - m_Target: {fileID: 135384453}
+        m_TargetAssemblyTypeName: Treasure, Assembly-CSharp
+        m_MethodName: submit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -321,6 +322,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135384448}
   m_CullTransparentMesh: 0
+--- !u!114 &135384453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135384448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d8281db87ebb1342be0ccd9bd1986c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputfield: {fileID: 454087349}
 --- !u!1 &183523846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,8 +1775,9 @@ RectTransform:
   m_Children:
   - {fileID: 910452540}
   - {fileID: 1033045367}
+  - {fileID: 135384449}
   m_Father: {fileID: 1449437024}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2831,6 +2846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 3184155899022973449, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
 --- !u!1 &798973964
@@ -3679,7 +3698,7 @@ GameObject:
   - component: {fileID: 1033045369}
   - component: {fileID: 1033045368}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TreasureInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4563,7 +4582,6 @@ RectTransform:
   m_LocalScale: {x: 0.5494, y: 0.5494, z: 0.5494}
   m_Children:
   - {fileID: 656222712}
-  - {fileID: 135384449}
   - {fileID: 454087350}
   m_Father: {fileID: 1046157359}
   m_RootOrder: 8
@@ -4678,7 +4696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8281db87ebb1342be0ccd9bd1986c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 454087349}
+  inputfield: {fileID: 454087349}
 --- !u!1 &1476525128
 GameObject:
   m_ObjectHideFlags: 0

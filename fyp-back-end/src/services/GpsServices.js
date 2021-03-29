@@ -20,14 +20,14 @@ module.exports = {
 
     // required number of player is 6
 
-    // const teammates_loc = await knex
-    //   .select("loc_x", "loc_y")
-    //   .from("user")
-    //   .where("id", teammates_id[0].user_id)
-    //   .orWhere("id", teammates_id[1].user_id);
+     const teammates_loc = await knex
+       .select("loc_x", "loc_y")
+       .from("user")
+       .where("id", teammates_id[0].user_id)
+       .orWhere("id", teammates_id[1].user_id);
 
-    // return teammates_loc;
-    return teammates_id;
+     return teammates_loc;
+    //return teammates_id;
   },
 
   getOppLocation: async function (groupid) {
@@ -40,9 +40,9 @@ module.exports = {
     const opps_loc = await knex
       .select("loc_x", "loc_y", "visible")
       .from("user")
-      .where("id", opps_id[0].user_id);
-    // .orWhere("id", opps_id[1].user_id)
-    // .orWhere("id", opps_id[2].user_id);
+      .where("id", opps_id[0].user_id)
+      .orWhere("id", opps_id[1].user_id)
+      .orWhere("id", opps_id[2].user_id);
 
     return opps_loc;
   },

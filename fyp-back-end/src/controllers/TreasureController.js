@@ -7,8 +7,8 @@ module.exports = {
     try {
       console.log("TreaasureController.validateTreasure started!");
       const { gameID } = req.params;
-      const { input } = req.query;
-      console.log(input);
+      const { input } = req.body;
+
       return standardServiceResponse(
         res,
         next,
