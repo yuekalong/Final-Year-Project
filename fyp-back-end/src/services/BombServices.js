@@ -16,7 +16,9 @@ module.exports = {
         "game_bombs_mapping.pattern_lock_id"
       );
 
-    const count = await knex("game_bombs_mapping")
+    try
+    {
+      const count = await knex("game_bombs_mapping")
       .count("*")
       .where("game_id", gameID)
       .join("bomb", "bomb.id", "=", "game_bombs_mapping.bomb_id")
@@ -27,6 +29,11 @@ module.exports = {
         "game_bombs_mapping.pattern_lock_id"
       );
     bombs[0]["count"] = count[0]["count(*)"];
+    }
+    catch(err) {
+      console.log(bombs);
+    }
+
 
     return bombs;
   },
