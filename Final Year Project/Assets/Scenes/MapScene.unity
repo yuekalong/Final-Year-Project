@@ -2051,10 +2051,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b9baff8f6a459f9b6386c10876a39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TEAM: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+  TEAM: {fileID: 1997953001238138, guid: 89eda14d2b3bd4ef3ab67c3e8578128d, type: 3}
   HINT: {fileID: 2938277103828573581, guid: 03b993560aeea4c618f1c3785a025026, type: 3}
   OPP: {fileID: 1144978573833690, guid: bc0b15b73807884489b6c6682a3fae14, type: 3}
-  Player: {fileID: 0}
+  Player: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
   LatLngs: []
   visible: 0
   x:

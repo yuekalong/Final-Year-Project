@@ -15,6 +15,6 @@ router.get("/:gameID/group/:groupID", hintController.groupArchiveHint);
 router.get("/:gameID/pattern-lock/:hintID", hintController.patternLockOrder);
 
 // validate the input pattern
-router.get("/:gameID/validate-pattern", hintController.validatePattern);
+router.put("/:gameID/validate-pattern", hintController.validatePattern);
 
 module.exports = router;

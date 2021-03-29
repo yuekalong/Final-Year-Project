@@ -135,8 +135,8 @@ public class SocketManager : MonoBehaviour
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
         data["id"] = user["id"];
-        data["socketID"] = user["socketID"];
         data["name"] = user["name"];
+        data["group_id"] = user["group_id"];
         data["msg"] = msg;
         Debug.Log("Send Message: " + msg);
 

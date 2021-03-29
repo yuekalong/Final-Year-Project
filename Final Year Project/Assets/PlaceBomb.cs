@@ -63,7 +63,7 @@ public class PlaceBomb : MonoBehaviour
             PlayerPrefs.SetString("loc_y",loc.Lng.ToString());
             num_bomb+=1;
             PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
-            SceneManager.LoadScene("NewPatternLock");
+            SceneManager.LoadScene("PatternLock");
         }
 
     }

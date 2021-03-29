@@ -15,6 +15,6 @@ router.post("/create-bomb", bombController.createBomb);
 router.get("/:lockID/pattern-lock", bombController.patternLockOrder);
 
 //  validate the input pattern
-router.get("/:lockID/validate-pattern", bombController.validatePattern);
+router.put("/:lockID/validate-pattern", bombController.validatePattern);
 
 module.exports = router;
