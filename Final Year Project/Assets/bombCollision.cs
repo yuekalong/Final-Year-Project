@@ -32,7 +32,7 @@ public class bombCollision : MonoBehaviour
             PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_id+" }");
             PlayerPrefs.SetString("visible","y");
             Destroy(this);
-            SceneManager.LoadScene("NewPatternLock");
+            SceneManager.LoadScene("PatternLock");
             
         }
     }
