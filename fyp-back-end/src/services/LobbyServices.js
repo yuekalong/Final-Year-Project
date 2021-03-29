@@ -9,7 +9,6 @@ module.exports = {
   getRoom: async function () {
     const gameInfo = await knex("game")
       .select("game.id as game_id", "hunter_group_id", "protector_group_id")
-
       .where("status", "=", "waiting");
 
     let rooms = [];

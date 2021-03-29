@@ -43,6 +43,9 @@ module.exports = {
     });
 
     if (totalCount == parseInt(process.env.MAXIMUM_NUMBER_OF_PLAYER)) {
+      // change the room status
+      await knex("game").update({ status: "playing" }).where("id", "=", roomID);
+
       connection.io.to(roomID).emit("start-game");
     }
   },
