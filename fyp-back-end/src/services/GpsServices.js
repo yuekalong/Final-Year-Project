@@ -51,14 +51,14 @@ module.exports = {
       .where("game_hints_mapping.game_id", gameid)
       .join("hint", "hint.id", "=", "game_hints_mapping.hint_id")
       .select("id", "hint_words", "loc_x", "loc_y");
-
+    console.log(hints_id);
     return hints_id;
   },
-  removeHintsLocation: async function (index) {
-    const hints_id = await knex("hint")
-      .update("loc_x", 0)
-      .update("loc_y", 0)
-      .where("id", index);
+  removeHintsLocation: async function (index,game_id) {
+    const hints_id = await knex("game_hints_mapping")
+      .update("hint_id", 0)
+      .where("hint_id", index)
+      .andWhere("game_id", game_id);
 
     return hints_id;
   },

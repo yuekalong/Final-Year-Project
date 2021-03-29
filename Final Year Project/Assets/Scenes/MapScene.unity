@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputfield: {fileID: 454087349}
+  input: {fileID: 454087351}
 --- !u!1 &183523846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,7 +1834,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 5
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -4697,6 +4698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputfield: {fileID: 454087349}
+  input: {fileID: 0}
 --- !u!1 &1476525128
 GameObject:
   m_ObjectHideFlags: 0

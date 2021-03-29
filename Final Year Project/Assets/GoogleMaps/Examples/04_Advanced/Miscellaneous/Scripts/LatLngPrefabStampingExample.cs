@@ -19,8 +19,11 @@ namespace Google.Maps.Examples {
     public GameObject HINT;
     public GameObject OPP;
     public GameObject Player;
+    public GameObject ITEM;
 
     private GameObject[] Hints = new GameObject[10];
+
+    private GameObject[] Items = new GameObject[10];
 
     private GameObject[] Teammates = new GameObject[2];
     private LatLng[] TeammateLoc = new LatLng[2];
@@ -30,9 +33,7 @@ namespace Google.Maps.Examples {
 
     public List<LatLng> LatLngs;
 
-    private int buildPlayer=0;
-
-    private int buildHints=0;
+    private int build=0;
 
     public int visible=0;
 
@@ -240,6 +241,8 @@ namespace Google.Maps.Examples {
       playerPosUpdate();
       hintsUpdate();
 
+      build=1;
+
     }
     private void playerPosUpdate(){
       
@@ -277,7 +280,7 @@ namespace Google.Maps.Examples {
     }
     private void playerInit(){
       
-      if(buildPlayer==0)
+      if(build==0)
       {
         Player = GameObject.Instantiate(TEAM);
         Player.AddComponent<BoxCollider>();
@@ -294,14 +297,12 @@ namespace Google.Maps.Examples {
         Opps[0].SetActive(false);
         Opps[1].SetActive(false);
         Opps[2].SetActive(false);  
-
-        buildPlayer=1;
       }
 
     }
     private void hintsInit(){
       
-      if(buildHints==0)
+      if(build==0)
       {
         for(int i=0;i<10;i++)
         {
@@ -310,10 +311,20 @@ namespace Google.Maps.Examples {
           Hints[i].AddComponent<hintCollision>();
 
         }
-
-        buildHints=1;
       }
+    }
+      private void itemsInit(){
+      
+      if(build==0)
+      {
+        for(int i=0;i<10;i++)
+        {
+          Items[i] = GameObject.Instantiate(ITEM);
+          Items[i].AddComponent<BoxCollider>();
+          Items[i].AddComponent<hintCollision>();
 
+        }
+      }
     }
     private void hintsUpdate(){
 

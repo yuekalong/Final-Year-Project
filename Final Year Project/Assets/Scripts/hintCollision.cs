@@ -9,12 +9,11 @@ public class hintCollision : MonoBehaviour
 
     public int index;
 
-    public int array_id;
     public string words="";
 
     private GameObject Dialog;
 
-    private int disable=0;
+
     void Start()
     {
         Dialog=GameObject.Find("ListButton");
@@ -28,13 +27,14 @@ public class hintCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" & words!="" & disable==0)
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" & words!="" )
         {
             Dialog.GetComponent<HintList>().haveHint=1;
-            Dialog.GetComponent<HintList>().hint_words+=(words+"\n");
-            gameObject.SetActive(false);
-            disable=1;
+            string temp=PlayerPrefs.GetString("hint_stored");
+            temp+=(words+"\n");
+            PlayerPrefs.SetString("hint_stored",temp);
             StartCoroutine(RemoveHint());  
+            gameObject.SetActive(false);
 
         }
     }
@@ -43,6 +43,7 @@ public class hintCollision : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("index",index);
+        form.AddField("game_id",PlayerPrefs.GetString("game_id","1"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/hintRemove",form);
 
