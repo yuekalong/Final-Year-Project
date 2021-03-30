@@ -122,8 +122,7 @@ public class PlaceBomb : MonoBehaviour
                 }
                 else
                 {
-                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
-                    Destroy(Bombs[i]);
+                    Bombs[i].SetActive(false);
                 }
                               
             }

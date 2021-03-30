@@ -55,7 +55,7 @@ module.exports = {
       .join("hint", "hint.id", "=", "game_hints_mapping.hint_id")
       .select("id", "hint_words", "loc_x", "loc_y");
 
-    if(hints_id=[])
+    if(hints_id[0]==undefined)
     {
       hints_id[0]={
         count:0
@@ -76,23 +76,53 @@ module.exports = {
       console.log(err);
       hints_id[0]["count"]=0;
     }
-    //console.log(hints_id);
+    console.log(hints_id);
     return hints_id;
   },
   removeHintsLocation: async function (index,game_id) {
-    const hints_id = await knex("hint")
-      .update("loc_x", 0)
-      .update("loc_y", 0)
-      .where("id", index);
+    const hints_id = await knex("game_hints_mapping")
+    .where("game_id", game_id)
+    .andWhere("hint_id", index)
+    .del()
 
     return hints_id;
   },
+
   getItemsLocation: async function (gameid) {
     const item_id = await knex("game_items_mapping")
       .where("game_items_mapping.game_id", gameid)
       .join("item", "item.id", "=", "game_items_mapping.item_id")
-      .select("loc_x", "loc_y");
+      .select("item.id","loc_x", "loc_y");
+    if(item_id[0]==undefined)
+    {
+      item_id[0]={
+        count:0
+      };
+    }
+    try
+    {
+      count = await knex("game_items_mapping")
+      .where("game_items_mapping.game_id", gameid)
+      .join("item", "item.id", "=", "game_items_mapping.item_id")
+      .count("*");
+
+      item_id[0]["count"] = count[0]["count(*)"];
+    }
+    catch(err)
+    {
+      console.log(err);
+      item_id[0]["count"]=0;
+    }
     console.log(item_id);
     return item_id;
+  },
+
+  removeItemsLocation: async function (index,game_id) {
+    const hints_id = await knex("game_items_mapping")
+    .where("game_id", game_id)
+    .andWhere("item_id", index)
+    .del()
+
+    return hints_id;
   },
 };

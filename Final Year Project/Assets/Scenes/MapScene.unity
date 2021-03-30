@@ -1762,7 +1762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &454087350
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2344,6 +2344,7 @@ MonoBehaviour:
   HINT: {fileID: 2938277103828573581, guid: 03b993560aeea4c618f1c3785a025026, type: 3}
   OPP: {fileID: 1144978573833690, guid: bc0b15b73807884489b6c6682a3fae14, type: 3}
   Player: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+  ITEM: {fileID: 2938277103828573581, guid: 03b993560aeea4c618f1c3785a025026, type: 3}
   LatLngs: []
   visible: 0
   x:
@@ -2392,6 +2393,39 @@ MonoBehaviour:
   - 
   - 
   - 
+  item_x:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  item_y:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  item_id: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   Prefabs:
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
   - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}

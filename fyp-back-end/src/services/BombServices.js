@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   allBombs: async function (gameID) {
-    const bombs = await knex("game_bombs_mapping")
+    var bombs = await knex("game_bombs_mapping")
       .select("type", "range", "loc_x", "loc_y", "pattern_lock_id", "group_id")
       .where("game_id", gameID)
       .join("bomb", "bomb.id", "=", "game_bombs_mapping.bomb_id")
@@ -16,7 +16,7 @@ module.exports = {
         "game_bombs_mapping.pattern_lock_id"
       );
 
-    if(bombs=[])
+    if(bombs[0]==undefined)
     {
       bombs[0]={
         count:0
@@ -42,7 +42,7 @@ module.exports = {
       bombs[0]["count"] = 0;
     }
 
-
+    console.log(bombs[0]["count"]);
     return bombs;
   },
   createBomb: async function (gameID, groupID, input, bombID, locX, locY) {

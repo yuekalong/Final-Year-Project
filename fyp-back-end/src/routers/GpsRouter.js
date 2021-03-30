@@ -9,9 +9,11 @@ const gpsContoller = require("../controllers/GpsController.js");
 router.post("/location/:id", gpsContoller.postLocation);
 router.get("/locationTeammates/:playerid/:groupid", gpsContoller.getTeamLocation);
 router.get("/locationOpps/:groupid", gpsContoller.getOppLocation);
+
 router.get("/hints/:gameid", gpsContoller.getHintsLocation);
 router.post("/hintRemove", gpsContoller.removeHintsLocation);
 
 router.get("/items/:gameid", gpsContoller.getItemsLocation);
+router.post("/itemRemove", gpsContoller.removeItemsLocation);
 
 module.exports = router;

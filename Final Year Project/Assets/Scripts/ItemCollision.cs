@@ -4,19 +4,13 @@ using UnityEngine.Networking;
 
 
 
-public class hintCollision : MonoBehaviour
+public class ItemCollision : MonoBehaviour
 {
 
-    public int index;
-
-    public string words="";
-
-    private GameObject Dialog;
-
-
+    public int index =0;
     void Start()
     {
-        Dialog=GameObject.Find("ListButton");
+
     }
 
 
@@ -27,20 +21,23 @@ public class hintCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && words!="" )
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && index!=0 )
         {
-            Dialog.GetComponent<HintList>().haveHint=1;
-            string temp=PlayerPrefs.GetString("hint_stored");
-            temp+=(words+"\n");
-            PlayerPrefs.SetString("hint_stored",temp);
+            StartCoroutine(RemoveItem());  
 
-            StartCoroutine(RemoveHint());  
+            int num = PlayerPrefs.GetInt("num_of_bombs", 3);
+            num+=1;
+            if(num>5)
+            {
+                num=0;
+            }
+            PlayerPrefs.SetInt("num_of_bombs", num);
+
             gameObject.SetActive(false);
-           
 
         }
     }
-    IEnumerator RemoveHint(){
+    IEnumerator RemoveItem(){
 
         WWWForm form = new WWWForm();
 
