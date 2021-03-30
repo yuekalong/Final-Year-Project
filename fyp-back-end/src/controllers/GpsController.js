@@ -82,4 +82,19 @@ module.exports = {
       next(err);
     }
   },
+  getItemsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.getItemsLocation started!");
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.getItemsLocation(req.params.gameid)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
 };

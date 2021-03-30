@@ -12,4 +12,6 @@ router.get("/locationOpps/:groupid", gpsContoller.getOppLocation);
 router.get("/hints/:gameid", gpsContoller.getHintsLocation);
 router.post("/hintRemove", gpsContoller.removeHintsLocation);
 
+router.get("/items/:gameid", gpsContoller.getItemsLocation);
+
 module.exports = router;

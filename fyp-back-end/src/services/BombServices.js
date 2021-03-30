@@ -16,6 +16,13 @@ module.exports = {
         "game_bombs_mapping.pattern_lock_id"
       );
 
+    if(bombs=[])
+    {
+      bombs[0]={
+        count:0
+      };
+    }
+
     try
     {
       const count = await knex("game_bombs_mapping")
@@ -31,7 +38,8 @@ module.exports = {
     bombs[0]["count"] = count[0]["count(*)"];
     }
     catch(err) {
-      console.log(bombs[0]["count"]);
+      console.log(err);
+      bombs[0]["count"] = 0;
     }
 
 

@@ -47,19 +47,52 @@ module.exports = {
     return opps_loc;
   },
   getHintsLocation: async function (gameid) {
-    const hints_id = await knex("game_hints_mapping")
+    var hints_id;
+    var count;
+
+    hints_id = await knex("game_hints_mapping")
       .where("game_hints_mapping.game_id", gameid)
       .join("hint", "hint.id", "=", "game_hints_mapping.hint_id")
       .select("id", "hint_words", "loc_x", "loc_y");
-    console.log(hints_id);
+
+    if(hints_id=[])
+    {
+      hints_id[0]={
+        count:0
+      };
+    }
+    
+    try
+    {
+      count = await knex("game_hints_mapping")
+      .where("game_hints_mapping.game_id", gameid)
+      .join("hint", "hint.id", "=", "game_hints_mapping.hint_id")
+      .count("*");
+
+      hints_id[0]["count"] = count[0]["count(*)"];
+    }
+    catch(err)
+    {
+      console.log(err);
+      hints_id[0]["count"]=0;
+    }
+    //console.log(hints_id);
     return hints_id;
   },
   removeHintsLocation: async function (index,game_id) {
-    const hints_id = await knex("game_hints_mapping")
-      .update("hint_id", 0)
-      .where("hint_id", index)
-      .andWhere("game_id", game_id);
+    const hints_id = await knex("hint")
+      .update("loc_x", 0)
+      .update("loc_y", 0)
+      .where("id", index);
 
     return hints_id;
+  },
+  getItemsLocation: async function (gameid) {
+    const item_id = await knex("game_items_mapping")
+      .where("game_items_mapping.game_id", gameid)
+      .join("item", "item.id", "=", "game_items_mapping.item_id")
+      .select("loc_x", "loc_y");
+    console.log(item_id);
+    return item_id;
   },
 };

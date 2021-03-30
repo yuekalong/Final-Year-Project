@@ -23,7 +23,7 @@ namespace Google.Maps.Examples {
 
     private GameObject[] Hints = new GameObject[10];
 
-    private GameObject[] Items = new GameObject[10];
+    private GameObject[] Items = new GameObject[15];
 
     private GameObject[] Teammates = new GameObject[2];
     private LatLng[] TeammateLoc = new LatLng[2];
