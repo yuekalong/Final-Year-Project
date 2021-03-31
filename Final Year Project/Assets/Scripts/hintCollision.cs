@@ -13,6 +13,8 @@ public class hintCollision : MonoBehaviour
 
     private GameObject Dialog;
 
+    public int trigger=0;
+
 
     void Start()
     {
@@ -27,14 +29,23 @@ public class hintCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && words!="" )
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && words!="" && trigger==0)
         {
-            Dialog.GetComponent<HintList>().haveHint=1;
-            string temp=PlayerPrefs.GetString("hint_stored");
-            temp+=(words+"\n");
-            PlayerPrefs.SetString("hint_stored",temp);
-
             StartCoroutine(RemoveHint());  
+
+            string temp=PlayerPrefs.GetString("hint_stored");
+            if(temp=="Empty")
+            {
+                temp=(words+"\n");
+            }
+            else
+            {
+                temp+=(words+"\n");
+            }
+            trigger=1;
+            
+            PlayerPrefs.SetString("hint_stored",temp);
+            
             gameObject.SetActive(false);
            
 

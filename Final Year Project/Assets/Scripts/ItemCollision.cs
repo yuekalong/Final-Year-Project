@@ -44,7 +44,7 @@ public class ItemCollision : MonoBehaviour
         form.AddField("index",index);
         form.AddField("game_id",PlayerPrefs.GetString("game_id","1"));
 
-        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/hintRemove",form);
+        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/itemRemove",form);
 
         yield return req.SendWebRequest();
 

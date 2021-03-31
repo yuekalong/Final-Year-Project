@@ -122,7 +122,7 @@ public class PlaceBomb : MonoBehaviour
                 }
                 else
                 {
-                    Bombs[i].SetActive(false);
+                    Destroy(Bombs[i]);
                 }
                               
             }

@@ -140,9 +140,11 @@ public class GpsManager : MonoBehaviour
 
                     location_script.hint_id[i] = data[i]["id"];
                     location_script.hint_words[i] = data[i]["hint_words"];
+                    location_script.Hints[i].GetComponent<hintCollision>().trigger=0;
                 }
                 else
                 {
+                    location_script.Hints[i].SetActive(false);
                     location_script.hint_x[i] = 0;
                     location_script.hint_y[i] = 0;
                     location_script.hint_words[i] = "";
@@ -172,7 +174,7 @@ public class GpsManager : MonoBehaviour
 
             int count=data[0]["count"];
 
-            for(int i=0;i<10;i++)
+            for(int i=0;i<15;i++)
             {
                 if(i<count)
                 {
@@ -183,8 +185,10 @@ public class GpsManager : MonoBehaviour
                 }
                 else
                 {
+                    location_script.Items[i].SetActive(false);
                     location_script.item_x[i] = 0;
                     location_script.item_y[i] = 0;
+                    location_script.item_id[i] = 0;
                 }
 
             }

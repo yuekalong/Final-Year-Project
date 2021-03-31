@@ -34,8 +34,6 @@ using UnityEngine.UI;
     /// </summary>
     public GameObject GlassPanel;
 
-    public int haveHint =0;
-
     public string hint_words="Empty";
 
 
@@ -50,10 +48,7 @@ using UnityEngine.UI;
 
       //hint_words=PlayerPrefs.SetString("hint_stored","Empty");
       PlayerPrefs.SetString("hint_stored","Empty");
-      if(PlayerPrefs.GetString("hint_stored","Empty")!="Empty")
-      {
-          InstructionsText.text=hint_words;
-      }
+
       ShowHideDialog(false);
     }
     public void Update()
