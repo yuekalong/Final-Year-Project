@@ -2374,6 +2374,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   LatLngs: []
+  build: 0
   visible: 0
   x:
   - 0
@@ -2410,6 +2411,17 @@ MonoBehaviour:
   - 0
   - 0
   hint_id: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  pattern_lock_id:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   hint_words:
   - 
   - 
