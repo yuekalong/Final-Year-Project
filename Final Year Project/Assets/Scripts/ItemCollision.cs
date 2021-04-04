@@ -8,6 +8,7 @@ public class ItemCollision : MonoBehaviour
 {
 
     public int index =0;
+    public int trigger =0;
     void Start()
     {
 
@@ -21,7 +22,7 @@ public class ItemCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && index!=0 )
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && index!=0 && trigger==0 )
         {
             StartCoroutine(RemoveItem());  
 
@@ -32,7 +33,7 @@ public class ItemCollision : MonoBehaviour
                 num=0;
             }
             PlayerPrefs.SetInt("num_of_bombs", num);
-
+            trigger=1;
             gameObject.SetActive(false);
 
         }

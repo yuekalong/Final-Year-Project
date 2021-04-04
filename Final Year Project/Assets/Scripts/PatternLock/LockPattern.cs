@@ -371,7 +371,9 @@ public class LockPattern : MonoBehaviour
             Debug.LogError(req.error);
             yield break;
         }
-        if(res["success"]){
+
+        JSONNode data = res["data"];
+        if(data==true){
             Debug.Log(res["data"]);
             SceneManager.LoadScene("MapScene");
             PlayerPrefs.SetString("visible","n");

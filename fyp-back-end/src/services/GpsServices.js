@@ -53,7 +53,7 @@ module.exports = {
     hints_id = await knex("game_hints_mapping")
       .where("game_hints_mapping.game_id", gameid)
       .join("hint", "hint.id", "=", "game_hints_mapping.hint_id")
-      .select("id", "hint_words", "loc_x", "loc_y");
+      .select("id", "hint_words", "pattern_lock_id","loc_x", "loc_y");
 
     if(hints_id[0]==undefined)
     {

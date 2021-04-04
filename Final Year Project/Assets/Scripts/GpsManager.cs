@@ -54,6 +54,8 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
+            location_script.build=2;
+
             yield return new WaitForSeconds(7.5f);
         }
     }
@@ -140,6 +142,15 @@ public class GpsManager : MonoBehaviour
 
                     location_script.hint_id[i] = data[i]["id"];
                     location_script.hint_words[i] = data[i]["hint_words"];
+                    if(data[i]["pattern_lock_id"]==null)
+                    {
+                        location_script.pattern_lock_id[i] = "";
+                    }
+                    else
+                    {
+                        location_script.pattern_lock_id[i] = data[i]["pattern_lock_id"];
+                    }
+                    
                     location_script.Hints[i].GetComponent<hintCollision>().trigger=0;
                 }
                 else
@@ -148,6 +159,8 @@ public class GpsManager : MonoBehaviour
                     location_script.hint_x[i] = 0;
                     location_script.hint_y[i] = 0;
                     location_script.hint_words[i] = "";
+                    location_script.pattern_lock_id[i] = "";
+                    location_script.Hints[i].GetComponent<hintCollision>().trigger=0;
                 }
 
             }
@@ -190,6 +203,7 @@ public class GpsManager : MonoBehaviour
                     location_script.item_y[i] = 0;
                     location_script.item_id[i] = 0;
                 }
+                location_script.Items[i].GetComponent<ItemCollision>().trigger=0;
 
             }
             

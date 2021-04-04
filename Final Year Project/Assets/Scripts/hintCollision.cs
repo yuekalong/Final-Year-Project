@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 
 
@@ -10,6 +11,8 @@ public class hintCollision : MonoBehaviour
     public int index;
 
     public string words="";
+
+    public string pattern_lock_id="";
 
     private GameObject Dialog;
 
@@ -46,6 +49,13 @@ public class hintCollision : MonoBehaviour
             
             PlayerPrefs.SetString("hint_stored",temp);
             
+            if(pattern_lock_id!="")
+            {
+                PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_lock_id+" }");
+                gameObject.SetActive(false);
+                SceneManager.LoadScene("PatternLock");
+            }
+
             gameObject.SetActive(false);
            
 

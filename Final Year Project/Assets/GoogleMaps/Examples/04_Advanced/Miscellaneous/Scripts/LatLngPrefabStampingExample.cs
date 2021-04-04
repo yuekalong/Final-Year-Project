@@ -33,7 +33,7 @@ namespace Google.Maps.Examples {
 
     public List<LatLng> LatLngs;
 
-    private int build=0;
+    public int build=0;
 
     public int visible=0;
 
@@ -45,7 +45,8 @@ namespace Google.Maps.Examples {
     public double[] hint_y= new double[10];
 
     public int[] hint_id= new int[10];
-    
+
+    public string[] pattern_lock_id= new string[10];
 
     public string[] hint_words= new string[10];
 
@@ -287,8 +288,17 @@ namespace Google.Maps.Examples {
 
     }
     private void playerInit(){
-      
-      if(build==0)
+      if(build==2)
+      {
+        Destroy(Player);
+        Destroy(Teammates[0]);
+        Destroy(Teammates[1]);
+        Destroy(Opps[0]);
+        Destroy(Opps[1]);
+        Destroy(Opps[2]);
+      }
+
+      if(build==0 || build==2)
       {
         Player = GameObject.Instantiate(TEAM);
         Player.AddComponent<BoxCollider>();
@@ -342,6 +352,7 @@ namespace Google.Maps.Examples {
         Hints[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
         Hints[i].GetComponent<hintCollision>().index=hint_id[i];
         Hints[i].GetComponent<hintCollision>().words=hint_words[i];
+        Hints[i].GetComponent<hintCollision>().pattern_lock_id=pattern_lock_id[i];
       }
     }
     private void itemsUpdate()

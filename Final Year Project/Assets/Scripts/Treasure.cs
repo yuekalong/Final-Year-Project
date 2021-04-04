@@ -14,10 +14,16 @@ public class Treasure : MonoBehaviour
 
     public InputField input;
 
+    private string type;
+
     bool  show=false;
     void Start()
     {
-        
+        type=PlayerPrefs.GetString("group_type", "No Group Type");
+        if(type!="Hunter")
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 

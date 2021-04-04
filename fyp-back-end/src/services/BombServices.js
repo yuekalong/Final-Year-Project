@@ -86,7 +86,7 @@ module.exports = {
       // delete in `pattern_lock`
       await knex("pattern_lock").where("id", "=", lockID).delete();
     }
-
+    console.log(isValid);
     return isValid;
   },
 };
