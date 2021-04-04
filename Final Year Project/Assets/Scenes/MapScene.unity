@@ -531,7 +531,6 @@ MonoBehaviour:
   InstructionsDialog: {fileID: 1991157704}
   CloseButton: {fileID: 261373230}
   GlassPanel: {fileID: 2071276079}
-  haveHint: 0
   hint_words: 
 --- !u!114 &261373234
 MonoBehaviour:
@@ -775,7 +774,6 @@ MonoBehaviour:
   InstructionsDialog: {fileID: 1991157704}
   CloseButton: {fileID: 261373230}
   GlassPanel: {fileID: 2071276079}
-  haveHint: 0
   hint_words: 
 --- !u!1 &272224799
 GameObject:
@@ -2133,6 +2131,9 @@ GameObject:
   - component: {fileID: 620685970}
   - component: {fileID: 620685973}
   - component: {fileID: 620685974}
+  - component: {fileID: 620685977}
+  - component: {fileID: 620685976}
+  - component: {fileID: 620685975}
   m_Layer: 0
   m_Name: WorldContainer
   m_TagString: Untagged
@@ -2345,6 +2346,33 @@ MonoBehaviour:
   OPP: {fileID: 1144978573833690, guid: bc0b15b73807884489b6c6682a3fae14, type: 3}
   Player: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
   ITEM: {fileID: 2938277103828573581, guid: 03b993560aeea4c618f1c3785a025026, type: 3}
+  Hints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Items:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   LatLngs: []
   visible: 0
   x:
@@ -2471,6 +2499,67 @@ MonoBehaviour:
   LatLngs: []
   BomePrefab: {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
   OppsBombPrefab: {fileID: 1685844063812944, guid: 073700690d35aac449aa9c1eae4b62fb, type: 3}
+--- !u!114 &620685975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620685966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d49e08a32884b27a3434f7f247c852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingAndRoadBorder: {fileID: 2100000, guid: 7b8771a7b9cd8438188912103bee58e3, type: 2}
+  Roads: {fileID: 2100000, guid: 615933885f2544e3bb1769bb3104f862, type: 2}
+--- !u!114 &620685976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620685966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bbe0c695e32453db299f673164cba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WallMaterials:
+  - {fileID: 2100000, guid: e633e9c97a0324a7a95bd2accde22a2e, type: 2}
+  - {fileID: 2100000, guid: 1a5e5af8378544520bd310a258c3164c, type: 2}
+  - {fileID: 2100000, guid: e971758d761f042f2b33ce115d9a14bf, type: 2}
+  - {fileID: 2100000, guid: 0fe6f1c9f27354c3a8b6310a5c1e17c0, type: 2}
+  - {fileID: 2100000, guid: c343b281e15c74d79b8aa0c6f4a9699c, type: 2}
+  - {fileID: 2100000, guid: 0d737e776cb73459696dec45cc3f64a7, type: 2}
+  RoofMaterials:
+  - {fileID: 2100000, guid: 3f500edc758c34904b34243e2db2a353, type: 2}
+  - {fileID: 2100000, guid: d217c98fb1cb1479388fe1e06c4cf43f, type: 2}
+  - {fileID: 2100000, guid: c93246d5f012d47769754a4ed01adc55, type: 2}
+  - {fileID: 2100000, guid: 85c507be7d67343c18cb2f7a20e59a9f, type: 2}
+  - {fileID: 2100000, guid: bbf6255db5cf04ed7bec3d5090555ebc, type: 2}
+  - {fileID: 2100000, guid: 4874137aea7734152a64a9f706a2dba4, type: 2}
+--- !u!114 &620685977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620685966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb79bec31eea14738bfe923d2f78241d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LatLng:
+    _Lat: -37.8110057
+    _Lng: 144.9601189
+  MaxDistance: 1000
+  Ground: {fileID: 0}
+  OnMapLoadStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  Loading: 0
 --- !u!1001 &637356653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5016,7 +5105,6 @@ MonoBehaviour:
   InstructionsDialog: {fileID: 0}
   CloseButton: {fileID: 0}
   GlassPanel: {fileID: 0}
-  haveHint: 0
   hint_words: 
 --- !u!1 &1594440076
 GameObject:

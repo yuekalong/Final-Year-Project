@@ -106,7 +106,7 @@ namespace Google.Maps.Examples.Shared {
 
       // Set real-world location to load. Note that the MapsService variable is auto-found on first
       // access.
-      MapsService.InitFloatingOrigin(LatLng);
+      //MapsService.InitFloatingOrigin(LatLng);
 
       // Make sure we have a set of GameObjectOptions to render loaded geometry with, using defaults
       // if no specific set of options has been given. This allows a different set of options to be
