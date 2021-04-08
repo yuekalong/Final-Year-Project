@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CatchButton : MonoBehaviour
 {
@@ -29,12 +30,12 @@ public class CatchButton : MonoBehaviour
     {
         catchManager.StartClient();
 
-        gameObject.interactable = false;
-        
+        gameObject.GetComponent<Button>().interactable = false;
+
         catchCoolDown.StartCountDown(TimeSpan.FromMinutes(2));
         while (catchCoolDown.TimeLeft != TimeSpan.Zero) { }
 
-        gameObject.interactable = true;
+        gameObject.GetComponent<Button>().interactable = true;
 
     }
 }
