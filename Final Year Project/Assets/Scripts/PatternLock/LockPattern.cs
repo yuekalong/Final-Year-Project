@@ -79,7 +79,7 @@ public class LockPattern : MonoBehaviour
         string type = JSON.Parse(PlayerPrefs.GetString("lock_detail"))["type"];
         switch(type){
             case "hint-unlock":
-                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + "1" + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
+                req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/hint/" + PlayerPrefs.GetString("game_id","N/A") + "/pattern-lock/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"]);
                 break;
             case "bomb-set":
                 yield break;
@@ -263,7 +263,7 @@ public class LockPattern : MonoBehaviour
 
     IEnumerator HintValidate(){        
         // generate the query path
-        string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id","1") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
+        string queryPath = "?groupID=" + PlayerPrefs.GetString("group_id","N/A") + "&hintID=" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["hintID"] + "&input=";
         
         string inputString = "";
         
@@ -282,7 +282,7 @@ public class LockPattern : MonoBehaviour
         }
         
         byte[] myData = System.Text.Encoding.UTF8.GetBytes("This is some test data");
-        UnityWebRequest req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/hint/" + PlayerPrefs.GetString("game_id","1") + "/validate-pattern" + queryPath + inputString, myData);
+        UnityWebRequest req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/hint/" + PlayerPrefs.GetString("game_id","N/A") + "/validate-pattern" + queryPath + inputString, myData);
 
         yield return req.SendWebRequest();
         // parse the json response
@@ -315,14 +315,14 @@ public class LockPattern : MonoBehaviour
 
         }
         WWWForm form = new WWWForm();
-        form.AddField("gameID", PlayerPrefs.GetString("game_id","1"));
+        form.AddField("gameID", PlayerPrefs.GetString("game_id","N/A"));
         form.AddField("input", inputString);
         form.AddField("bombID", "1"); // get bomb id
         string locX=PlayerPrefs.GetString("loc_x","Empty");
         string locY=PlayerPrefs.GetString("loc_y","Empty");
         form.AddField("locX", locX); // get loc x
         form.AddField("locY", locY); // get loc y
-        form.AddField("groupID", PlayerPrefs.GetString("group_id","1"));
+        form.AddField("groupID", PlayerPrefs.GetString("group_id","N/A"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/bomb/create-bomb", form);
 

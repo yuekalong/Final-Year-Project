@@ -83,6 +83,8 @@ public class InitGame : MonoBehaviour
         DontDestroyOnLoad(socket);
 
         yield return AddProgress(0.1f);
+
+        PlayerPrefs.SetString("hint_stored", "Empty");
         yield return AddProgress(0.1f);
 
         // set time limit

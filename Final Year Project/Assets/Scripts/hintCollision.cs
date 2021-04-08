@@ -34,7 +34,6 @@ public class hintCollision : MonoBehaviour
     {
         if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && words!="" && trigger==0)
         {
-            StartCoroutine(RemoveHint());  
 
             string temp=PlayerPrefs.GetString("hint_stored");
             if(temp=="Empty")
@@ -51,9 +50,12 @@ public class hintCollision : MonoBehaviour
             
             if(pattern_lock_id!="")
             {
-                PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: "+index+" }");
+                PlayerPrefs.SetString("lock_detail", "{ id: "+PlayerPrefs.GetString("game_id",temp)+", type: hint-unlock, hintID: "+index+" }");
                 gameObject.SetActive(false);
                 SceneManager.LoadScene("PatternLock");
+            }
+            else{
+                StartCoroutine(RemoveHint());  
             }
 
             gameObject.SetActive(false);
