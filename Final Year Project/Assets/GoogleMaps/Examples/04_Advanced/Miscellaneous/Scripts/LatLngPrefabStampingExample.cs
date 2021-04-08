@@ -312,9 +312,6 @@ namespace Google.Maps.Examples {
         Opps[1] = GameObject.Instantiate(OPP);;
         Opps[2] = GameObject.Instantiate(OPP);
 
-        Opps[0].SetActive(false);
-        Opps[1].SetActive(false);
-        Opps[2].SetActive(false);  
       }
 
     }

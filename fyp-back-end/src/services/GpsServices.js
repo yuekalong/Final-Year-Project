@@ -2,10 +2,19 @@ const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
   postLocation: async function (userID, locx, locy, visible) {
+    var temp;
+    if(visible=="y")
+    {
+      temp=true;
+    }
+    else
+    {
+      temp=false;
+    }
     const group = await knex("user")
       .update("loc_x", locx)
       .update("loc_y", locy)
-      .update("visible", visible == "true")
+      .update("visible", temp)
       .where("id", "=", userID);
 
     return group;
