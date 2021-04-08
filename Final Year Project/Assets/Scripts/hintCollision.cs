@@ -51,7 +51,7 @@ public class hintCollision : MonoBehaviour
             
             if(pattern_lock_id!="")
             {
-                PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_lock_id+" }");
+                PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: "+index+" }");
                 gameObject.SetActive(false);
                 SceneManager.LoadScene("PatternLock");
             }

@@ -282,7 +282,7 @@ public class LockPattern : MonoBehaviour
         }
         
         byte[] myData = System.Text.Encoding.UTF8.GetBytes("This is some test data");
-        UnityWebRequest req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/hint/" + "1" + "/validate-pattern" + queryPath + inputString, myData);
+        UnityWebRequest req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/hint/" + PlayerPrefs.GetString("game_id","1") + "/validate-pattern" + queryPath + inputString, myData);
 
         yield return req.SendWebRequest();
         // parse the json response
