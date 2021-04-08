@@ -34,11 +34,8 @@ using UnityEngine.UI;
     /// </summary>
     public GameObject GlassPanel;
 
-    public int haveHint =0;
+    public string hint_words="Empty";
 
-    public string hint_words="";
-
-    private bool x=false;
 
 
     private void Start() {
@@ -49,17 +46,17 @@ using UnityEngine.UI;
 
       InstructionsText.text = "You Have No Hint!!!\nGo And Find It Before Your Enermy Take It!!!";
 
+      hint_words=PlayerPrefs.GetString("hint_stored","Empty");
+      //PlayerPrefs.SetString("hint_stored","Empty");
 
       ShowHideDialog(false);
     }
     public void Update()
     {
-        if(haveHint!=0)
-        {
-            InstructionsText.text=hint_words;
-            PlayerPrefs.SetString("hint_stored",hint_words);
-        }
-
+      if(PlayerPrefs.GetString("hint_stored","Empty")!="Empty")
+      {
+          InstructionsText.text=PlayerPrefs.GetString("hint_stored");
+      }
     }
 
     public void HideHint() {

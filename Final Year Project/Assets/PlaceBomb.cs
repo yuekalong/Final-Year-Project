@@ -94,7 +94,7 @@ public class PlaceBomb : MonoBehaviour
             
             for(int i=0;i<20;i++)
             {   
-                if(i<count && group_id==data[0]["group_id"])
+                if(i<count && group_id==data[i]["group_id"])
                 {
                     Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(BomePrefab);
@@ -107,7 +107,7 @@ public class PlaceBomb : MonoBehaviour
                     
                     Bombs[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
                 }
-                else if(i<count && group_id!=data[0]["group_id"])
+                else if(i<count && group_id!=data[i]["group_id"])
                 {
                     Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
@@ -122,7 +122,6 @@ public class PlaceBomb : MonoBehaviour
                 }
                 else
                 {
-                    Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
                     Destroy(Bombs[i]);
                 }
                               
