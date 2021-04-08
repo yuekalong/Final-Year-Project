@@ -69,11 +69,45 @@ module.exports = {
       console.log("GpsController.removeHintsLocation started!");
 
       const index = req.body.index;
+      const game_id = req.body.game_id;
 
       return standardServiceResponse(
         res,
         next,
-        gpsServices.removeHintsLocation(index)
+        gpsServices.removeHintsLocation(index,game_id)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
+  getItemsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.getItemsLocation started!");
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.getItemsLocation(req.params.gameid)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
+  removeItemsLocation: function (req, res, next) {
+    try {
+      console.log("GpsController.removeItemsLocation started!");
+
+      const index = req.body.index;
+      const game_id = req.body.game_id;
+
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.removeItemsLocation(index,game_id)
       );
     } catch (err) {
       // catch exception and shows the error message

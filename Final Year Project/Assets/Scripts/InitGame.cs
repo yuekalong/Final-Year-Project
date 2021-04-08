@@ -115,7 +115,7 @@ public class InitGame : MonoBehaviour
             PlayerPrefs.SetString("group_id", data["group"]["id"]);
             PlayerPrefs.SetString("group_type", data["group"]["type"]);
             PlayerPrefs.SetString("opponent_id", data["opponent"]["id"]);
-            PlayerPrefs.SetInt("num_of_bombs", 3);
+            PlayerPrefs.SetInt("num_of_bombs", 0);
 
             Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
             Debug.Log("Area ID: " + PlayerPrefs.GetString("area_id", "No Area ID"));

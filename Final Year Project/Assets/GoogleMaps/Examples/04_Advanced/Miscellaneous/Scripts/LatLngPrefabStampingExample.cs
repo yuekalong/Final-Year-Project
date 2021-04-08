@@ -19,8 +19,11 @@ namespace Google.Maps.Examples {
     public GameObject HINT;
     public GameObject OPP;
     public GameObject Player;
+    public GameObject ITEM;
 
-    private GameObject[] Hints = new GameObject[10];
+    public GameObject[] Hints = new GameObject[10];
+
+    public GameObject[] Items = new GameObject[15];
 
     private GameObject[] Teammates = new GameObject[2];
     private LatLng[] TeammateLoc = new LatLng[2];
@@ -30,13 +33,10 @@ namespace Google.Maps.Examples {
 
     public List<LatLng> LatLngs;
 
-    private int buildPlayer=0;
-
-    private int buildHints=0;
+    public int build=0;
 
     public int visible=0;
 
-    
     public double[] x= new double[5];
     public double[] y= new double[5];
 
@@ -46,7 +46,15 @@ namespace Google.Maps.Examples {
 
     public int[] hint_id= new int[10];
 
+    public string[] pattern_lock_id= new string[10];
+
     public string[] hint_words= new string[10];
+
+    public double[] item_x= new double[15];
+
+    public double[] item_y= new double[15];
+
+    public int[] item_id= new int[15];
 
     /// <summary>
     /// The prefabs to use for each stamp.
@@ -236,9 +244,13 @@ namespace Google.Maps.Examples {
  
       playerInit();
       hintsInit();
+      itemsInit();
       
       playerPosUpdate();
       hintsUpdate();
+      itemsUpdate();
+
+      build=1;
 
     }
     private void playerPosUpdate(){
@@ -276,8 +288,17 @@ namespace Google.Maps.Examples {
 
     }
     private void playerInit(){
-      
-      if(buildPlayer==0)
+      if(build==2)
+      {
+        Destroy(Player);
+        Destroy(Teammates[0]);
+        Destroy(Teammates[1]);
+        Destroy(Opps[0]);
+        Destroy(Opps[1]);
+        Destroy(Opps[2]);
+      }
+
+      if(build==0 || build==2)
       {
         Player = GameObject.Instantiate(TEAM);
         Player.AddComponent<BoxCollider>();
@@ -294,14 +315,12 @@ namespace Google.Maps.Examples {
         Opps[0].SetActive(false);
         Opps[1].SetActive(false);
         Opps[2].SetActive(false);  
-
-        buildPlayer=1;
       }
 
     }
-    private void hintsInit(){
-      
-      if(buildHints==0)
+    private void hintsInit()
+    {  
+      if(build==0)
       {
         for(int i=0;i<10;i++)
         {
@@ -310,21 +329,40 @@ namespace Google.Maps.Examples {
           Hints[i].AddComponent<hintCollision>();
 
         }
-
-        buildHints=1;
       }
-
     }
-    private void hintsUpdate(){
-
-    for(int i=0;i<10;i++)
+    private void itemsInit()
     {
-      LatLng temp = new LatLng(hint_x[i],hint_y[i]);
-      Hints[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
-      Hints[i].GetComponent<hintCollision>().index=hint_id[i];
-      Hints[i].GetComponent<hintCollision>().words=hint_words[i];
-    }
+      if(build==0)
+      {
+        for(int i=0;i<15;i++)
+        {
+          Items[i] = GameObject.Instantiate(ITEM);
+          Items[i].AddComponent<BoxCollider>();
+          Items[i].AddComponent<ItemCollision>();
 
+        }
+      }
+    }
+    private void hintsUpdate()
+    {
+      for(int i=0;i<10;i++)
+      {
+        LatLng temp = new LatLng(hint_x[i],hint_y[i]);
+        Hints[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+        Hints[i].GetComponent<hintCollision>().index=hint_id[i];
+        Hints[i].GetComponent<hintCollision>().words=hint_words[i];
+        Hints[i].GetComponent<hintCollision>().pattern_lock_id=pattern_lock_id[i];
+      }
+    }
+    private void itemsUpdate()
+    {
+      for(int i=0;i<15;i++)
+      {
+        LatLng temp = new LatLng(item_x[i],item_y[i]);
+        Items[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
+        Items[i].GetComponent<ItemCollision>().index=item_id[i];
+      }
     }
 
   }

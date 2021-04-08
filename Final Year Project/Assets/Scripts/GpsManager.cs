@@ -24,6 +24,7 @@ public class GpsManager : MonoBehaviour
         location_script= GetComponent<LatLngPrefabStampingExample>();
 
         StartCoroutine(HintsGpsUpdate());
+        StartCoroutine(ItemsGpsUpdate());
         StartCoroutine(TeamGpsUpdate());
         StartCoroutine(OppGpsUpdate());
         StartCoroutine(PlayerGpsUpdate());
@@ -53,6 +54,8 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
+            location_script.build=2;
+
             yield return new WaitForSeconds(7.5f);
         }
     }
@@ -128,14 +131,80 @@ public class GpsManager : MonoBehaviour
             JSONNode res = JSON.Parse(req.downloadHandler.text);
             JSONNode data = res["data"];
 
+            int count=data[0]["count"];
             for(int i=0;i<10;i++)
             {
-                location_script.hint_x[i] = data[i]["loc_x"];
-                location_script.hint_y[i] = data[i]["loc_y"];
+                if(i<count)
+                {
+                    location_script.Hints[i].SetActive(true);
+                    location_script.hint_x[i] = data[i]["loc_x"];
+                    location_script.hint_y[i] = data[i]["loc_y"];
 
-                location_script.hint_id[i] = data[i]["id"];
-                location_script.hint_words[i] = data[i]["hint_words"];
-                //Debug.Log(location_script.hint_words[i]);
+                    location_script.hint_id[i] = data[i]["id"];
+                    location_script.hint_words[i] = data[i]["hint_words"];
+                    if(data[i]["pattern_lock_id"]==null)
+                    {
+                        location_script.pattern_lock_id[i] = "";
+                    }
+                    else
+                    {
+                        location_script.pattern_lock_id[i] = data[i]["pattern_lock_id"];
+                    }
+                    
+                    location_script.Hints[i].GetComponent<hintCollision>().trigger=0;
+                }
+                else
+                {
+                    location_script.Hints[i].SetActive(false);
+                    location_script.hint_x[i] = 0;
+                    location_script.hint_y[i] = 0;
+                    location_script.hint_words[i] = "";
+                    location_script.pattern_lock_id[i] = "";
+                    location_script.Hints[i].GetComponent<hintCollision>().trigger=0;
+                }
+
+            }
+
+            if(req.isNetworkError || req.isHttpError){
+                Debug.LogError(req.error);
+                error.text=req.error;
+                yield break;
+            }
+            
+            yield return new WaitForSeconds(10);
+        }
+    }
+    IEnumerator ItemsGpsUpdate(){
+        while(true)
+        {
+            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/items/"+PlayerPrefs.GetString("game_id", "1"));
+
+            // stop the function and return the state to Login(), if access this function again will start from here
+            yield return req.SendWebRequest();
+
+            JSONNode res = JSON.Parse(req.downloadHandler.text);
+            JSONNode data = res["data"];
+
+            int count=data[0]["count"];
+
+            for(int i=0;i<15;i++)
+            {
+                if(i<count)
+                {
+                    location_script.Items[i].SetActive(true);
+                    location_script.item_x[i] = data[i]["loc_x"];
+                    location_script.item_y[i] = data[i]["loc_y"];
+                    location_script.item_id[i] = data[i]["id"];
+                }
+                else
+                {
+                    location_script.Items[i].SetActive(false);
+                    location_script.item_x[i] = 0;
+                    location_script.item_y[i] = 0;
+                    location_script.item_id[i] = 0;
+                }
+                location_script.Items[i].GetComponent<ItemCollision>().trigger=0;
+
             }
             
 
@@ -145,7 +214,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(10);
         }
     }
     

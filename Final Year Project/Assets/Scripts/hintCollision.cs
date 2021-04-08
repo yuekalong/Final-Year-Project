@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 
 
@@ -9,12 +10,15 @@ public class hintCollision : MonoBehaviour
 
     public int index;
 
-    public int array_id;
     public string words="";
+
+    public string pattern_lock_id="";
 
     private GameObject Dialog;
 
-    private int disable=0;
+    public int trigger=0;
+
+
     void Start()
     {
         Dialog=GameObject.Find("ListButton");
@@ -28,13 +32,32 @@ public class hintCollision : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" & words!="" & disable==0)
+        if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && words!="" && trigger==0)
         {
-            Dialog.GetComponent<HintList>().haveHint=1;
-            Dialog.GetComponent<HintList>().hint_words+=(words+"\n");
-            gameObject.SetActive(false);
-            disable=1;
             StartCoroutine(RemoveHint());  
+
+            string temp=PlayerPrefs.GetString("hint_stored");
+            if(temp=="Empty")
+            {
+                temp=(words+"\n");
+            }
+            else
+            {
+                temp+=(words+"\n");
+            }
+            trigger=1;
+            
+            PlayerPrefs.SetString("hint_stored",temp);
+            
+            if(pattern_lock_id!="")
+            {
+                PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_lock_id+" }");
+                gameObject.SetActive(false);
+                SceneManager.LoadScene("PatternLock");
+            }
+
+            gameObject.SetActive(false);
+           
 
         }
     }
@@ -43,6 +66,7 @@ public class hintCollision : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("index",index);
+        form.AddField("game_id",PlayerPrefs.GetString("game_id","1"));
 
         UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/hintRemove",form);
 
