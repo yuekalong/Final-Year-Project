@@ -1,6 +1,6 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 const patternLockServices = require("../services/PatternLockService.js");
-const gpsServices = require("../services/gpsServices.js");
+const gpsServices = require("../services/GpsServices.js");
 
 module.exports = {
   getAllHint: async function (gameID) {
