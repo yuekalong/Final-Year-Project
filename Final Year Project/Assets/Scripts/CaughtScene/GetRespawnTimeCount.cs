@@ -9,6 +9,7 @@ public class GetRespawnTimeCount : MonoBehaviour
     public TimeCountDown respawnTimer;
     public Text timer;
 
+    private CatchManager catchManager;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,8 @@ public class GetRespawnTimeCount : MonoBehaviour
         // Debug.Log(respawnTimer.TimeLeft.ToString());
         respawnTimer.StartCountDown(TimeSpan.FromMinutes(1));
         timer.text = String.Format("{0:00}:{1:00}", respawnTimer.TimeLeft.Minutes, respawnTimer.TimeLeft.Seconds);
+
+        catchManager = FindObjectOfType<CatchManager>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,9 @@ public class GetRespawnTimeCount : MonoBehaviour
 
         if (respawnTimer.TimeLeft == TimeSpan.Zero)
         {
+            catchManager.Initialize();
+            catchManager.StartServer();
+
             GameSceneManager.GoToMap();
         }
     }

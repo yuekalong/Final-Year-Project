@@ -24,8 +24,17 @@ public class CatchButton : MonoBehaviour
         }
     }
 
+    TimeCountDown catchCoolDown = new TimeCountDown();
     public void Catch()
     {
         catchManager.StartClient();
+
+        gameObject.interactable = false;
+        
+        catchCoolDown.StartCountDown(TimeSpan.FromMinutes(2));
+        while (catchCoolDown.TimeLeft != TimeSpan.Zero) { }
+
+        gameObject.interactable = true;
+
     }
 }
