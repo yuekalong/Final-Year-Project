@@ -337,7 +337,7 @@ MonoBehaviour:
   circularImg: {fileID: 1311830973}
   networking: {fileID: 1449830091}
   socket: {fileID: 1061098911}
-  gameTimerObj: {fileID: 1477886858}
+  gameTimer: {fileID: 1477886860}
   progress: 0
 --- !u!4 &736275156
 Transform:

@@ -13,7 +13,7 @@ public class InitGame : MonoBehaviour
     [SerializeField] Image circularImg;
     [SerializeField] CatchManager networking;
     [SerializeField] GameObject socket;
-    [SerializeField] GameObject gameTimerObj;
+    [SerializeField] TimeCountDown gameTimer;
 
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
@@ -81,14 +81,13 @@ public class InitGame : MonoBehaviour
 
         // set socket
         DontDestroyOnLoad(socket);
-    
+
         yield return AddProgress(0.1f);
         yield return AddProgress(0.1f);
 
         // set time limit
-        TimeCountDown gameTimer = gameTimerObj.GetComponent<TimeCountDown>();
-        gameTimer.StartCountDown(TimeSpan.FromMinutes(0.1));
-        DontDestroyOnLoad(gameTimerObj);
+        gameTimer.StartCountDown(TimeSpan.FromMinutes(2));
+        DontDestroyOnLoad(gameTimer);
 
         GameSceneManager.StartGame();
     }
@@ -104,7 +103,8 @@ public class InitGame : MonoBehaviour
     }
 
 
-    IEnumerator GetBasicGameInfo(){
+    IEnumerator GetBasicGameInfo()
+    {
         UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/account/game-basic-info/" + PlayerPrefs.GetString("game_id", "No ID") + "/" + PlayerPrefs.GetString("id", "No ID"));
 
         // stop the function and return the state to Login(), if access this function again will start from here
@@ -112,11 +112,13 @@ public class InitGame : MonoBehaviour
         // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);
 
-        if(req.isNetworkError || req.isHttpError){
+        if (req.isNetworkError || req.isHttpError)
+        {
             Debug.LogError(req.error);
             yield break;
         }
-        if(res["success"]){
+        if (res["success"])
+        {
             JSONNode data = res["data"];
 
             PlayerPrefs.SetString("game_id", data["game"]["id"]);
@@ -135,7 +137,8 @@ public class InitGame : MonoBehaviour
             Debug.Log("Opponent ID: " + PlayerPrefs.GetString("opponent_id", "No Opponent ID"));
             Debug.Log("Number of Bombs: " + PlayerPrefs.GetString("num_of_bombs", "No num_of_bombs"));
         }
-        else{
+        else
+        {
             Debug.Log(res);
         }
     }

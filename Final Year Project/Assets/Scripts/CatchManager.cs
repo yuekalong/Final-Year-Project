@@ -85,6 +85,8 @@ public class CatchManager : MonoBehaviour
 
                         connectedText.text = "Server Connected! Client Name: " + clientName;
                         SendSignal("Client Connected!");
+                        
+                        GameSceneManager.GoToCaughtScene();
 
                     }, (disconnectedDevice) => // onDeviceDisconnected
                     {

@@ -10,7 +10,7 @@ PlayerSettings:
   AndroidEnableSustainedPerformanceMode: 0
   defaultScreenOrientation: 0
   targetDevice: 2
-  useOnDemandResources: 1
+  useOnDemandResources: 0
   accelerometerFrequency: 100
   companyName: DefaultCompany
   productName: Final Year Project
@@ -540,7 +540,7 @@ PlayerSettings:
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
-  cameraUsageDescription: 
+  cameraUsageDescription: Please allow your camera for our game
   locationUsageDescription: Please allow your location for our game
   microphoneUsageDescription: 
   switchNMETAOverride: 

@@ -44,4 +44,9 @@ public class GameSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene("ChatroomScene");
     }
+
+    public static void GoToCaughtScene()
+    {
+        SceneManager.LoadScene("CaughtScene");
+    }
 }

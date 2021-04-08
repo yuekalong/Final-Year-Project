@@ -475,6 +475,8 @@ GameObject:
   - component: {fileID: 547690214}
   - component: {fileID: 547690216}
   - component: {fileID: 547690215}
+  - component: {fileID: 547690218}
+  - component: {fileID: 547690217}
   m_Layer: 5
   m_Name: RespawnTime
   m_TagString: Untagged
@@ -543,6 +545,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547690213}
   m_CullTransparentMesh: 0
+--- !u!114 &547690217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547690213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868adaf2dd55c43fd80f10ba3931d045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &547690218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547690213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2e0dc8f506e4e88acb0fb291e5a883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnTimer: {fileID: 547690217}
+  timer: {fileID: 547690215}
 --- !u!1 &1040132529
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,19 +788,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3184155897404534961, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
   m_PrefabInstance: {fileID: 1212443282}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1212443286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212443285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 947c4bbe78abe4a97be6127ca696e890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 547690215}
 --- !u!114 &1212443287
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class GetGameTimeCount : MonoBehaviour
         // set the current time into time limit
         // Debug.Log(gameTimer.TimeLeft.ToString());
 
-        gameTimer = GameObject.FindGameObjectsWithTag("GameTimer")[0].GetComponent<TimeCountDown>();
+        gameTimer = FindObjectOfType<TimeCountDown>();
 
         timer.text = String.Format("{0:00}:{1:00}", gameTimer.TimeLeft.Minutes, gameTimer.TimeLeft.Seconds);
     }
@@ -27,7 +27,8 @@ public class GetGameTimeCount : MonoBehaviour
         // Debug.Log(gameTimer.TimeLeft.ToString());
         timer.text = String.Format("{0:00}:{1:00}", gameTimer.TimeLeft.Minutes, gameTimer.TimeLeft.Seconds);
 
-        if(gameTimer.TimeLeft == TimeSpan.Zero){
+        if (gameTimer.TimeLeft == TimeSpan.Zero)
+        {
             Debug.Log("Game End!");
         }
     }
