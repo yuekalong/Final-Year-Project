@@ -13,6 +13,7 @@ public class InitGame : MonoBehaviour
     [SerializeField] Image circularImg;
     [SerializeField] CatchManager networking;
     [SerializeField] GameObject socket;
+    [SerializeField] GameObject gameTimerObj;
 
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
@@ -57,8 +58,10 @@ public class InitGame : MonoBehaviour
         Debug.Log("Start initialize BLE");
 
         yield return AddProgress(0.1f);
+
         // if network is ready
         bool startedServer = false;
+        // bluetooth initialization <= comment if want to work on PC
         while (!startedServer)
         {
             if (networking != null && groupType == "hunter")
@@ -74,6 +77,7 @@ public class InitGame : MonoBehaviour
 
             yield return AddProgress(0.05f);
         }
+        // ----------------------------------------
 
         // set socket
         DontDestroyOnLoad(socket);
@@ -82,17 +86,23 @@ public class InitGame : MonoBehaviour
         yield return AddProgress(0.1f);
 
         // set time limit
-        TimeCountDown.StartCountDown(TimeSpan.FromMinutes(2));
+        TimeCountDown gameTimer = gameTimerObj.GetComponent<TimeCountDown>();
+        gameTimer.StartCountDown(TimeSpan.FromMinutes(0.1));
+        DontDestroyOnLoad(gameTimerObj);
+
         GameSceneManager.StartGame();
     }
 
+
+    TimeCountDown progressTimer = new TimeCountDown();
     bool AddProgress(float value)
     {
         circularImg.fillAmount += value;
-        TimeCountDown.StartCountDown(TimeSpan.FromMilliseconds(500));
-        while (TimeCountDown.TimeLeft != TimeSpan.Zero) { }
+        progressTimer.StartCountDown(TimeSpan.FromMilliseconds(500));
+        while (progressTimer.TimeLeft != TimeSpan.Zero) { }
         return true;
     }
+
 
     IEnumerator GetBasicGameInfo(){
         UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/account/game-basic-info/" + PlayerPrefs.GetString("game_id", "No ID") + "/" + PlayerPrefs.GetString("id", "No ID"));
