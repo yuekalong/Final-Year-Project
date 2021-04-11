@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 const patternLockServices = require("../services/PatternLockService.js");
+const gpsServices = require("../services/GpsServices.js");
 
 module.exports = {
   getAllHint: async function (gameID) {
@@ -61,6 +62,8 @@ module.exports = {
         .where("hint_id", "=", hintID)
         .andWhere("game_id", "=", gameID)
         .update({ group_id: groupID });
+
+      await gpsServices.removeHintsLocation(hintID, gameID);
     }
 
     return isValid;

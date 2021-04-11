@@ -2,18 +2,18 @@
 using System.Collections;
 using System;
 
-public static class TimeCountDown
+public class TimeCountDown : MonoBehaviour
 {
-    static DateTime startTime;
-    static TimeSpan total;
+    public DateTime startTime;
+    public TimeSpan total;
 
-    public static void StartCountDown(TimeSpan input)
+    public void StartCountDown(TimeSpan input)
     {
         startTime = DateTime.UtcNow;
         total = input;
     }
 
-    public static TimeSpan TimeLeft
+    public TimeSpan TimeLeft
     {
         get
         {
