@@ -39,7 +39,7 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(res["data"]);
 
-            int roomNo = 1;
+            // int roomNo = 1;
 
             foreach (var room in res["data"])
             {
@@ -47,11 +47,28 @@ public class LobbyManager : MonoBehaviour
                 roomObject.transform.SetAsFirstSibling();
 
                 Room roomIdf = roomObject.GetComponent<Room>();
-                roomIdf.id = room.Value["game_id"];
-                roomIdf.content.text = "Room: " + roomNo + "\nArea: CUHK Base\nPlayer: " + room.Value["player_count"] + " / 6";
 
-                roomNo++;
+
+                roomIdf.id = room.Value["game_id"];
+                roomIdf.content.text = "Room: " + room.Value["game_id"] + "\nArea: " + GetMapName(room.Value["map_number"]) + "\nPlayer: " + room.Value["player_count"] + " / 6";
+
+                // roomNo++;
             }
+        }
+    }
+
+    public string GetMapName(string mapNumber)
+    {
+        switch (mapNumber)
+        {
+            case "1":
+                return "CUHK Base";
+            case "2":
+                return "CUHK Main Campus";
+            case "3":
+                return "CUHK Peak";
+            default:
+                return "";
         }
     }
 }

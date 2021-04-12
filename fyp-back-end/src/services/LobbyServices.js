@@ -1,14 +1,21 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 const { customAlphabet } = require("nanoid/async");
 const alphabet = "0123456789";
 const nanoid = customAlphabet(alphabet, 10);
 
+const roomid = customAlphabet(alphabet, 6);
+
 module.exports = {
   getRoom: async function () {
     const gameInfo = await knex("game")
-      .select("game.id as game_id", "hunter_group_id", "protector_group_id")
+      .select(
+        "game.id as game_id",
+        "game.map_number as map_number",
+        "hunter_group_id",
+        "protector_group_id"
+      )
       .where("status", "=", "waiting");
 
     let rooms = [];
@@ -36,6 +43,7 @@ module.exports = {
 
       const lobbyInfo = {
         game_id: room.game_id,
+        map_number: room.map_number,
         player_count: hunterCount + protectorCount,
         hunter_group_id: room.hunter_group_id,
         hunter_count: hunterCount,
@@ -48,10 +56,11 @@ module.exports = {
 
     return rooms;
   },
-  createRoom: async function () {
-    const roomID = uuidv4();
+  createRoom: async function (mapNumber) {
+    const roomID = await roomid();
     await knex("game").insert({
       id: roomID,
+      map_number: mapNumber,
     });
     return roomID;
   },

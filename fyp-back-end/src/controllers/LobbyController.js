@@ -19,8 +19,13 @@ module.exports = {
   createRoom: function (req, res, next) {
     try {
       console.log("LobbyContoller.createRoom started!");
+      const { mapNumber } = req.body;
 
-      return standardServiceResponse(res, next, lobbyServices.createRoom());
+      return standardServiceResponse(
+        res,
+        next,
+        lobbyServices.createRoom(mapNumber)
+      );
     } catch (err) {
       // catch exception and shows the error message
       console.log(

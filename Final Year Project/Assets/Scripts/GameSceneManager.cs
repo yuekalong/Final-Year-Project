@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public static void GoToLogin(){
+    public static void GoToLogin()
+    {
         SceneManager.LoadScene("LoginScene");
     }
-    
-    public static void GoToRegistration(){
+
+    public static void GoToRegistration()
+    {
         SceneManager.LoadScene("RegistrationScene");
     }
 
@@ -20,13 +22,19 @@ public class GameSceneManager : MonoBehaviour
         // TODO: care about the status, retrieve back the data if the player is still in game
 
         SceneManager.LoadScene("LobbyScene");
-    } 
+    }
 
-    public static void GoToWaitingRoom(){
+    public static void GoToCreateRoom()
+    {
+        SceneManager.LoadScene("CreateRoomScene");
+    }
+    public static void GoToWaitingRoom()
+    {
         SceneManager.LoadScene("WaitingRoomScene");
     }
 
-    public static void InitGame(){
+    public static void InitGame()
+    {
         SceneManager.LoadScene("LoadingScene");
     }
 
