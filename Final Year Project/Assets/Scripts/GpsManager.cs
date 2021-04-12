@@ -107,7 +107,7 @@ public class GpsManager : MonoBehaviour
             location_script.visible=0;
             for(int i =0;i<3;i++)
             {
-                if(data[i]["visible"]=="y")
+                if(data[i]["visible"]=="1")
                     location_script.visible=1;
             }
 
