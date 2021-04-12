@@ -16,6 +16,7 @@ public class InitGame : MonoBehaviour
 
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
+    private string[] occupation ={"Bomb Walker","Enhancer","Tracker","Faker","Professor","Terrorist","Robber","Avengers"};
 
 
     bool isStarted = false;
@@ -23,6 +24,8 @@ public class InitGame : MonoBehaviour
     void Awake()
     {
         circularImg.fillAmount = progress;
+        int rand  = UnityEngine.Random.Range(1, 9);
+        PlayerPrefs.SetString("occupation",occupation[rand]);
     }
 
     void Update()

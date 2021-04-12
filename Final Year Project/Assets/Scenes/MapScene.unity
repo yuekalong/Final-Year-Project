@@ -2467,16 +2467,16 @@ MonoBehaviour:
   - 0
   item_id: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   Prefabs:
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
-  - {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
+  - {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
   SuppressionRadiuses: []
   SpawnReference: {fileID: 620685966}
   SpawnRadius: 2000
@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LatLngs: []
-  BomePrefab: {fileID: 1685844063812944, guid: 48930e59914f14addbdfaf5673100750, type: 3}
+  BomePrefab: {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
   OppsBombPrefab: {fileID: 1685844063812944, guid: 073700690d35aac449aa9c1eae4b62fb, type: 3}
 --- !u!114 &620685975
 MonoBehaviour:

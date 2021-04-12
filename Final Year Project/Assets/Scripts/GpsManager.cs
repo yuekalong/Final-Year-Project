@@ -204,7 +204,6 @@ public class GpsManager : MonoBehaviour
                     location_script.item_id[i] = 0;
                 }
                 location_script.Items[i].GetComponent<ItemCollision>().trigger=0;
-
             }
             
 
