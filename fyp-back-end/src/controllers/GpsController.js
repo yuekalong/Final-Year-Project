@@ -19,6 +19,22 @@ module.exports = {
       next(err);
     }
   },
+  triggerBomb: function (req, res, next) {
+    try {
+      console.log("GpsController.triggerBomb started!");
+
+      const { Visible } = req.body;
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.postLocation(req.params.id, Visible)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
   getTeamLocation: function (req, res, next) {
     try {
       console.log("GpsController.getTeamLocation started!");

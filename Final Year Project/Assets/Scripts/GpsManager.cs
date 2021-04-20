@@ -41,7 +41,7 @@ public class GpsManager : MonoBehaviour
 
             form.AddField("Lat", latLng.Lat.ToString());
             form.AddField("Lng", latLng.Lng.ToString());
-            form.AddField("Visible", PlayerPrefs.GetString("visible","false"));
+            form.AddField("Visible", PlayerPrefs.GetString("visible","n"));
 
             UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/location/"+PlayerPrefs.GetString("id","1"),form);
 
@@ -107,7 +107,7 @@ public class GpsManager : MonoBehaviour
             location_script.visible=0;
             for(int i =0;i<3;i++)
             {
-                if(data[i]["visible"]=="1")
+                if(data[i]["visible"]=="y")
                     location_script.visible=1;
             }
 

@@ -10,6 +10,8 @@ router.post("/location/:id", gpsContoller.postLocation);
 router.get("/locationTeammates/:playerid/:groupid", gpsContoller.getTeamLocation);
 router.get("/locationOpps/:groupid", gpsContoller.getOppLocation);
 
+router.get("/location/trigger/:playerid", gpsContoller.triggerBomb);
+
 router.get("/hints/:gameid", gpsContoller.getHintsLocation);
 router.post("/hintRemove", gpsContoller.removeHintsLocation);
 

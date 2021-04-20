@@ -2,19 +2,19 @@ const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
   postLocation: async function (userID, locx, locy, visible) {
-    var temp;
-    if(visible=="y")
-    {
-      temp=true;
-    }
-    else
-    {
-      temp=false;
-    }
+
     const group = await knex("user")
       .update("loc_x", locx)
       .update("loc_y", locy)
-      .update("visible", temp)
+      .update("visible", visible)
+      .where("id", "=", userID);
+
+    return group;
+  },
+  triggerBomb: async function (userID,visible) {
+
+    const group = await knex("user")
+      .update("visible", visible)
       .where("id", "=", userID);
 
     return group;
@@ -52,6 +52,7 @@ module.exports = {
       .where("id", opps_id[0].user_id);
     // .orWhere("id", opps_id[1].user_id)
     // .orWhere("id", opps_id[2].user_id);
+    console.log(opps_loc);
 
     return opps_loc;
   },
