@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GetGameTimeCount : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class GetGameTimeCount : MonoBehaviour
         if (gameTimer.TimeLeft == TimeSpan.Zero)
         {
             Debug.Log("Game End!");
+            PlayerPrefs.SetString("reason","time_up");
+            SceneManager.LoadScene("WinLose");
         }
     }
 }

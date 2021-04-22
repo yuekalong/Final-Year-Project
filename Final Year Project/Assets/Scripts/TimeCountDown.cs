@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 
+
 public class TimeCountDown : MonoBehaviour
 {
     public DateTime startTime;
@@ -18,6 +19,16 @@ public class TimeCountDown : MonoBehaviour
         get
         {
             var result = total - (DateTime.UtcNow - startTime);
+            if (result.TotalSeconds <= 0)
+                return TimeSpan.Zero;
+            return result;
+        }
+    }
+    public TimeSpan TimeUsed
+    {
+        get
+        {
+            var result = DateTime.UtcNow - startTime;
             if (result.TotalSeconds <= 0)
                 return TimeSpan.Zero;
             return result;

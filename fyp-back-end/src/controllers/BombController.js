@@ -79,4 +79,24 @@ module.exports = {
       next(err);
     }
   },
+  deleteBomb: function (req, res, next) {
+    try {
+      console.log("BombController.deleteBomb started!");
+
+      const { lockID } = req.params;
+
+      return standardServiceResponse(
+        res,
+        next,
+        bombServices.validatePattern(lockID)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(
+        "Error: BombController.deleteBomb: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
 };

@@ -30,7 +30,12 @@ public class bombCollision : MonoBehaviour
         Debug.Log("collide");
         if(other.gameObject.name=="MobileMaleFreeSimpleMovement1(Clone)" && group_id!=check_group)
         {
-            Debug.Log("collide ok");
+            if(PlayerPrefs.GetString("occupation")=="Avenger")
+            {
+                int temp=PlayerPrefs.GetInt("num_of_bombs");
+                temp+=1;
+                PlayerPrefs.SetInt("num_of_bombs",temp);
+            }
             PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: "+pattern_id+" }");
             PlayerPrefs.SetString("visible","y");
             StartCoroutine(PlayerGpsUpdate());

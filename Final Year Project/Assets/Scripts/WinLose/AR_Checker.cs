@@ -19,7 +19,12 @@ public class AR_Checker : MonoBehaviour
 
     public void changeScene()
     {
-        SceneManager.LoadScene("WinLose");
+        if("hunter"==PlayerPrefs.GetString("group_type", "empty"))
+        {
+            PlayerPrefs.SetString("reason","unseal");
+            SceneManager.LoadScene("WinLose");
+        }
+            
     }
 
     IEnumerator Goback(){

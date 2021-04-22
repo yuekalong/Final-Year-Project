@@ -11,6 +11,7 @@ module.exports = {
 
     return group;
   },
+
   triggerBomb: async function (userID,visible) {
 
     const group = await knex("user")
@@ -30,7 +31,7 @@ module.exports = {
     // required number of player is 6
 
     const teammates_loc = await knex
-      .select("loc_x", "loc_y")
+      .select("loc_x", "loc_y","game_status")
       .from("user")
       .where("id", teammates_id[0].user_id);
     //  .orWhere("id", teammates_id[1].user_id);
@@ -52,7 +53,7 @@ module.exports = {
       .where("id", opps_id[0].user_id);
     // .orWhere("id", opps_id[1].user_id)
     // .orWhere("id", opps_id[2].user_id);
-    console.log(opps_loc);
+    //console.log(opps_loc);
 
     return opps_loc;
   },
@@ -82,7 +83,7 @@ module.exports = {
       console.log(err);
       hints_id[0]["count"] = 0;
     }
-    console.log(hints_id);
+    //console.log(hints_id);
     return hints_id;
   },
   removeHintsLocation: async function (index, game_id) {
@@ -115,7 +116,7 @@ module.exports = {
       console.log(err);
       item_id[0]["count"] = 0;
     }
-    console.log(item_id);
+    //console.log(item_id);
     return item_id;
   },
 

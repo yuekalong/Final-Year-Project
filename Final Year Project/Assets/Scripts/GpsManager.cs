@@ -11,9 +11,14 @@ namespace Google.Maps.Examples {
 public class GpsManager : MonoBehaviour
 {
     public Text error;
+
     private LatLng latLng;
     public LatLng current;
+    public Text occupation;
+
+    private int tracker=0;
     LocationFollower script;
+    private TimeCountDown gameTimer;
 
     LatLngPrefabStampingExample location_script;
 
@@ -22,6 +27,10 @@ public class GpsManager : MonoBehaviour
         error.text = "";
         script= GetComponent<LocationFollower>();
         location_script= GetComponent<LatLngPrefabStampingExample>();
+        gameTimer = FindObjectOfType<TimeCountDown>();
+
+        occupation.text=PlayerPrefs.GetString("occupation","Empty");
+        
 
         StartCoroutine(HintsGpsUpdate());
         StartCoroutine(ItemsGpsUpdate());
@@ -32,15 +41,31 @@ public class GpsManager : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
+        {
+             occupation.text="Bomb Walker :" +PlayerPrefs.GetInt("disable").ToString();
+        }
+    }
+
     IEnumerator PlayerGpsUpdate(){
         while(true)
         {
             WWWForm form = new WWWForm();
 
             latLng=script.currentLocation; 
-
-            form.AddField("Lat", latLng.Lat.ToString());
-            form.AddField("Lng", latLng.Lng.ToString());
+            
+            if(PlayerPrefs.GetString("occupation")=="Faker" && gameTimer.TimeUsed.Minutes<=15)
+            {
+                form.AddField("Lat", "0");
+                form.AddField("Lng", "0");
+            }
+            else
+            {
+                form.AddField("Lat", latLng.Lat.ToString());
+                form.AddField("Lng", latLng.Lng.ToString());
+            }
             form.AddField("Visible", PlayerPrefs.GetString("visible","n"));
 
             UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/location/"+PlayerPrefs.GetString("id","1"),form);
@@ -105,6 +130,10 @@ public class GpsManager : MonoBehaviour
             location_script.y[4] = data[3]["loc_y"];
 
             location_script.visible=0;
+            if(tracker==1)
+            {
+                location_script.visible=1;
+            }
             for(int i =0;i<3;i++)
             {
                 if(data[i]["visible"]=="y")
@@ -117,7 +146,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(5);
         }
     }
     IEnumerator HintsGpsUpdate(){
@@ -145,6 +174,8 @@ public class GpsManager : MonoBehaviour
                     if(data[i]["pattern_lock_id"]==null)
                     {
                         location_script.pattern_lock_id[i] = "";
+                        if(PlayerPrefs.GetString("hint_stored")=="Empty" && PlayerPrefs.GetString("occupation")=="Professor")
+                            PlayerPrefs.SetString("hint_stored",location_script.hint_words[i]);
                     }
                     else
                     {
@@ -171,7 +202,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
         }
     }
     IEnumerator ItemsGpsUpdate(){
@@ -213,8 +244,18 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
         }
+    }
+    IEnumerator checkOpp(){
+        tracker=1;
+        yield return new WaitForSeconds(30);
+        tracker=0;
+    }
+    public void use_tracker_skill()
+    {
+        StartCoroutine(checkOpp());
+        PlayerPrefs.SetInt("can_track",PlayerPrefs.GetInt("can_track")-1);
     }
     
 }

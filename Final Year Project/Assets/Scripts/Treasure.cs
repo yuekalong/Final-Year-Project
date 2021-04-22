@@ -20,11 +20,8 @@ public class Treasure : MonoBehaviour
     bool  show=false;
     void Start()
     {
-        type=PlayerPrefs.GetString("group_type", "Hunter");
-        if(type!="Hunter")
-        {
-            gameObject.SetActive(false);
-        }
+        
+
     }
 
 
