@@ -372,14 +372,18 @@ public class LockPattern : MonoBehaviour
         }
         
         byte[] myData = System.Text.Encoding.UTF8.GetBytes("This is some test data");
-        if(PlayerPrefs.GetInt("disable_bome",0)>0)
+        
+        if(PlayerPrefs.GetInt("disable_bomb",0)>0)
         {
             req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"], myData);
-            PlayerPrefs.SetInt("disable_bome",PlayerPrefs.GetInt("disable_bome")-1);
+            int temp =PlayerPrefs.GetInt("disable_bomb");
+            PlayerPrefs.SetInt("disable_bomb",temp-1);
         }
         else
+        {
             req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"]+"/validate-pattern" + queryPath+ inputString, myData);
-
+        }
+        
 
         yield return req.SendWebRequest();
         // parse the json response

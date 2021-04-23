@@ -99,9 +99,9 @@ public class PlaceBomb : MonoBehaviour
                     Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(BomePrefab);
 
-                    if(data[i]["bomb_id"]==2)
+                    if(data[i]["bomb_id"]=="2")
                     {
-                        Bombs[i].transform.localScale += new Vector3(2.0f, 0.0f, 2.0f);
+                        Bombs[i].transform.localScale += new Vector3(20.0f, 0.0f, 20.0f);
                     }
 
                     temp = new LatLng(data[i]["loc_x"],data[i]["loc_y"]);
@@ -118,7 +118,7 @@ public class PlaceBomb : MonoBehaviour
                     Destroy(Bombs[i]);
                     Bombs[i] = GameObject.Instantiate(OppsBombPrefab);
 
-                    if(data[i]["bomb_id"]==2)
+                    if(data[i]["bomb_id"]=="2")
                     {
                         Bombs[i].transform.localScale += new Vector3(2.0f, 0.0f, 2.0f);
                     }

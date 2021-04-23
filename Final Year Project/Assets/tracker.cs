@@ -16,10 +16,12 @@ public class tracker : MonoBehaviour
     public GameObject script;
     void Start()
     {
-        if(PlayerPrefs.GetString("occupation")=="Tracker")
+        number.text=PlayerPrefs.GetInt("can_track").ToString();
+        if(PlayerPrefs.GetString("occupation")!="Tracker")
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
+
 
     }
 

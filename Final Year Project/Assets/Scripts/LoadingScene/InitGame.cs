@@ -17,7 +17,7 @@ public class InitGame : MonoBehaviour
 
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
-    private string[] occupation ={"Bomb Walker","Enhancer","Tracker","Faker","Professor","Terrorist","Robber","Avengers"};
+    private string[] occupation ={"Bomb Walker","Enhancer","Tracker","Faker","Professor","Terrorist","Robber","Avenger"};
 
 
     bool isStarted = false;
@@ -27,9 +27,10 @@ public class InitGame : MonoBehaviour
         circularImg.fillAmount = progress;
         int rand  = UnityEngine.Random.Range(1, 9);
         PlayerPrefs.SetString("occupation",occupation[rand]);
+        PlayerPrefs.SetString("occupation","Robber");
         if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
         {
-            PlayerPrefs.SetInt("disable_bome",2);
+            PlayerPrefs.SetInt("disable_bomb",2);
         }
         if(PlayerPrefs.GetString("occupation")=="Tracker")
         {

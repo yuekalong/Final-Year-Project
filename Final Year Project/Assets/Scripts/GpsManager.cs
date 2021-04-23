@@ -15,8 +15,6 @@ public class GpsManager : MonoBehaviour
     private LatLng latLng;
     public LatLng current;
     public Text occupation;
-
-    private int tracker=0;
     LocationFollower script;
     private TimeCountDown gameTimer;
 
@@ -45,7 +43,7 @@ public class GpsManager : MonoBehaviour
     {
         if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
         {
-             occupation.text="Bomb Walker :" +PlayerPrefs.GetInt("disable").ToString();
+             occupation.text="Bomb Walker :" +PlayerPrefs.GetInt("disable_bomb").ToString();
         }
     }
 
@@ -56,7 +54,7 @@ public class GpsManager : MonoBehaviour
 
             latLng=script.currentLocation; 
             
-            if(PlayerPrefs.GetString("occupation")=="Faker" && gameTimer.TimeUsed.Minutes<=15)
+            if(PlayerPrefs.GetString("occupation")=="Faker" && gameTimer.TimeUsed.Minutes<=1)
             {
                 form.AddField("Lat", "0");
                 form.AddField("Lng", "0");
@@ -130,7 +128,7 @@ public class GpsManager : MonoBehaviour
             location_script.y[4] = data[3]["loc_y"];
 
             location_script.visible=0;
-            if(tracker==1)
+            if(PlayerPrefs.GetInt("tracking")==1)
             {
                 location_script.visible=1;
             }
@@ -175,7 +173,10 @@ public class GpsManager : MonoBehaviour
                     {
                         location_script.pattern_lock_id[i] = "";
                         if(PlayerPrefs.GetString("hint_stored")=="Empty" && PlayerPrefs.GetString("occupation")=="Professor")
+                        {
                             PlayerPrefs.SetString("hint_stored",location_script.hint_words[i]);
+                        }
+                            
                     }
                     else
                     {
@@ -248,14 +249,15 @@ public class GpsManager : MonoBehaviour
         }
     }
     IEnumerator checkOpp(){
-        tracker=1;
+        PlayerPrefs.SetInt("tracking",1);
         yield return new WaitForSeconds(30);
-        tracker=0;
+        PlayerPrefs.SetInt("tracking",0);
     }
     public void use_tracker_skill()
     {
         StartCoroutine(checkOpp());
-        PlayerPrefs.SetInt("can_track",PlayerPrefs.GetInt("can_track")-1);
+        int temp = PlayerPrefs.GetInt("can_track");
+        PlayerPrefs.SetInt("can_track",temp-1);
     }
     
 }

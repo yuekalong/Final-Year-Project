@@ -42,7 +42,7 @@ module.exports = {
       bombs[0]["count"] = 0;
     }
 
-    console.log(bombs[0]["count"]);
+    console.log(bombs[0]["bomb_id"]);
     return bombs;
   },
   createBomb: async function (gameID, groupID, input, bombID, locX, locY) {

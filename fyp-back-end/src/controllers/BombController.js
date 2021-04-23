@@ -88,7 +88,7 @@ module.exports = {
       return standardServiceResponse(
         res,
         next,
-        bombServices.validatePattern(lockID)
+        bombServices.deleteBomb(lockID)
       );
     } catch (err) {
       // catch exception and shows the error message
