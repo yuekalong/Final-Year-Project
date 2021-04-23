@@ -1,14 +1,13 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
-  validateTreasure: async function (gameID, input) {
+  getTreasureId: async function (gameID) {
     const treasure = (
-      await knex("treasure")
-        .first("code")
-        .join("game", "game.treasure_id", "=", "treasure.id")
-        .where("game.id", "=", gameID)
-    ).code;
-
-    return treasure == input;
+      await knex("game")
+        .first("treasure_id")
+        .where("id", "=", gameID)
+    );
+    console.log(treasure);
+    return treasure;
   },
 };

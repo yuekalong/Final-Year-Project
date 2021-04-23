@@ -3,21 +3,20 @@ const treasureServices = require("../services/TreasureServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
 module.exports = {
-  validateTreasure: function (req, res, next) {
+  getTreasureId: function (req, res, next) {
     try {
-      console.log("TreaasureController.validateTreasure started!");
+      console.log("TreaasureController.getTreasureId started!");
       const { gameID } = req.params;
-      const { input } = req.body;
 
       return standardServiceResponse(
         res,
         next,
-        treasureServices.validateTreasure(gameID, input)
+        treasureServices.getTreasureId(gameID)
       );
     } catch (err) {
       // catch exception and shows the error message
       console.log(
-        "Error: TreaasureController.validateTreasure: " +
+        "Error: TreaasureController.getTreasureId: " +
           JSON.parse(err.message)["message"]
       );
       next(err);
