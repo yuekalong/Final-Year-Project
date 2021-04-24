@@ -5,12 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
+using SocketIO;
 
 public class AR_Checker : MonoBehaviour
 {
+    private SocketManager socketManager;
+    
     // Start is called before the first frame update
     void Start()
     {
+        socketManager = FindObjectOfType<SocketManager>();
         StartCoroutine(Goback());
         StartCoroutine(SeleteTreasure());
     }
@@ -25,8 +29,11 @@ public class AR_Checker : MonoBehaviour
     {
         if("hunter"==PlayerPrefs.GetString("group_type", "empty"))
         {
-            PlayerPrefs.SetString("reason","unseal");
+            
+            socketManager.sendWinLoseTeam("unseal");
+            socketManager.sendWinLoseOpp("unseal");
             SceneManager.LoadScene("WinLose");
+            
         }
             
     }

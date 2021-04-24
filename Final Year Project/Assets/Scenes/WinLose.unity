@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 222269547}
   - component: {fileID: 222269546}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: TimeNeeded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,12 +269,10 @@ MonoBehaviour:
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Your team defeated by
-
-    your enemy in 10:15
+  m_Text: 'Your team defeated by your enemy in 10:15
 
 '
 --- !u!222 &222269547
@@ -773,11 +771,11 @@ MonoBehaviour:
     m_MaxSize: 40
     m_Alignment: 1
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Time's Up
+    m_LineSpacing: 0.85
+  m_Text: None
 --- !u!222 &706354506
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1373,12 +1371,10 @@ MonoBehaviour:
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Your team need 10:15 to
-
-    defeat your enemy
+  m_Text: 'Your team need 10:15 to defeat your enemy
 
 '
 --- !u!222 &1532386601
@@ -1614,4 +1610,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reason: {fileID: 706354505}
-  TimeNeeded: {fileID: 1532386600}

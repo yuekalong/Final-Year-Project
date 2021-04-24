@@ -27,7 +27,7 @@ public class InitGame : MonoBehaviour
         circularImg.fillAmount = progress;
         int rand  = UnityEngine.Random.Range(1, 9);
         PlayerPrefs.SetString("occupation",occupation[rand]);
-        PlayerPrefs.SetString("occupation","Robber");
+        
         if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
         {
             PlayerPrefs.SetInt("disable_bomb",2);
