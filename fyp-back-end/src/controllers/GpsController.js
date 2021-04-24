@@ -19,6 +19,22 @@ module.exports = {
       next(err);
     }
   },
+  postStatus: function (req, res, next) {
+    try {
+      console.log("GpsController.postStatus started!");
+
+      const { game_status } = req.body;
+      return standardServiceResponse(
+        res,
+        next,
+        gpsServices.postStatus(req.params.id, game_status)
+      );
+    } catch (err) {
+      // catch exception and shows the error message
+      console.log(err);
+      next(err);
+    }
+  },
   triggerBomb: function (req, res, next) {
     try {
       console.log("GpsController.triggerBomb started!");

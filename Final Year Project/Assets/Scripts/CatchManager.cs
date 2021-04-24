@@ -165,30 +165,5 @@ public class CatchManager : MonoBehaviour
             networking.SendFromClient(bytes);
         }
     }
-    IEnumerator CheckIfAllCaught(){
-        while(true)
-        {
 
-            UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/locationTeammates/"+PlayerPrefs.GetString("id","1")+"/"+PlayerPrefs.GetString("group_id", "1"));
-
-            // stop the function and return the state to Login(), if access this function again will start from here
-            yield return req.SendWebRequest();
-
-            JSONNode res = JSON.Parse(req.downloadHandler.text);
-            JSONNode data = res["data"];
-
-            location_script.x[0] = data[0]["loc_x"];
-            location_script.y[0] = data[0]["loc_y"];
-            location_script.x[1] = data[1]["loc_x"];
-            location_script.y[1] = data[1]["loc_y"];
-
-            if(req.isNetworkError || req.isHttpError){
-                Debug.LogError(req.error);
-                error.text=req.error;
-                yield break;
-            }
-            
-            yield return new WaitForSeconds(10);
-        }
-    }
 }

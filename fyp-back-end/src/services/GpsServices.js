@@ -12,6 +12,15 @@ module.exports = {
     return group;
   },
 
+  postStatus: async function (userID, game_status) {
+
+    const group = await knex("user")
+      .update("game_status", game_status)
+      .where("id", "=", userID);
+
+    return group;
+  },
+
   triggerBomb: async function (userID,visible) {
 
     const group = await knex("user")
