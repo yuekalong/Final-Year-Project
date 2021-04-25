@@ -31,9 +31,9 @@ public class CatchButton : MonoBehaviour
 
     public void Catch()
     {
+        catchManager.StartClient();
         buttonObject.interactable = false;
         catchCoolDown.StartCountDown(TimeSpan.FromSeconds(10));
-        catchManager.StartClient();
     }
 
     void Update()

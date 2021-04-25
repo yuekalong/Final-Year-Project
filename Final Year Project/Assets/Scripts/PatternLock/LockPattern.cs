@@ -50,7 +50,7 @@ public class LockPattern : MonoBehaviour
                 }
         */
         // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: hint-unlock, hintID: 1 }");
-        PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
+        // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-set }");
         // PlayerPrefs.SetString("lock_detail", "{ id: 1, type: bomb-unlock, lockID: 233887c4-9374-4733-b3a7-4231ea8031e0 }");
 
         circles = new Dictionary<int, Circle>();

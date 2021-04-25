@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.alterTable("game_bombs_mapping", (table) => {
-    table.string("group_id");
+    table.uuid("group_id");
     table.foreign("group_id").references("group.id");
   });
 };
