@@ -219,7 +219,7 @@ public class GpsManager : MonoBehaviour
 
             int count=data[0]["count"];
 
-            for(int i=0;i<15;i++)
+            for(int i=0;i<30;i++)
             {
                 if(i<count)
                 {
