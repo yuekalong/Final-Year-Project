@@ -22,7 +22,7 @@ public class Treasure : MonoBehaviour
     bool  show=false;
     void Start()
     {
-        if(PlayerPrefs.GetInt("scanned",1)==1)
+        if(PlayerPrefs.GetInt("scanned",0)==1)
         {
             but.interactable=false;
             StartCoroutine(CountDown());
@@ -42,5 +42,6 @@ public class Treasure : MonoBehaviour
     IEnumerator CountDown(){
         yield return new WaitForSeconds(20);
         PlayerPrefs.SetInt("scanned",0);
+        but.interactable=true;
     }
 }

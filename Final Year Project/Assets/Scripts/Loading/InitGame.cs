@@ -15,6 +15,7 @@ public class InitGame : MonoBehaviour
     [SerializeField] GameObject socket;
     [SerializeField] TimeCountDown gameTimer;
 
+    public Text gather;
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
     private string[] occupation = { "Bomb Walker", "Enhancer", "Tracker", "Faker", "Professor", "Terrorist", "Robber", "Avenger" };
@@ -99,8 +100,11 @@ public class InitGame : MonoBehaviour
         yield return AddProgress(0.1f);
 
         PlayerPrefs.SetString("hint_stored", "Empty");
-        yield return AddProgress(0.1f);
 
+
+
+        yield return new WaitForSeconds(10);
+        yield return AddProgress(0.1f);
         // set time limit
         gameTimer.StartCountDown(TimeSpan.FromMinutes(2));
         DontDestroyOnLoad(gameTimer);
@@ -125,14 +129,17 @@ public class InitGame : MonoBehaviour
 
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
+
         // parse the json response
         JSONNode res = JSON.Parse(req.downloadHandler.text);
 
         if (req.isNetworkError || req.isHttpError)
         {
+            gather.text = req.error;
             Debug.LogError(req.error);
             yield break;
         }
+        gather.text = res["success"];
         if (res["success"])
         {
             JSONNode data = res["data"];
@@ -146,7 +153,43 @@ public class InitGame : MonoBehaviour
             PlayerPrefs.SetString("visible", "n");
             PlayerPrefs.SetInt("num_of_bombs", 0);
             if (PlayerPrefs.GetString("occupation") == "Terrorist")
+            {
                 PlayerPrefs.SetInt("num_of_bombs", 2);
+            }
+
+            PlayerPrefs.SetInt("disable_bomb", -1);
+            PlayerPrefs.SetInt("can_track", -1);
+            if (PlayerPrefs.GetString("occupation") == "Bomb Walker")
+            {
+                PlayerPrefs.SetInt("disable_bomb", 2);
+            }
+            if (PlayerPrefs.GetString("occupation") == "Tracker")
+            {
+                PlayerPrefs.SetInt("can_track", 3);
+            }
+
+            if (PlayerPrefs.GetString("map") == "1")
+            {
+                if (PlayerPrefs.GetString("group_type") == "hunter")
+                    gather.text += "CC canteen";
+                else
+                    gather.text += "MTR Station Piazza";
+
+            }
+            else if (PlayerPrefs.GetString("map") == "2")
+            {
+                if (PlayerPrefs.GetString("group_type") == "hunter")
+                    gather.text += "Science Center";
+                else
+                    gather.text += "U library";
+            }
+            else
+            {
+                if (PlayerPrefs.GetString("group_type") == "hunter")
+                    gather.text += "523 Entrance";
+                else
+                    gather.text += "WS Entrance";
+            }
 
             Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
             Debug.Log("Area ID: " + PlayerPrefs.GetString("area_id", "No Area ID"));

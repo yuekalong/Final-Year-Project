@@ -12,7 +12,7 @@ public class bomb : MonoBehaviour
     void Start()
     {
         count=-1;
-        text = GameObject.Find("Number");
+        text = GameObject.Find("BombNumber");
         text.GetComponent<Text>().text=PlayerPrefs.GetInt("num_of_bombs", 3).ToString();
         if(text.GetComponent<Text>().text=="0")
         {
