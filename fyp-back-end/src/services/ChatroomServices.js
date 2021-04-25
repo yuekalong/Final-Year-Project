@@ -49,7 +49,7 @@ module.exports = {
   },
 
   sendWinLoseTeam: async function (connection, data) {
-    const roomID = data.opponent_id;
+    const roomID = data.group_id;
 
     connection.io
       .to(roomID)
