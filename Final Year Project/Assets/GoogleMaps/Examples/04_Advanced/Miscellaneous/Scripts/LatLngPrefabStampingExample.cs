@@ -23,7 +23,7 @@ namespace Google.Maps.Examples {
 
     public GameObject[] Hints = new GameObject[10];
 
-    public GameObject[] Items = new GameObject[15];
+    public GameObject[] Items = new GameObject[30];
 
     private GameObject[] Teammates = new GameObject[2];
     private LatLng[] TeammateLoc = new LatLng[2];
@@ -50,11 +50,11 @@ namespace Google.Maps.Examples {
 
     public string[] hint_words= new string[10];
 
-    public double[] item_x= new double[15];
+    public double[] item_x= new double[30];
 
-    public double[] item_y= new double[15];
+    public double[] item_y= new double[30];
 
-    public int[] item_id= new int[15];
+    public int[] item_id= new int[30];
 
     /// <summary>
     /// The prefabs to use for each stamp.
@@ -332,7 +332,7 @@ namespace Google.Maps.Examples {
     {
       if(build==0)
       {
-        for(int i=0;i<15;i++)
+        for(int i=0;i<30;i++)
         {
           Items[i] = GameObject.Instantiate(ITEM);
           Items[i].AddComponent<BoxCollider>();
@@ -354,7 +354,7 @@ namespace Google.Maps.Examples {
     }
     private void itemsUpdate()
     {
-      for(int i=0;i<15;i++)
+      for(int i=0;i<30;i++)
       {
         LatLng temp = new LatLng(item_x[i],item_y[i]);
         Items[i].transform.position = MapsService.Coords.FromLatLngToVector3(temp);
