@@ -65,20 +65,28 @@ module.exports = {
 
     random();
 
-    // const hints = await knex("hint").select("*");
-    // const items = await knex("item").select("*");
-    // const treasure = await knex("treasure")
-    //   .select("*")
-    //   .where("map_number", "=", mapNumber);
+    const hints = await knex("hint").select("*");
+    const items = await knex("item").select("*");
+    const treasure = await knex("treasure")
+      .select("*")
+      .where("map_number", "=", mapNumber);
 
-    // const selectedTreasureId = treasure[random(treasure.length)].id;
+    const selectedTreasureId = treasure[random(treasure.length)].id;
 
     // init game data
     await knex("game").insert({
       id: roomID,
       map_number: mapNumber,
-      // treasure_id: selectedTreasureId
+      treasure_id: selectedTreasureId,
     });
+
+    // init game hint mapping
+
+    // big hint
+
+    // small hint
+
+    // init game item mapping
 
     return roomID;
   },

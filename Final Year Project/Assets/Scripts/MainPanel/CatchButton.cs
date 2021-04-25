@@ -43,7 +43,7 @@ public class CatchButton : MonoBehaviour
     {
         scanning = true;
         // yield return new WaitForSeconds(60);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         scanning = false;
     }
 
