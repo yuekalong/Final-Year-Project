@@ -7,8 +7,24 @@ const nanoid = customAlphabet(alphabet, 10);
 
 const roomid = customAlphabet(alphabet, 6);
 
+// random number
 function random(max) {
   return Math.floor(Math.random() * max);
+}
+
+// random array
+function getRandom(arr, n) {
+  let result = new Array(n);
+  let len = arr.length;
+  let taken = new Array(len);
+
+  if (n > len) throw new RangeError("n is larger than array's size");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
 }
 
 module.exports = {
@@ -63,8 +79,6 @@ module.exports = {
   createRoom: async function (mapNumber) {
     const roomID = await roomid();
 
-    random();
-
     const hints = await knex("hint").select("*");
     const items = await knex("item").select("*");
     const treasure = await knex("treasure")
@@ -81,12 +95,39 @@ module.exports = {
     });
 
     // init game hint mapping
+    let randomizeHints = getRandom(hints, 11);
+    randomizeHints = randomizeHints.map((hint) => {
+      return {
+        game_id: roomID,
+        hint_id: hint.id,
+      };
+    });
 
-    // big hint
+    // TODO: change the schema.... actually big hint should contain critial word
+    // init big hint
+    const hint_pattern_locks = await knex("pattern_lock")
+      .select("*")
+      .where("type", "=", "hint");
+    randomizeHints[0] = {
+      ...randomizeHints[0],
+      ...{
+        pattern_lock_id:
+          hint_pattern_locks[random(hint_pattern_locks.length)].id,
+      },
+    };
 
-    // small hint
+    await knex("game_hints_mapping").insert(randomizeHints);
 
     // init game item mapping
+    let randomizeItems = getRandom(items, 10);
+    randomizeItems = randomizeItems.map((item) => {
+      return {
+        game_id: roomID,
+        item_id: item.id,
+      };
+    });
+
+    await knex("game_items_mapping").insert(randomizeItems);
 
     return roomID;
   },
