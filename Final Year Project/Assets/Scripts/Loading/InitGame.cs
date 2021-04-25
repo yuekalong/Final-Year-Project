@@ -27,7 +27,8 @@ public class InitGame : MonoBehaviour
         circularImg.fillAmount = progress;
         int rand  = UnityEngine.Random.Range(1, 9);
         PlayerPrefs.SetString("occupation",occupation[rand]);
-        
+        PlayerPrefs.SetInt("disable_bomb",-1);
+        PlayerPrefs.SetInt("can_track",-1);
         if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
         {
             PlayerPrefs.SetInt("disable_bomb",2);
@@ -158,6 +159,7 @@ public class InitGame : MonoBehaviour
         else
         {
             Debug.Log(res);
+            GameSceneManager.GoToLobby();
         }
     }
 }
