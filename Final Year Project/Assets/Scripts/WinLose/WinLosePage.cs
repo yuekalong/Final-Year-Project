@@ -73,6 +73,8 @@ public class WinLosePage : MonoBehaviour
                 TimeNeeded.text="Your team need "+time+" to defeat your enemy";
             }
         }
+        Destroy(gameTimer);
+        PlayerPrefs.DeleteAll();
 
 
     }
