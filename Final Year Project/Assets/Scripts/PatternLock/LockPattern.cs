@@ -352,7 +352,14 @@ public class LockPattern : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("gameID", PlayerPrefs.GetString("game_id", "N/A"));
         form.AddField("input", inputString);
-        form.AddField("bombID", "1"); // get bomb id
+
+        if (PlayerPrefs.GetString("occupation") == "Enhancer")
+        {
+            form.AddField("bombID", "2"); // get bomb id
+        }
+        else
+            form.AddField("bombID", "1"); // get bomb id
+
         string locX = PlayerPrefs.GetString("loc_x", "Empty");
         string locY = PlayerPrefs.GetString("loc_y", "Empty");
         form.AddField("locX", locX); // get loc x
@@ -381,6 +388,7 @@ public class LockPattern : MonoBehaviour
     {
 
         string queryPath = "?input=";
+        UnityWebRequest req;
 
         // generate the query path        
         string inputString = "";
@@ -404,7 +412,18 @@ public class LockPattern : MonoBehaviour
         }
 
         byte[] myData = System.Text.Encoding.UTF8.GetBytes("This is some test data");
-        UnityWebRequest req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"] + "/validate-pattern" + queryPath + inputString, myData);
+
+        if (PlayerPrefs.GetInt("disable_bomb", 0) > 0)
+        {
+            req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"], myData);
+            int temp = PlayerPrefs.GetInt("disable_bomb");
+            PlayerPrefs.SetInt("disable_bomb", temp - 1);
+        }
+        else
+        {
+            req = UnityWebRequest.Put(PlatformDefines.apiAddress + "/bomb/" + JSON.Parse(PlayerPrefs.GetString("lock_detail"))["lockID"] + "/validate-pattern" + queryPath + inputString, myData);
+        }
+
 
         yield return req.SendWebRequest();
         // parse the json response

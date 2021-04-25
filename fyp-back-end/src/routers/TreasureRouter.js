@@ -5,6 +5,6 @@ const router = express.Router();
 // importing the controller to controll the action for specific route
 const treasureController = require("../controllers/TreasureController.js");
 
-router.post("/:gameID", treasureController.validateTreasure);
+router.get("/:gameID", treasureController.getTreasureId);
 
 module.exports = router;

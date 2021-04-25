@@ -24,7 +24,7 @@ namespace Google.Maps.Examples.Shared {
     public Text InstructionsText;
 
     private GameObject gameZone;
-    public int map=0;
+    public int map=2;
     /// <summary>
     /// Dialog box controlled by the help button.
     /// </summary>

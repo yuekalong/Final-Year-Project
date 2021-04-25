@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 
 public class Treasure : MonoBehaviour
@@ -19,25 +20,23 @@ public class Treasure : MonoBehaviour
     bool  show=false;
     void Start()
     {
-        type=PlayerPrefs.GetString("group_type", "No Group Type");
-        if(type!="hunter")
-        {
-            gameObject.SetActive(false);
-        }
+        
+
     }
 
 
     public void onclick()
     {
-        inputfield.SetActive(!show);
-        show=!show;
+        //inputfield.SetActive(!show);
+        //show=!show;
+        SceneManager.LoadScene("AR Testing");
     }
     public void submit()
     {
-        StartCoroutine(CheckCode());
+        //StartCoroutine(CheckCode());
     }
 
-    IEnumerator CheckCode(){
+    /*IEnumerator CheckCode(){
     while(true)
     {
         WWWForm form = new WWWForm();
@@ -65,5 +64,5 @@ public class Treasure : MonoBehaviour
 
         yield break;
     }
-    }
+    }*/
 }

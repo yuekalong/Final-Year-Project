@@ -21,6 +21,7 @@ public class SocketManager : MonoBehaviour
         user["id"] = PlayerPrefs.GetString("id", "No ID");
         user["game_id"] = PlayerPrefs.GetString("game_id", "No Game ID");
         user["group_id"] = PlayerPrefs.GetString("group_id", "No Game ID");
+        user["opponent_id"] = PlayerPrefs.GetString("opponent_id", "No Game ID");
         user["name"] = PlayerPrefs.GetString("name", "No Name");
 
         sceneName = SceneManager.GetActiveScene().name;
@@ -39,6 +40,9 @@ public class SocketManager : MonoBehaviour
 
             // chatroom
             socket.On("receive-msg", ReceiveMsg);
+
+            //whole game
+             socket.On("receive-reason", ReceiveReason);
 
             // waiting room
             socket.On("player-count", UpdatePlayerCount);
@@ -143,6 +147,28 @@ public class SocketManager : MonoBehaviour
         socket.Emit("send-msg", new JSONObject(data));
     }
 
+    public void sendWinLoseTeam(string msg)
+    {
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["id"] = user["id"];
+        data["name"] = user["name"];
+        data["group_id"] = user["group_id"];
+        data["msg"] = msg;
+
+        socket.Emit("send-winlose-team", new JSONObject(data));
+    }
+
+    public void sendWinLoseOpp(string msg)
+    {
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["id"] = user["id"];
+        data["name"] = user["name"];
+        data["opponent_id"] = user["opponent_id"];
+        data["msg"] = msg;
+
+        socket.Emit("send-winlose-opp", new JSONObject(data));
+    }
+
     public void ReceiveMsg(SocketIOEvent ev)
     {
         Debug.Log("Receive Message: " + ev.data);
@@ -171,6 +197,16 @@ public class SocketManager : MonoBehaviour
             scrollRect.verticalNormalizedPosition = 0f;
             Canvas.ForceUpdateCanvases();
         }
+    }
+    public void ReceiveReason(SocketIOEvent ev)
+    {
+        Debug.Log("Receive Message: " + ev.data);
+        JSONObject data = ev.data;
+
+        PlayerPrefs.SetString("reason",data.GetField("msg").str);
+        SceneManager.LoadScene("WinLose");
+        
+
     }
 
     public void GetHistory()

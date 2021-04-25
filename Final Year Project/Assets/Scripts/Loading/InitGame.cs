@@ -17,6 +17,7 @@ public class InitGame : MonoBehaviour
 
     [SerializeField] [Range(0, 1)] float progress = 0f;
 
+    private string[] occupation ={"Bomb Walker","Enhancer","Tracker","Faker","Professor","Terrorist","Robber","Avenger"};
 
 
     bool isStarted = false;
@@ -24,6 +25,18 @@ public class InitGame : MonoBehaviour
     void Awake()
     {
         circularImg.fillAmount = progress;
+        int rand  = UnityEngine.Random.Range(1, 9);
+        PlayerPrefs.SetString("occupation",occupation[rand]);
+        
+        if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
+        {
+            PlayerPrefs.SetInt("disable_bomb",2);
+        }
+        if(PlayerPrefs.GetString("occupation")=="Tracker")
+        {
+            PlayerPrefs.SetInt("can_track",3);
+        }
+            
     }
 
     void Update()
@@ -129,7 +142,10 @@ public class InitGame : MonoBehaviour
             PlayerPrefs.SetString("group_id", data["group"]["id"]);
             PlayerPrefs.SetString("group_type", data["group"]["type"]);
             PlayerPrefs.SetString("opponent_id", data["opponent"]["id"]);
+            PlayerPrefs.SetString("visible","n");
             PlayerPrefs.SetInt("num_of_bombs", 0);
+            if(PlayerPrefs.GetString("occupation")=="Terrorist")
+                PlayerPrefs.SetInt("num_of_bombs", 2);
 
             Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
             Debug.Log("Area ID: " + PlayerPrefs.GetString("area_id", "No Area ID"));

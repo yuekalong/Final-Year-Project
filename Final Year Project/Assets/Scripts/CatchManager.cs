@@ -165,4 +165,5 @@ public class CatchManager : MonoBehaviour
             networking.SendFromClient(bytes);
         }
     }
+
 }

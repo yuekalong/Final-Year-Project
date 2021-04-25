@@ -27,11 +27,13 @@ public class ItemCollision : MonoBehaviour
             StartCoroutine(RemoveItem());  
 
             int num = PlayerPrefs.GetInt("num_of_bombs", 3);
-            num+=1;
-            if(num>5)
+            
+            if(PlayerPrefs.GetString("occupation")=="Robber")
             {
-                num=0;
+                num+=1;
             }
+            num+=1;
+
             PlayerPrefs.SetInt("num_of_bombs", num);
             trigger=1;
             gameObject.SetActive(false);

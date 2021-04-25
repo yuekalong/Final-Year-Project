@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 module.exports = {
   allBombs: async function (gameID) {
     var bombs = await knex("game_bombs_mapping")
-      .select("type", "range", "loc_x", "loc_y", "pattern_lock_id", "group_id")
+      .select("type", "range", "loc_x", "loc_y", "pattern_lock_id", "group_id","bomb_id")
       .where("game_id", gameID)
       .join("bomb", "bomb.id", "=", "game_bombs_mapping.bomb_id")
       .join(
@@ -41,8 +41,7 @@ module.exports = {
       console.log(err);
       bombs[0]["count"] = 0;
     }
-
-    console.log(bombs[0]["count"]);
+    
     return bombs;
   },
   createBomb: async function (gameID, groupID, input, bombID, locX, locY) {
@@ -88,5 +87,17 @@ module.exports = {
     }
     console.log(isValid);
     return isValid;
+  },
+  deleteBomb: async function (lockID) {
+
+    // delete in `game_bombs_mapping`
+    await knex("game_bombs_mapping")
+      .where("pattern_lock_id", "=", lockID)
+      .delete();
+
+    // delete in `pattern_lock`
+    await knex("pattern_lock").where("id", "=", lockID).delete();
+
+    return true;
   },
 };

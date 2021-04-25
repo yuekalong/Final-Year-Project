@@ -25,6 +25,15 @@ module.exports = function (io) {
       chatroomController.sendMsg(connection, data);
     });
 
+    // send endgame message
+    socket.on("send-winlose-team", (data) => {
+      chatroomController.sendWinLoseTeam(connection, data);
+    });
+
+    // send endgame message
+    socket.on("send-winlose-opp", (data) => {
+      chatroomController.sendWinLoseOpp(connection, data);
+    });
     // get history
     socket.on("get-history", (user) => {
       chatroomController.getHistory(connection, user);

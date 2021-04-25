@@ -23,10 +23,11 @@ module.exports = {
 
   joinRoom: async function (connection, user) {
     const roomID = user.group_id;
+    const rooms = [user.group_id, user.opponent_id];
 
     // join the room
-    connection.socket.join(roomID);
-    console.log(`Room ${roomID} Join!`);
+    connection.socket.join(rooms);
+    console.log(`Room ${rooms} Join!`);
 
     // get history
     // this.getHistory(connection, roomID, user.socketID);
@@ -45,5 +46,23 @@ module.exports = {
       .to(roomID)
       .emit("receive-msg", { name: data.name, msg: data.msg });
     console.log("Send Message!");
+  },
+
+  sendWinLoseTeam: async function (connection, data) {
+    const roomID = data.opponent_id;
+
+    connection.io
+      .to(roomID)
+      .emit("receive-reason", { msg: data.msg });
+    console.log("Send reason!");
+  },
+  sendWinLoseOpp: async function (connection, data) {
+    const roomID = data.opponent_id;
+
+    connection.io
+      .to(roomID)
+      .emit("receive-reason", { msg: data.msg });
+    console.log(data.msg);
+    console.log("Send reason!");
   },
 };

@@ -2,19 +2,29 @@ const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
   postLocation: async function (userID, locx, locy, visible) {
-    var temp;
-    if(visible=="y")
-    {
-      temp=true;
-    }
-    else
-    {
-      temp=false;
-    }
+
     const group = await knex("user")
       .update("loc_x", locx)
       .update("loc_y", locy)
-      .update("visible", temp)
+      .update("visible", visible)
+      .where("id", "=", userID);
+
+    return group;
+  },
+
+  postStatus: async function (userID, game_status) {
+
+    const group = await knex("user")
+      .update("game_status", game_status)
+      .where("id", "=", userID);
+
+    return group;
+  },
+
+  triggerBomb: async function (userID,visible) {
+
+    const group = await knex("user")
+      .update("visible", visible)
       .where("id", "=", userID);
 
     return group;
@@ -30,7 +40,7 @@ module.exports = {
     // required number of player is 6
 
     const teammates_loc = await knex
-      .select("loc_x", "loc_y")
+      .select("loc_x", "loc_y","game_status")
       .from("user")
       .where("id", teammates_id[0].user_id);
     //  .orWhere("id", teammates_id[1].user_id);
@@ -52,6 +62,7 @@ module.exports = {
       .where("id", opps_id[0].user_id);
     // .orWhere("id", opps_id[1].user_id)
     // .orWhere("id", opps_id[2].user_id);
+    //console.log(opps_loc);
 
     return opps_loc;
   },
@@ -81,7 +92,7 @@ module.exports = {
       console.log(err);
       hints_id[0]["count"] = 0;
     }
-    console.log(hints_id);
+    //console.log(hints_id);
     return hints_id;
   },
   removeHintsLocation: async function (index, game_id) {
@@ -114,7 +125,7 @@ module.exports = {
       console.log(err);
       item_id[0]["count"] = 0;
     }
-    console.log(item_id);
+    //console.log(item_id);
     return item_id;
   },
 

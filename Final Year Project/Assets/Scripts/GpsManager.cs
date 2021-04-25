@@ -11,9 +11,12 @@ namespace Google.Maps.Examples {
 public class GpsManager : MonoBehaviour
 {
     public Text error;
+
     private LatLng latLng;
     public LatLng current;
+    public Text occupation;
     LocationFollower script;
+    private TimeCountDown gameTimer;
 
     LatLngPrefabStampingExample location_script;
 
@@ -22,6 +25,10 @@ public class GpsManager : MonoBehaviour
         error.text = "";
         script= GetComponent<LocationFollower>();
         location_script= GetComponent<LatLngPrefabStampingExample>();
+        gameTimer = FindObjectOfType<TimeCountDown>();
+
+        occupation.text=PlayerPrefs.GetString("occupation","Empty");
+        
 
         StartCoroutine(HintsGpsUpdate());
         StartCoroutine(ItemsGpsUpdate());
@@ -32,16 +39,32 @@ public class GpsManager : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if(PlayerPrefs.GetString("occupation")=="Bomb Walker")
+        {
+             occupation.text="Bomb Walker :" +PlayerPrefs.GetInt("disable_bomb").ToString();
+        }
+    }
+
     IEnumerator PlayerGpsUpdate(){
         while(true)
         {
             WWWForm form = new WWWForm();
 
             latLng=script.currentLocation; 
-
-            form.AddField("Lat", latLng.Lat.ToString());
-            form.AddField("Lng", latLng.Lng.ToString());
-            form.AddField("Visible", PlayerPrefs.GetString("visible","false"));
+            
+            if(PlayerPrefs.GetString("occupation")=="Faker" && gameTimer.TimeUsed.Minutes<=1)
+            {
+                form.AddField("Lat", "0");
+                form.AddField("Lng", "0");
+            }
+            else
+            {
+                form.AddField("Lat", latLng.Lat.ToString());
+                form.AddField("Lng", latLng.Lng.ToString());
+            }
+            form.AddField("Visible", PlayerPrefs.GetString("visible","n"));
 
             UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/location/"+PlayerPrefs.GetString("id","1"),form);
 
@@ -105,9 +128,13 @@ public class GpsManager : MonoBehaviour
             location_script.y[4] = data[3]["loc_y"];
 
             location_script.visible=0;
+            if(PlayerPrefs.GetInt("tracking")==1)
+            {
+                location_script.visible=1;
+            }
             for(int i =0;i<3;i++)
             {
-                if(data[i]["visible"]=="1")
+                if(data[i]["visible"]=="y")
                     location_script.visible=1;
             }
 
@@ -117,7 +144,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(5);
         }
     }
     IEnumerator HintsGpsUpdate(){
@@ -145,6 +172,11 @@ public class GpsManager : MonoBehaviour
                     if(data[i]["pattern_lock_id"]==null)
                     {
                         location_script.pattern_lock_id[i] = "";
+                        if(PlayerPrefs.GetString("hint_stored")=="Empty" && PlayerPrefs.GetString("occupation")=="Professor")
+                        {
+                            PlayerPrefs.SetString("hint_stored",location_script.hint_words[i]);
+                        }
+                            
                     }
                     else
                     {
@@ -171,7 +203,7 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
         }
     }
     IEnumerator ItemsGpsUpdate(){
@@ -204,7 +236,6 @@ public class GpsManager : MonoBehaviour
                     location_script.item_id[i] = 0;
                 }
                 location_script.Items[i].GetComponent<ItemCollision>().trigger=0;
-
             }
             
 
@@ -214,8 +245,19 @@ public class GpsManager : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
         }
+    }
+    IEnumerator checkOpp(){
+        PlayerPrefs.SetInt("tracking",1);
+        yield return new WaitForSeconds(30);
+        PlayerPrefs.SetInt("tracking",0);
+    }
+    public void use_tracker_skill()
+    {
+        StartCoroutine(checkOpp());
+        int temp = PlayerPrefs.GetInt("can_track");
+        PlayerPrefs.SetInt("can_track",temp-1);
     }
     
 }
