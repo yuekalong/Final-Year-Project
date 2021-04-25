@@ -571,6 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTimer: {fileID: 547690217}
   timer: {fileID: 547690215}
+  BLEHandlerPrefab: {fileID: 3596592454266253839, guid: 9eb11723057424db49a706c77a8bfe1e, type: 3}
+  catchManager: {fileID: 0}
 --- !u!1 &1040132529
 GameObject:
   m_ObjectHideFlags: 0

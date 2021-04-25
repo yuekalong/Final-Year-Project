@@ -16,19 +16,37 @@ public class GetRespawnTimeCount : MonoBehaviour
     private SocketManager socketManager;
     public Text timer;
 
-    private CatchManager catchManager;
+    public GameObject BLEHandlerPrefab;
+    public CatchManager catchManager;
     private String caught;
+    public GameObject originalHandler;
+    public GameObject originalBluetooth;
+
+    void Awake()
+    {
+        originalHandler = GameObject.Find("BLEHandler");
+        originalBluetooth = GameObject.Find("BluetoothLEReceiver");
+
+        if (originalHandler == null)
+        {
+            originalHandler = GameObject.Find("BLEHandler(Clone)");
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         socketManager = FindObjectOfType<SocketManager>();
 
         // set the current time into time limit
-        // Debug.Log(respawnTimer.TimeLeft.ToString());
-        respawnTimer.StartCountDown(TimeSpan.FromMinutes(1));
+        respawnTimer.StartCountDown(TimeSpan.FromMinutes(0.1));
+
         timer.text = String.Format("{0:00}:{1:00}", respawnTimer.TimeLeft.Minutes, respawnTimer.TimeLeft.Seconds);
 
-        catchManager = FindObjectOfType<CatchManager>();
+        // destroy original ble handler
+        Destroy(originalHandler);
+        Destroy(originalBluetooth);
+
         caught = "caught";
 
         StartCoroutine(StatusUpdate());
@@ -43,8 +61,23 @@ public class GetRespawnTimeCount : MonoBehaviour
 
         if (respawnTimer.TimeLeft == TimeSpan.Zero)
         {
+            Instantiate(BLEHandlerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            catchManager = FindObjectOfType<CatchManager>();
+
+            DontDestroyOnLoad(catchManager);
+
             catchManager.Initialize();
-            catchManager.StartServer();
+
+            bool startClient = false;
+            // bluetooth initialization <= comment if want to work on PC
+            while (!startClient)
+            {
+                if (catchManager != null)
+                {
+                    catchManager.StartClient();
+                    startClient = true;
+                }
+            }
 
             caught = "notCaught";
             StartCoroutine(StatusUpdate());

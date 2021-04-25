@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.alterTable("user", (table) => {
-    table.boolean("visible").default(false);
+    table.string("visible").default("n");
   });
 };
 

@@ -6,7 +6,7 @@ using System;
 
 public class CatchButton : MonoBehaviour
 {
-    private CatchManager catchManager;
+    public CatchManager catchManager;
     public Text textStatus;
     public Text connectedStatus;
     public Button buttonObject;
@@ -31,14 +31,19 @@ public class CatchButton : MonoBehaviour
 
     public void Catch()
     {
-        catchManager.StartClient();
+        textStatus.text = "";
+        connectedStatus.text = "";
+        // for start the scaning process
+        catchManager.StartServer();
+
         StartCoroutine(Scanning());
     }
 
     IEnumerator Scanning()
     {
         scanning = true;
-        yield return new WaitForSeconds(60);
+        // yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(1);
         scanning = false;
     }
 

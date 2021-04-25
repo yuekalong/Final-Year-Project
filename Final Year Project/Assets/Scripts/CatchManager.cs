@@ -21,8 +21,6 @@ public class CatchManager : MonoBehaviour
 
     private String groupType;
 
-    public int respawnTime;
-
     private TimeCountDown scanTimeLimit;
 
     // private void Start()
@@ -58,18 +56,13 @@ public class CatchManager : MonoBehaviour
         connectedText.text = "";
     }
 
-    // public void Update(){
-    //     // if network is ready
-    //     if(networking != null && groupType == "hunter" && !isServer){
-    //         StartServer();
-    //     }
-    // }
-
     public void StartServer()
     {
         isServer = true;
 
-        serverName = PlayerPrefs.GetString("group_id", "No Group ID");
+        serverName = PlayerPrefs.GetString("opponent_id", "No Opponent ID");
+
+        StartCoroutine(ScaningProcess());
 
         networking.StartServer(serverName, (connectedDevice) => // onDeviceReady
                     {
@@ -85,12 +78,8 @@ public class CatchManager : MonoBehaviour
 
                         clientName = connectedDevice.Name;
 
-                        connectedText.text = "Server Connected! Client Name: " + clientName;
-                        SendSignal("Client Connected!");
-
-                        StopServer();
-                        GameSceneManager.GoToCaughtScene();
-
+                        connectedText.text = "Catched! " + clientName;
+                        SendSignal("catch");
                     }, (disconnectedDevice) => // onDeviceDisconnected
                     {
                         // device disconnected
@@ -108,28 +97,20 @@ public class CatchManager : MonoBehaviour
                         {
                             StopServer();
                         }
+
                     });
     }
 
     public void StopServer()
     {
         networking.StopServer(() => { });
-
-        StartCoroutine(StartServerAgain());
-    }
-
-    public IEnumerator StartServerAgain()
-    {
-        yield return new WaitForSeconds(respawnTime);
-
-        StartServer();
     }
 
     public void StartClient()
     {
         isServer = false;
 
-        serverName = PlayerPrefs.GetString("opponent_id", "No Opponent ID");
+        serverName = PlayerPrefs.GetString("group_id", "No Group ID");
         clientName = PlayerPrefs.GetString("name", "No Name");
 
         networking.StartClient(serverName, clientName, () => // onStartedAdvertising
@@ -137,13 +118,16 @@ public class CatchManager : MonoBehaviour
                         // when finding server
                         networking.StatusMessage = "Started scaning";
 
-                        StartCoroutine(ScaningProcess());
-
                     }, (clientName, characteristic, bytes) => // onCharacteristicWritten
                     {
                         // receive server data
                         connectedText.text = System.Text.Encoding.ASCII.GetString(bytes);
-                        StopClient();
+
+                        if (System.Text.Encoding.ASCII.GetString(bytes) == "catch")
+                        {
+                            StopClient();
+                            GameSceneManager.GoToCaughtScene();
+                        }
                     });
 
     }
@@ -151,7 +135,7 @@ public class CatchManager : MonoBehaviour
     private IEnumerator ScaningProcess()
     {
         yield return new WaitForSeconds(60);
-        StopClient();
+        StopServer();
     }
 
     public void StopClient()

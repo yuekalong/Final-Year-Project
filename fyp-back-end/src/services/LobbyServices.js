@@ -7,6 +7,10 @@ const nanoid = customAlphabet(alphabet, 10);
 
 const roomid = customAlphabet(alphabet, 6);
 
+function random(max) {
+  return Math.floor(Math.random() * max);
+}
+
 module.exports = {
   getRoom: async function () {
     const gameInfo = await knex("game")
@@ -58,10 +62,24 @@ module.exports = {
   },
   createRoom: async function (mapNumber) {
     const roomID = await roomid();
+
+    random();
+
+    // const hints = await knex("hint").select("*");
+    // const items = await knex("item").select("*");
+    // const treasure = await knex("treasure")
+    //   .select("*")
+    //   .where("map_number", "=", mapNumber);
+
+    // const selectedTreasureId = treasure[random(treasure.length)].id;
+
+    // init game data
     await knex("game").insert({
       id: roomID,
       map_number: mapNumber,
+      // treasure_id: selectedTreasureId
     });
+
     return roomID;
   },
   joinRoom: async function (userID, gameID) {
