@@ -20,6 +20,9 @@ public class InitGame : MonoBehaviour
 
     private string[] occupation = { "Bomb Walker", "Enhancer", "Tracker", "Faker", "Professor", "Terrorist", "Robber", "Avenger" };
 
+    public TimeCountDown gatherTimer;
+    public Text gatherTimeText;
+
 
     bool isStarted = false;
 
@@ -39,6 +42,8 @@ public class InitGame : MonoBehaviour
             PlayerPrefs.SetInt("can_track", 3);
         }
 
+        gatherTimer.StartCountDown(TimeSpan.FromSeconds(30));
+        gatherTimeText.text = "";
     }
 
     void Update()
@@ -47,6 +52,20 @@ public class InitGame : MonoBehaviour
         {
             StartCoroutine(Initialize());
             isStarted = true;
+        }
+
+        // set timer
+        if (gatherTimer != null)
+        {
+            gatherTimeText.text = String.Format("{0:00}:{1:00}", gatherTimer.TimeLeft.Minutes, gatherTimer.TimeLeft.Seconds);
+
+            if (gatherTimer.TimeLeft == TimeSpan.Zero)
+            {
+                // set time limit
+                gameTimer.StartCountDown(TimeSpan.FromMinutes(2));
+                DontDestroyOnLoad(gameTimer);
+                GameSceneManager.StartGame();
+            }
         }
     }
 
@@ -102,14 +121,9 @@ public class InitGame : MonoBehaviour
         PlayerPrefs.SetString("hint_stored", "Empty");
 
 
+        circularImg.fillAmount = 1f;
 
-        yield return new WaitForSeconds(10);
-        yield return AddProgress(0.1f);
-        // set time limit
-        gameTimer.StartCountDown(TimeSpan.FromMinutes(2));
-        DontDestroyOnLoad(gameTimer);
 
-        GameSceneManager.StartGame();
     }
 
 
@@ -171,24 +185,24 @@ public class InitGame : MonoBehaviour
             if (PlayerPrefs.GetString("map") == "1")
             {
                 if (PlayerPrefs.GetString("group_type") == "hunter")
-                    gather.text += "CC canteen";
+                    gather.text = "CC canteen";
                 else
-                    gather.text += "MTR Station Piazza";
+                    gather.text = "MTR Station Piazza";
 
             }
             else if (PlayerPrefs.GetString("map") == "2")
             {
                 if (PlayerPrefs.GetString("group_type") == "hunter")
-                    gather.text += "Science Center";
+                    gather.text = "Science Center";
                 else
-                    gather.text += "U library";
+                    gather.text = "U library";
             }
             else
             {
                 if (PlayerPrefs.GetString("group_type") == "hunter")
-                    gather.text += "523 Entrance";
+                    gather.text = "523 Entrance";
                 else
-                    gather.text += "WS Entrance";
+                    gather.text = "WS Entrance";
             }
 
             Debug.Log("Game ID: " + PlayerPrefs.GetString("game_id", "No Game ID"));
