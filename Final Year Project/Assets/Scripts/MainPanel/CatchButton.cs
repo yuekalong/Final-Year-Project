@@ -28,13 +28,14 @@ public class CatchButton : MonoBehaviour
     TimeCountDown catchCoolDown = new TimeCountDown();
     public void Catch()
     {
-        // catchManager.StartClient();
+        catchManager.StartClient();
 
         gameObject.GetComponent<Button>().interactable = false;
 
         catchCoolDown.StartCountDown(TimeSpan.FromMinutes(2));
 
-        if(catchCoolDown.TimeLeft != TimeSpan.Zero) {        
+        if (catchCoolDown.TimeLeft != TimeSpan.Zero)
+        {
             gameObject.GetComponent<Button>().interactable = true;
         }
     }

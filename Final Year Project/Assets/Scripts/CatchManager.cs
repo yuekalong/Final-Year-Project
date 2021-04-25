@@ -133,7 +133,7 @@ public class CatchManager : MonoBehaviour
         networking.StartClient(serverName, clientName, () => // onStartedAdvertising
                     {
                         // when finding server
-                        networking.StatusMessage = "Started advertising";
+                        networking.StatusMessage = "Started scaning";
                     }, (clientName, characteristic, bytes) => // onCharacteristicWritten
                     {
                         // receive server data

@@ -33,7 +33,7 @@ module.exports = {
   },
   sendMsg: async function (connection, data) {
     const roomID = data.group_id;
-
+    console.log(roomID);
     await knex("chatroom_history").insert({
       id: uuid(),
       group_id: roomID,
