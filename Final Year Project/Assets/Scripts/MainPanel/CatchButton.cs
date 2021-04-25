@@ -10,7 +10,7 @@ public class CatchButton : MonoBehaviour
     public Text textStatus;
     public Text connectedStatus;
     public Button buttonObject;
-    private TimeCountDown catchCoolDown;
+    private bool scanning;
 
     private void Awake()
     {
@@ -26,21 +26,31 @@ public class CatchButton : MonoBehaviour
             gameObject.SetActive(true);
         }
 
-        catchCoolDown.StartCountDown(TimeSpan.FromMinutes(0));
+        scanning = false;
     }
 
     public void Catch()
     {
         catchManager.StartClient();
-        buttonObject.interactable = false;
-        catchCoolDown.StartCountDown(TimeSpan.FromSeconds(10));
+        StartCoroutine(Scanning());
+    }
+
+    IEnumerator Scanning()
+    {
+        scanning = true;
+        yield return new WaitForSeconds(60);
+        scanning = false;
     }
 
     void Update()
     {
-        if (catchCoolDown.TimeLeft == TimeSpan.Zero)
+        if (!scanning)
         {
             buttonObject.interactable = true;
+        }
+        else
+        {
+            buttonObject.interactable = false;
         }
     }
 }

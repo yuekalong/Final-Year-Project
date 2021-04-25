@@ -137,7 +137,7 @@ public class CatchManager : MonoBehaviour
                         // when finding server
                         networking.StatusMessage = "Started scaning";
 
-                        ScaningProcess();
+                        StartCoroutine(ScaningProcess());
 
                     }, (clientName, characteristic, bytes) => // onCharacteristicWritten
                     {
@@ -148,9 +148,9 @@ public class CatchManager : MonoBehaviour
 
     }
 
-    private IEnumerable ScaningProcess()
+    private IEnumerator ScaningProcess()
     {
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(60);
         StopClient();
     }
 
