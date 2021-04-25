@@ -9,6 +9,8 @@ public class CatchButton : MonoBehaviour
     private CatchManager catchManager;
     public Text textStatus;
     public Text connectedStatus;
+    public Button buttonObject;
+    private TimeCountDown catchCoolDown;
 
     private void Awake()
     {
@@ -23,20 +25,22 @@ public class CatchButton : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+
+        catchCoolDown.StartCountDown(TimeSpan.FromMinutes(0));
     }
 
-    TimeCountDown catchCoolDown = new TimeCountDown();
     public void Catch()
     {
+        buttonObject.interactable = false;
+        catchCoolDown.StartCountDown(TimeSpan.FromSeconds(10));
         catchManager.StartClient();
+    }
 
-        gameObject.GetComponent<Button>().interactable = false;
-
-        catchCoolDown.StartCountDown(TimeSpan.FromMinutes(2));
-
-        if (catchCoolDown.TimeLeft != TimeSpan.Zero)
+    void Update()
+    {
+        if (catchCoolDown.TimeLeft == TimeSpan.Zero)
         {
-            gameObject.GetComponent<Button>().interactable = true;
+            buttonObject.interactable = true;
         }
     }
 }

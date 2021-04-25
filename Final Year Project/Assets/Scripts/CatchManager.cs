@@ -23,6 +23,8 @@ public class CatchManager : MonoBehaviour
 
     public int respawnTime;
 
+    private TimeCountDown scanTimeLimit;
+
     // private void Start()
     public void Initialize()
     {
@@ -86,8 +88,8 @@ public class CatchManager : MonoBehaviour
                         connectedText.text = "Server Connected! Client Name: " + clientName;
                         SendSignal("Client Connected!");
 
-                        GameSceneManager.GoToCaughtScene();
                         StopServer();
+                        GameSceneManager.GoToCaughtScene();
 
                     }, (disconnectedDevice) => // onDeviceDisconnected
                     {
@@ -134,6 +136,9 @@ public class CatchManager : MonoBehaviour
                     {
                         // when finding server
                         networking.StatusMessage = "Started scaning";
+
+                        ScaningProcess();
+
                     }, (clientName, characteristic, bytes) => // onCharacteristicWritten
                     {
                         // receive server data
@@ -141,6 +146,12 @@ public class CatchManager : MonoBehaviour
                         StopClient();
                     });
 
+    }
+
+    private IEnumerable ScaningProcess()
+    {
+        yield return new WaitForSeconds(30);
+        StopClient();
     }
 
     public void StopClient()

@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
 using SocketIO;
-            
-            
+
+
 
 public class GetRespawnTimeCount : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class GetRespawnTimeCount : MonoBehaviour
         timer.text = String.Format("{0:00}:{1:00}", respawnTimer.TimeLeft.Minutes, respawnTimer.TimeLeft.Seconds);
 
         catchManager = FindObjectOfType<CatchManager>();
-        caught="caught";
+        caught = "caught";
 
         StartCoroutine(StatusUpdate());
         StartCoroutine(CheckIfAllCaught());
@@ -46,33 +46,35 @@ public class GetRespawnTimeCount : MonoBehaviour
             catchManager.Initialize();
             catchManager.StartServer();
 
-            caught="notCaught";
+            caught = "notCaught";
             StartCoroutine(StatusUpdate());
 
             SceneManager.LoadScene("MapScene");
         }
     }
+
     IEnumerator StatusUpdate()
     {
         WWWForm form = new WWWForm();
 
         form.AddField("game_status", caught);
 
-        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/status/"+PlayerPrefs.GetString("id","1"),form);
+        UnityWebRequest req = UnityWebRequest.Post(PlatformDefines.apiAddress + "/gps/status/" + PlayerPrefs.GetString("id", "1"), form);
 
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
 
-        if(req.isNetworkError || req.isHttpError){
+        if (req.isNetworkError || req.isHttpError)
+        {
             Debug.LogError(req.error);
             yield break;
         }
-            
-        
+
+
     }
     IEnumerator CheckIfAllCaught()
     {
-        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/locationTeammates/"+PlayerPrefs.GetString("id","1")+"/"+PlayerPrefs.GetString("group_id", "1"));
+        UnityWebRequest req = UnityWebRequest.Get(PlatformDefines.apiAddress + "/gps/locationTeammates/" + PlayerPrefs.GetString("id", "1") + "/" + PlayerPrefs.GetString("group_id", "1"));
 
         // stop the function and return the state to Login(), if access this function again will start from here
         yield return req.SendWebRequest();
@@ -81,17 +83,18 @@ public class GetRespawnTimeCount : MonoBehaviour
         JSONNode data = res["data"];
 
         //2vs2 version
-        if(data[0]["game_status"]=="caught" )
+        if (data[0]["game_status"] == "caught")
         {
             socketManager.sendWinLoseTeam("catch");
             socketManager.sendWinLoseOpp("catch");
         }
 
 
-        if(req.isNetworkError || req.isHttpError){
+        if (req.isNetworkError || req.isHttpError)
+        {
             Debug.LogError(req.error);
             yield break;
         }
-        
+
     }
 }
