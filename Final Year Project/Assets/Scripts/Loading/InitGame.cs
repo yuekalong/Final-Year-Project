@@ -52,7 +52,7 @@ public class InitGame : MonoBehaviour
             if (gatherTimer.TimeLeft == TimeSpan.Zero)
             {
                 // set time limit
-                gameTimer.StartCountDown(TimeSpan.FromMinutes(2));
+                gameTimer.StartCountDown(TimeSpan.FromMinutes(5));
                 DontDestroyOnLoad(gameTimer);
                 GameSceneManager.StartGame();
             }
