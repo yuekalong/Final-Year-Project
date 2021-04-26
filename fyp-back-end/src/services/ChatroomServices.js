@@ -47,7 +47,7 @@ module.exports = {
 
     connection.io
       .to(roomID)
-      .emit("receive-msg", { name: data.name, msg: data.msg });
+      .emit("receive-msg", { id: roomID, name: data.name, msg: data.msg });
     console.log("Send Message!");
   },
 

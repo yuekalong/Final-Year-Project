@@ -190,9 +190,11 @@ public class SocketManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "ChatroomScene")
         {
-
-            // if not in chatroom scene
-            unseenMsg++;
+            if (data.GetField("id").str == user["group_id"])
+            {
+                // if not in chatroom scene
+                unseenMsg++;
+            }
         }
         else
         {

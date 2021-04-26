@@ -31,16 +31,6 @@ public class InitGame : MonoBehaviour
         circularImg.fillAmount = progress;
         int rand = UnityEngine.Random.Range(0, 8);
         PlayerPrefs.SetString("occupation", occupation[rand]);
-        PlayerPrefs.SetInt("disable_bomb", -1);
-        PlayerPrefs.SetInt("can_track", -1);
-        if (PlayerPrefs.GetString("occupation") == "Bomb Walker")
-        {
-            PlayerPrefs.SetInt("disable_bomb", 2);
-        }
-        if (PlayerPrefs.GetString("occupation") == "Tracker")
-        {
-            PlayerPrefs.SetInt("can_track", 3);
-        }
 
         gatherTimer.StartCountDown(TimeSpan.FromSeconds(15));
         gatherTimeText.text = "";
