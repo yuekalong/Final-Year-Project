@@ -573,6 +573,8 @@ MonoBehaviour:
   timer: {fileID: 547690215}
   BLEHandlerPrefab: {fileID: 3596592454266253839, guid: 9eb11723057424db49a706c77a8bfe1e, type: 3}
   catchManager: {fileID: 0}
+  originalHandler: {fileID: 0}
+  originalBluetooth: {fileID: 0}
 --- !u!1 &1040132529
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,15 +663,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3184155897404534963, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.050980393
       objectReference: {fileID: 0}
     - target: {fileID: 3184155897404534963, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
       propertyPath: m_Color.g
-      value: 0.019607844
+      value: 0.11764706
       objectReference: {fileID: 0}
     - target: {fileID: 3184155897404534963, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
       propertyPath: m_Color.b
-      value: 0.09803922
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 3184155897404534963, guid: 0592d2ea6d87d40edbfdb104957fea90, type: 3}
       propertyPath: m_Sprite
@@ -853,7 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.019607844, b: 0.09803922, a: 1}
+  m_Color: {r: 0.050980393, g: 0.11764706, b: 0.27450982, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

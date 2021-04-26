@@ -126,7 +126,8 @@ public class CatchManager : MonoBehaviour
                         if (System.Text.Encoding.ASCII.GetString(bytes) == "catch")
                         {
                             StopClient();
-                            GameSceneManager.GoToCaughtScene();
+                            // GameSceneManager.GoToCaughtScene();
+                            SceneManager.LoadScene("CaughtScene");
                         }
                     });
 
