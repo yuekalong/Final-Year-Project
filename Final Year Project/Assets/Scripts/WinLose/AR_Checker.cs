@@ -28,11 +28,9 @@ public class AR_Checker : MonoBehaviour
     public void changeScene()
     {
         if("hunter"==PlayerPrefs.GetString("group_type", "empty"))
-        {
-            
+        {   
             socketManager.sendWinLoseTeam("unseal");
             socketManager.sendWinLoseOpp("unseal");
-            SceneManager.LoadScene("WinLose");
             
         }
             

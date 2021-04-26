@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-
+namespace SocketIO
+{
 public class WinLosePage : MonoBehaviour
 {
     // Start is called before the first frame update
     public Text reason;
 
+    private CatchManager catchManager;
+    private SocketIOComponent networking;
     private Text TimeNeeded;
     private TimeCountDown gameTimer;
 
@@ -19,6 +22,9 @@ public class WinLosePage : MonoBehaviour
     void Start()
     {
         gameTimer = FindObjectOfType<TimeCountDown>();
+        networking = FindObjectOfType<SocketIOComponent>();
+        catchManager = FindObjectOfType<CatchManager>();
+
         string time = String.Format("{0:00}:{1:00}", gameTimer.TimeUsed.Minutes, gameTimer.TimeUsed.Seconds);
         
         String receievedReason = PlayerPrefs.GetString("reason");
@@ -74,8 +80,10 @@ public class WinLosePage : MonoBehaviour
             }
         }
         Destroy(gameTimer);
+        Destroy(networking);
+        Destroy(catchManager);
+        Destroy(GameObject.Find("BluetoothLEReceiver"));
         PlayerPrefs.DeleteAll();
-
 
     }
 
@@ -88,4 +96,5 @@ public class WinLosePage : MonoBehaviour
     {
         SceneManager.LoadScene("LobbyScene");
     }
+}
 }
