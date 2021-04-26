@@ -42,7 +42,7 @@ public class InitGame : MonoBehaviour
             PlayerPrefs.SetInt("can_track", 3);
         }
 
-        gatherTimer.StartCountDown(TimeSpan.FromSeconds(30));
+        gatherTimer.StartCountDown(TimeSpan.FromSeconds(15));
         gatherTimeText.text = "";
     }
 
@@ -115,6 +115,8 @@ public class InitGame : MonoBehaviour
 
         // set socket
         DontDestroyOnLoad(socket);
+        socket.GetComponent<SocketManager>().SetSocketUser();
+        socket.GetComponent<SocketManager>().joinChatoom();
 
         yield return AddProgress(0.1f);
 

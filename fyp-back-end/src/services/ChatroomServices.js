@@ -22,7 +22,7 @@ module.exports = {
   },
 
   joinRoom: async function (connection, user) {
-    const roomID = user.group_id;
+    // const roomID = user.group_id;
     const rooms = [user.group_id, user.opponent_id];
 
     // join the room
@@ -33,8 +33,11 @@ module.exports = {
     // this.getHistory(connection, roomID, user.socketID);
   },
   sendMsg: async function (connection, data) {
+    console.log(data);
+
     const roomID = data.group_id;
     console.log(roomID);
+
     await knex("chatroom_history").insert({
       id: uuid(),
       group_id: roomID,
@@ -51,17 +54,13 @@ module.exports = {
   sendWinLoseTeam: async function (connection, data) {
     const roomID = data.group_id;
 
-    connection.io
-      .to(roomID)
-      .emit("receive-reason", { msg: data.msg });
+    connection.io.to(roomID).emit("receive-reason", { msg: data.msg });
     console.log("Send reason!");
   },
   sendWinLoseOpp: async function (connection, data) {
     const roomID = data.opponent_id;
 
-    connection.io
-      .to(roomID)
-      .emit("receive-reason", { msg: data.msg });
+    connection.io.to(roomID).emit("receive-reason", { msg: data.msg });
     console.log(data.msg);
     console.log("Send reason!");
   },

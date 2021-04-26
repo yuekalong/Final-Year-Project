@@ -17,15 +17,11 @@ public class SocketManager : MonoBehaviour
     {
         socket = GetComponent<SocketIOComponent>();
 
-        // set ids
         user["id"] = PlayerPrefs.GetString("id", "No ID");
         user["game_id"] = PlayerPrefs.GetString("game_id", "No Game ID");
-        user["group_id"] = PlayerPrefs.GetString("group_id", "No Game ID");
-        user["opponent_id"] = PlayerPrefs.GetString("opponent_id", "No Game ID");
-        user["name"] = PlayerPrefs.GetString("name", "No Name");
 
         sceneName = SceneManager.GetActiveScene().name;
-        
+
         if (socket != null)
         {
             // set for open message
@@ -42,12 +38,26 @@ public class SocketManager : MonoBehaviour
             socket.On("receive-msg", ReceiveMsg);
 
             //whole game
-             socket.On("receive-reason", ReceiveReason);
+            socket.On("receive-reason", ReceiveReason);
 
             // waiting room
             socket.On("player-count", UpdatePlayerCount);
             socket.On("start-game", InitGame);
         }
+    }
+
+    public void SetSocketUser()
+    {
+        // set ids
+        user["group_id"] = PlayerPrefs.GetString("group_id", "No Group ID");
+        user["opponent_id"] = PlayerPrefs.GetString("opponent_id", "No Opponent ID");
+        user["name"] = PlayerPrefs.GetString("name", "No Name");
+
+        Debug.Log("User ID:" + user["id"]);
+        Debug.Log("Game ID:" + user["game_id"]);
+        Debug.Log("Group ID:" + user["group_id"]);
+        Debug.Log("Opponent ID:" + user["opponent_id"]);
+        Debug.Log("Name:" + user["name"]);
     }
 
     #region socketEvent
@@ -57,19 +67,21 @@ public class SocketManager : MonoBehaviour
         if (socket.sid != null)
         {
             Debug.Log("Connect Socket.io!\nSocket ID:" + socket.sid);
-            
+
             Debug.Log(sceneName);
 
-            if(sceneName == "LoadingScene"){
+            if (sceneName == "LoadingScene")
+            {
                 user["socketID"] = socket.sid;
 
                 // assume no close of game
                 unseenMsg = 0;
-                
+
                 // join chatroom
-                joinChatoom();
+                // joinChatoom();
             }
-            else if (sceneName == "WaitingRoomScene"){
+            else if (sceneName == "WaitingRoomScene")
+            {
                 joinWaitingRoom();
             }
         }
@@ -108,11 +120,13 @@ public class SocketManager : MonoBehaviour
         waitingRoomDisplay.text = data["count"] + " / " + data["maximum_count"];
     }
 
-    public void GetCurrentWaitingCount(){
+    public void GetCurrentWaitingCount()
+    {
         socket.Emit("get-current-player-count", new JSONObject(user));
     }
 
-    public void InitGame(SocketIOEvent ev){
+    public void InitGame(SocketIOEvent ev)
+    {
         GameSceneManager.InitGame();
     }
     #endregion
@@ -122,7 +136,7 @@ public class SocketManager : MonoBehaviour
     private ScrollRect scrollRect;
     public int unseenMsg;
 
-    private void joinChatoom()
+    public void joinChatoom()
     {
         socket.Emit("join-chatroom", new JSONObject(user));
 
@@ -203,9 +217,9 @@ public class SocketManager : MonoBehaviour
         Debug.Log("Receive Message: " + ev.data);
         JSONObject data = ev.data;
 
-        PlayerPrefs.SetString("reason",data.GetField("msg").str);
+        PlayerPrefs.SetString("reason", data.GetField("msg").str);
         SceneManager.LoadScene("WinLose");
-        
+
 
     }
 
