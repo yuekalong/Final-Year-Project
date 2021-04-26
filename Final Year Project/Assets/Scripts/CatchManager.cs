@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Shatalmic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CatchManager : MonoBehaviour
 {
