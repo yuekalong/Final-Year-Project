@@ -25,6 +25,16 @@ exports.seed = function (knex) {
           code: "4",
           map_number: "2",
         },
+        {
+          id: 5,
+          code: "5",
+          map_number: "2",
+        },
+        {
+          id: 6,
+          code: "6",
+          map_number: "2",
+        },
       ]);
     });
 };
